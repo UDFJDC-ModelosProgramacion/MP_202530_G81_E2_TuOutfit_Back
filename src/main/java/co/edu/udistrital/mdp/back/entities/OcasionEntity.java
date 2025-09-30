@@ -7,16 +7,16 @@ import java.util.List;
 
 /**
  * Clase que representa una ocasión de uso (ej: fiesta, trabajo, deporte).
- *
- * Cada ocasión puede estar relacionada con muchas categorías.
  */
+
 @Data
 @Entity
 public class OcasionEntity extends BaseEntity {
 
-    private String nombre;  // Ej: "Formal", "Casual", "Deportivo"
+    // Nombre de la ocasión (ej: "Trabajo", "Boda", "Fiesta", "Deportivo")
+    private String nombre;
 
-    // Relación con Categoría
+    // Una ocasión puede tener muchas categorías
     @ManyToMany(mappedBy = "ocasiones", cascade = CascadeType.ALL)
     private List<CategoriaEntity> categorias = new ArrayList<>();
 }

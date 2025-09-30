@@ -2,21 +2,31 @@ package co.edu.udistrital.mdp.back.entities;
 
 import jakarta.persistence.*;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
+import uk.co.jemos.podam.common.PodamExclude;
+
+import java.util.List;
+
+/**
+ * Clase que representa una tienda en la persistencia
+ */
 
 @Data
 @Entity
-@EqualsAndHashCode(callSuper = true)
 public class TiendaEntity extends BaseEntity {
 
+    private String nombre;
     private String direccion;
     private String horario;
+    private String ubicacion;
 
-    @Lob
-    private byte[] ubicacion;
-
-    // 🔗 Relación con Marca (muchas tiendas → 1 marca)
+    @PodamExclude
+    // Una tienda pertenece a una marca
     @ManyToOne
     @JoinColumn(name = "marca_id")
     private MarcaEntity marca;
+
+    @PodamExclude
+    // Una tienda puede tener muchas prendas
+    @OneToMany(mappedBy = "tienda", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<PrendaEntity> prendas;
 }

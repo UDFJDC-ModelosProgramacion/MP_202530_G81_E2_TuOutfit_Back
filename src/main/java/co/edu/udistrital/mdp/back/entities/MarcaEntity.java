@@ -2,26 +2,35 @@ package co.edu.udistrital.mdp.back.entities;
 
 import jakarta.persistence.*;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
+import uk.co.jemos.podam.common.PodamExclude;
 
 import java.util.List;
 
+/**
+ * Clase que representa una marca en la persistencia
+ */
+
 @Data
 @Entity
-@EqualsAndHashCode(callSuper = true)
 public class MarcaEntity extends BaseEntity {
 
     private String nombre;
-    private String sitioOficial;
+    private String logo;
+    private String ubicacion;
 
-    @Lob
-    private byte[] logo;
-
-    // 🔗 Relación con Prenda (1 marca → muchas prendas)
+    @PodamExclude
+    // Una marca puede tener muchas prendas
     @OneToMany(mappedBy = "marca", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<PrendaEntity> prendas;
 
-    // 🔗 Relación con Tienda (1 marca → muchas tiendas)
+    @PodamExclude
+    // Una marca puede tener muchas tiendas
     @OneToMany(mappedBy = "marca", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<TiendaEntity> tiendas;
+
+    @PodamExclude
+    // Una marca tiene una sola imagen (ej: logo)
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "imagen_id", referencedColumnName = "id")
+    private ImagenEntity imagen;
 }
