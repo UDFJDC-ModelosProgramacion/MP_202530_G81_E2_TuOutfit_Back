@@ -2,12 +2,12 @@ package co.edu.udistrital.mdp.back.repositories;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-import co.edu.udistrital.mdp.back.entities.OutfitEntity;
+import co.edu.udistrital.mdp.back.entities.PrendaEntity;
 
 /**
- * Interfaz que persiste un outfit
+ * Interfaz que persiste una prenda
  */
 
 @Repository
-public interface OutfitRepository extends JpaRepository<OutfitEntity, Long> {
+public interface PrendaRepository extends JpaRepository<PrendaEntity, Long> {  
 }
