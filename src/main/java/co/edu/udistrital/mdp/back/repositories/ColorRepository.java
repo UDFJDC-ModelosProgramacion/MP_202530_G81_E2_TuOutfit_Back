@@ -1,9 +1,13 @@
 package co.edu.udistrital.mdp.back.repositories;
 
-import co.edu.udistrital.mdp.back.entities.MarcaEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
+import co.edu.udistrital.mdp.back.entities.ColorEntity;
+
+/**
+ * Interfaz que persiste un color
+ */
 
 @Repository
-public interface MarcaRepository extends JpaRepository<MarcaEntity, Long> {
+public interface ColorRepository extends JpaRepository<ColorEntity, Long> {
 }

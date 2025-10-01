@@ -5,8 +5,6 @@ import lombok.Data;
 
 /**
  * Clase que representa un comentario en la persistencia
- *
- * @author ISIS2603
  */
 
 @Data

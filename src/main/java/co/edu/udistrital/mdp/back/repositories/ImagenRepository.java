@@ -2,12 +2,12 @@ package co.edu.udistrital.mdp.back.repositories;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-import co.edu.udistrital.mdp.back.entities.OutfitEntity;
+import co.edu.udistrital.mdp.back.entities.ImagenEntity;
 
 /**
- * Interfaz que persiste un outfit
+ * Interfaz que persiste una imagen
  */
 
 @Repository
-public interface OutfitRepository extends JpaRepository<OutfitEntity, Long> {
+public interface ImagenRepository extends JpaRepository<ImagenEntity, Long> {
 }
