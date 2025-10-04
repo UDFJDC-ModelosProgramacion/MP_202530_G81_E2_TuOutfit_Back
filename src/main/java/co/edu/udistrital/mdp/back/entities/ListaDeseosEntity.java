@@ -4,12 +4,12 @@ import jakarta.persistence.*;
 import lombok.Data;
 import uk.co.jemos.podam.common.PodamExclude;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Clase que representa una lista de deseos en la persistencia.
  */
-
 @Data
 @Entity
 public class ListaDeseosEntity extends BaseEntity {
@@ -20,13 +20,13 @@ public class ListaDeseosEntity extends BaseEntity {
     @JoinColumn(name = "usuario_id")
     private UsuarioEntity usuario;
 
+    // Relación ListaDeseos ↔ Outfit (lado dueño con JoinTable)
     @PodamExclude
-    // Una lista de deseos puede contener muchos outfits
     @ManyToMany
     @JoinTable(
-        name = "lista_outfit",
-        joinColumns = @JoinColumn(name = "lista_id"),
-        inverseJoinColumns = @JoinColumn(name = "outfit_id")
+        name = "lista_outfit", // nombre de la tabla intermedia
+        joinColumns = @JoinColumn(name = "lista_id"), // FK a ListaDeseos
+        inverseJoinColumns = @JoinColumn(name = "outfit_id") // FK a Outfit
     )
-    private List<OutfitEntity> outfits;
+    private List<OutfitEntity> outfits = new ArrayList<>();
 }

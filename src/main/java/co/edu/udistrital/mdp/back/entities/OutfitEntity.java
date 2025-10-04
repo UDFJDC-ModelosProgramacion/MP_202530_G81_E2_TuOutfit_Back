@@ -4,12 +4,12 @@ import jakarta.persistence.*;
 import lombok.Data;
 import uk.co.jemos.podam.common.PodamExclude;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Clase que representa un outfit en la persistencia
  */
-
 @Data
 @Entity
 public class OutfitEntity extends BaseEntity {
@@ -17,24 +17,22 @@ public class OutfitEntity extends BaseEntity {
     private String nombre;
     private Double precioEstimado;
 
+    // Relación Outfit ↔ Prenda (lado inverso, NO dueño)
     @PodamExclude
-    // Un outfit puede tener muchas prendas
-    @ManyToMany
-    @JoinTable(
-        name = "outfit_prenda",
-        joinColumns = @JoinColumn(name = "outfit_id"),
-        inverseJoinColumns = @JoinColumn(name = "prenda_id")
-    )
-    private List<PrendaEntity> prendas;
+    @ManyToMany(mappedBy = "outfits")
+    private List<PrendaEntity> prendas = new ArrayList<>();
 
     @PodamExclude
-    // Un outfit tiene una sola imagen
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "imagen_id", referencedColumnName = "id")
+    @OneToOne
+    @JoinColumn(name = "imagen_id")
     private ImagenEntity imagen;
 
     @PodamExclude
-    // Un outfit puede estar en muchas listas de deseos (muchos usuarios pueden guardarlo)
+    @OneToMany(mappedBy = "outfit", cascade = CascadeType.PERSIST, orphanRemoval = true)
+    private List<CategoriaEntity> categorias;
+
+    // Relación Outfit ↔ Lista de deseos (lado inverso, NO dueño)
+    @PodamExclude
     @ManyToMany(mappedBy = "outfits")
-    private List<ListaDeseosEntity> listasDeseos;
+    private List<ListaDeseosEntity> listasDeseos = new ArrayList<>();
 }
