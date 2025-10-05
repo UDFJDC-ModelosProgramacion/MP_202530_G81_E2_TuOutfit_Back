@@ -16,7 +16,7 @@ public class OcasionEntity extends BaseEntity {
 
     private String nombre;
 
-    // Relación Ocasion ↔ Categoria (lado dueño con JoinTable)
+    // Relación Ocasion - Categoria (lado dueño con JoinTable)
     @PodamExclude
     @ManyToMany
     @JoinTable(

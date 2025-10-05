@@ -16,6 +16,7 @@ import uk.co.jemos.podam.common.PodamExclude;
 public class UsuarioEntity extends BaseEntity {
 
     private String nombre;
+    private String correo;
 
     @PodamExclude
     // Un usuario puede tener muchos comentarios

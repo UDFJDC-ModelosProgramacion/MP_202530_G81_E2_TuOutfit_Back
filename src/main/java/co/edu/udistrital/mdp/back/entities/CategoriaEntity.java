@@ -15,6 +15,10 @@ import java.util.List;
 @Entity
 public class CategoriaEntity extends BaseEntity {
 
+    // Edad recomendada para la categoría (ej: 18, 25, 40)
+    private Integer edad;
+
+    // Nombre de la categoría (ej: "Juvenil", "Adulto", "Clásico")
     private String nombre;
 
     @PodamExclude
@@ -27,7 +31,7 @@ public class CategoriaEntity extends BaseEntity {
     @ManyToOne
     private OutfitEntity outfit;
 
-@PodamExclude
+    @PodamExclude
     @ManyToMany(mappedBy = "categorias")
     private List<OcasionEntity> ocasiones = new ArrayList<>();
 }
