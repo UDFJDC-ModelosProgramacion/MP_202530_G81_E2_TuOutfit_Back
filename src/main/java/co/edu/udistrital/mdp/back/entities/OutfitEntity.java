@@ -17,7 +17,7 @@ public class OutfitEntity extends BaseEntity {
     private String nombre;
     private Double precioEstimado;
 
-    // Relación Outfit ↔ Prenda (lado inverso, NO dueño)
+    // Relación Outfit - Prenda (lado inverso, NO dueño)
     @PodamExclude
     @ManyToMany(mappedBy = "outfits")
     private List<PrendaEntity> prendas = new ArrayList<>();
@@ -31,7 +31,7 @@ public class OutfitEntity extends BaseEntity {
     @OneToMany(mappedBy = "outfit", cascade = CascadeType.PERSIST, orphanRemoval = true)
     private List<CategoriaEntity> categorias;
 
-    // Relación Outfit ↔ Lista de deseos (lado inverso, NO dueño)
+    // Relación Outfit - Lista de deseos (lado inverso, NO dueño)
     @PodamExclude
     @ManyToMany(mappedBy = "outfits")
     private List<ListaDeseosEntity> listasDeseos = new ArrayList<>();
