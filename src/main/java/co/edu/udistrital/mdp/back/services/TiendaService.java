@@ -1,7 +1,5 @@
 package co.edu.udistrital.mdp.back.services;
 
-import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -29,7 +27,7 @@ public class TiendaService {
             throw new IllegalOperationException("El nombre es obligatorio");
 
         // Validar marcas
-        if (tienda.getMarcas() == null || tienda.getMarcas().isEmpty())
+        if (tienda.getMarca() == null)
             throw new IllegalOperationException("La tienda debe tener al menos una marca asociada");
 
         // Validar ubicación
@@ -52,12 +50,12 @@ public class TiendaService {
             throw new IllegalOperationException("El nombre ya existe");
 
         // Validar marcas
-        if (tiendaDetails.getMarcas() == null || tiendaDetails.getMarcas().isEmpty())
+        if (tiendaDetails.getMarca() == null)
             throw new IllegalOperationException("La tienda debe tener al menos una marca asociada");
 
         tienda.setNombre(tiendaDetails.getNombre());
         tienda.setUbicacion(tiendaDetails.getUbicacion());
-        tienda.setMarcas(tiendaDetails.getMarcas());
+        tienda.setMarca(tiendaDetails.getMarca());
 
         log.info("Tienda actualizada correctamente");
         return tiendaRepository.save(tienda);

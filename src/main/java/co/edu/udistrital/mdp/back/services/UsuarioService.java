@@ -44,13 +44,18 @@ public class UsuarioService {
     @Transactional
 	public UsuarioEntity createUsuario(UsuarioEntity usuario) throws IllegalOperationException {
 		log.info("Inicia proceso de creación del usuario");
+		if (usuario.getNombre() == null || usuario.getNombre().trim().isEmpty()) {
+    		throw new IllegalOperationException("El nombre no puede estar vacío");
+		}
 		if(usuario.getCorreo()== null  || usuario.getCorreo().isEmpty()) {
 			throw new IllegalOperationException("El correo no puede estar vacio");
 	    }
         if(usuarioRepository.findByCorreo(usuario.getCorreo()).isPresent()) {
 			throw new IllegalOperationException("Ya existe un usuario con ese correo");
 	    }
-        return usuarioRepository.save(usuario);
+		UsuarioEntity creado = usuarioRepository.save(usuario);
+        log.info("Finaliza proceso de creación del usuario con id = {}", creado.getId());
+        return creado;
 	}
 
 	/**
@@ -72,11 +77,11 @@ public class UsuarioService {
 	 */
 	@Transactional
 	public UsuarioEntity getUsuario(Long usuarioId) throws EntityNotFoundException {
-		log.info("Inicia proceso de consultar el usuario con id = {0}", usuarioId);
+		log.info("Inicia proceso de consultar el usuario con id = {}", usuarioId);
 		Optional<UsuarioEntity> usuarioEntity = usuarioRepository.findById(usuarioId);
 		if (usuarioEntity.isEmpty())
 			throw new EntityNotFoundException(ErrorMessage.USUARIO_NOT_FOUND);
-		log.info("Termina proceso de consultar el usuario con id = {0}", usuarioId);
+		log.info("Termina proceso de consultar el usuario con id = {}", usuarioId);
 		return usuarioEntity.get();
 	}
 
@@ -86,14 +91,26 @@ public class UsuarioService {
 	 * @param usuarioId     Identificador de la instancia a actualizar
 	 * @param usuarioEntity Instancia de UsuarioEntity con los nuevos datos.
 	 * @return Instancia de UsuarioEntity con los datos actualizados.
+	 * @throws IllegalOperationException 
 	 */
 	@Transactional
-	public UsuarioEntity updateUsuario(Long UsuarioId, UsuarioEntity Usuario) throws EntityNotFoundException {
-		log.info("Inicia proceso de actualizar el autor con id = {0}", UsuarioId);
+	public UsuarioEntity updateUsuario(Long UsuarioId, UsuarioEntity Usuario) throws EntityNotFoundException, IllegalOperationException {
+		log.info("Inicia proceso de actualizar el autor con id = {}", UsuarioId);
 		Optional<UsuarioEntity> UsuarioEntity = usuarioRepository.findById(UsuarioId);
 		if (UsuarioEntity.isEmpty())
 			throw new EntityNotFoundException(ErrorMessage.USUARIO_NOT_FOUND);
-		log.info("Termina proceso de actualizar el autor con id = {0}", UsuarioId);
+		if (Usuario.getNombre() == null || Usuario.getNombre().trim().isEmpty()) {
+        	throw new IllegalOperationException("El nombre no puede estar vacío");
+    	}
+    	if (Usuario.getCorreo() == null || Usuario.getCorreo().trim().isEmpty()) {
+        	throw new IllegalOperationException("El correo no puede estar vacío");
+    	}
+		// Verificar que el nuevo correo no esté repetido en otro usuario
+		Optional<UsuarioEntity> existingUser = usuarioRepository.findByCorreo(Usuario.getCorreo());
+		if (existingUser.isPresent() && !existingUser.get().getId().equals(UsuarioId)) {
+			throw new IllegalOperationException("Ya existe un usuario con ese correo");
+		}
+		log.info("Termina proceso de actualizar el autor con id = {}", UsuarioId);
 		Usuario.setId(UsuarioId);
 		return usuarioRepository.save(Usuario);
 	}
@@ -106,13 +123,13 @@ public class UsuarioService {
 	 */
 	@Transactional
 	public void deleteUsuario(Long usuarioId) throws IllegalOperationException, EntityNotFoundException {
-		log.info("Inicia proceso de borrar el usuario con id = {0}", usuarioId);
+		log.info("Inicia proceso de borrar el usuario con id = {}", usuarioId);
 		Optional<UsuarioEntity> usuarioEntity = usuarioRepository.findById(usuarioId);
 		if (usuarioEntity.isEmpty()) {
         throw new EntityNotFoundException(ErrorMessage.USUARIO_NOT_FOUND);
         }   
         usuarioRepository.deleteById(usuarioId);
-		log.info("Termina proceso de borrar el usuario con id = {0}", usuarioId);
+		log.info("Termina proceso de borrar el usuario con id = {}", usuarioId);
 	}
 
 
@@ -145,7 +162,7 @@ public class UsuarioService {
     @Transactional
     public ListaDeseosEntity setListaDeseos(Long usuarioId, ListaDeseosEntity listaDeseos)
         throws EntityNotFoundException {
-    log.info("Inicia proceso de asignar lista de deseos al usuario con id = {0}", usuarioId);
+    log.info("Inicia proceso de asignar lista de deseos al usuario con id = {}", usuarioId);
 
     UsuarioEntity usuario = usuarioRepository.findById(usuarioId)
             .orElseThrow(() -> new EntityNotFoundException(ErrorMessage.USUARIO_NOT_FOUND));
@@ -153,18 +170,18 @@ public class UsuarioService {
     listaDeseos.setUsuario(usuario);
     usuario.setWishlist(listaDeseos);
 
-    log.info("Finaliza proceso de asignar lista de deseos al usuario con id = {0}", usuarioId);
+    log.info("Finaliza proceso de asignar lista de deseos al usuario con id = {}", usuarioId);
     return listaDeseosRepository.save(listaDeseos);
     }
 
     @Transactional
     public ListaDeseosEntity getListaDeseos(Long usuarioId) throws EntityNotFoundException {
-        log.info("Inicia proceso de consultar lista de deseos del usuario con id = {0}", usuarioId);
+        log.info("Inicia proceso de consultar lista de deseos del usuario con id = {}", usuarioId);
 
         UsuarioEntity usuario = usuarioRepository.findById(usuarioId)
                 .orElseThrow(() -> new EntityNotFoundException(ErrorMessage.USUARIO_NOT_FOUND));
 
-        log.info("Finaliza proceso de consultar lista de deseos del usuario con id = {0}", usuarioId);
+        log.info("Finaliza proceso de consultar lista de deseos del usuario con id = {}", usuarioId);
         return usuario.getWishlist();
     }
 }

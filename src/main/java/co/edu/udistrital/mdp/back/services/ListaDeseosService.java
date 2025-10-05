@@ -60,7 +60,7 @@ public class ListaDeseosService {
 	 * @return Colección de objetos de ListaDeseosEntity.
 	 */
 	@Transactional
-	public List<ListaDeseosEntity> getListaDeseoss() {
+	public List<ListaDeseosEntity> getListaDeseos() {
 		log.info("Inicia proceso de consultar todas los ListaDeseoss");
 		return listaDeseosRepository.findAll();
 	}
