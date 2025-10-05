@@ -25,7 +25,7 @@ public class PrendaEntity extends BaseEntity {
     @ManyToOne
     private MarcaEntity marca;
 
-    // Relación Prenda ↔ Outfit (este es el lado dueño de la relación)
+    // Relación Prenda - Outfit (este es el lado dueño de la relación)
     @PodamExclude
     @ManyToMany
 @JoinTable(
