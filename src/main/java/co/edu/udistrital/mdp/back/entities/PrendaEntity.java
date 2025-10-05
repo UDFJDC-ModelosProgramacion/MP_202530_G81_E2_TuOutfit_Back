@@ -3,6 +3,8 @@ package co.edu.udistrital.mdp.back.entities;
 import jakarta.persistence.*;
 import lombok.Data;
 import uk.co.jemos.podam.common.PodamExclude;
+
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -26,12 +28,12 @@ public class PrendaEntity extends BaseEntity {
     // Relación Prenda ↔ Outfit (este es el lado dueño de la relación)
     @PodamExclude
     @ManyToMany
-    @JoinTable(
-        name = "prenda_outfit",
-        joinColumns = @JoinColumn(name = "prenda_id"),
-        inverseJoinColumns = @JoinColumn(name = "outfit_id")
-    )
-    private List<OutfitEntity> outfits;
+@JoinTable(
+    name = "prenda_outfit",
+    joinColumns = @JoinColumn(name = "prenda_id"),
+    inverseJoinColumns = @JoinColumn(name = "outfit_id")
+)
+private List<OutfitEntity> outfits = new ArrayList<>();
 
     @PodamExclude
     @ManyToOne
