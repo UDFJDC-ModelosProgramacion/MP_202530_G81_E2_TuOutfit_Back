@@ -10,4 +10,5 @@ import co.edu.udistrital.mdp.back.entities.TiendaEntity;
 
 @Repository
 public interface TiendaRepository extends JpaRepository<TiendaEntity, Long> {
+    boolean existsByNombre(String nombre);
 }
