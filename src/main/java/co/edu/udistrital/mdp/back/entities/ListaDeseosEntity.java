@@ -20,7 +20,7 @@ public class ListaDeseosEntity extends BaseEntity {
     @JoinColumn(name = "usuario_id")
     private UsuarioEntity usuario;
 
-    // Relación ListaDeseos ↔ Outfit (lado dueño con JoinTable)
+    // Relación ListaDeseos - Outfit (lado dueño con JoinTable)
     @PodamExclude
     @ManyToMany
     @JoinTable(
