@@ -10,4 +10,5 @@ import co.edu.udistrital.mdp.back.entities.MarcaEntity;
 
 @Repository
 public interface MarcaRepository extends JpaRepository<MarcaEntity, Long> {
+    boolean existsByNombre(String nombre);
 }
