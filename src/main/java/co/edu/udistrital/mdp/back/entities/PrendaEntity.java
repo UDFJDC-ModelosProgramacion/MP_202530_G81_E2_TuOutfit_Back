@@ -33,7 +33,7 @@ public class PrendaEntity extends BaseEntity {
         joinColumns = @JoinColumn(name = "prenda_id"),
         inverseJoinColumns = @JoinColumn(name = "outfit_id")
     )
-private List<OutfitEntity> outfits = new ArrayList<>();
+    private List<OutfitEntity> outfits = new ArrayList<>();
 
     @PodamExclude
     @ManyToOne
