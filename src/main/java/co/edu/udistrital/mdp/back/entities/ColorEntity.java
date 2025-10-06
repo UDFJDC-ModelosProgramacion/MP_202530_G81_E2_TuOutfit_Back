@@ -22,7 +22,7 @@ public class ColorEntity extends BaseEntity {
     /**
      * Código hexadecimal del color (ej: "#FFFFFF")
      */
-    @Column(name = "codigo_hex", nullable = false, unique = true, length = 7)
+    @Column(name = "codigo_hex", nullable = false, unique = true, length = 20)
     private String codigoHex;
 
     /**
