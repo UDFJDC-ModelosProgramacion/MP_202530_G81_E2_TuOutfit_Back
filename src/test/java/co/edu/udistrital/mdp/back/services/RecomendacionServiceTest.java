@@ -50,7 +50,7 @@ class RecomendacionServiceTest {
         outfitRepository.save(outfit);
 
         recomendacion = new RecomendacionEntity();
-        recomendacion.setDescripcion("Ideal para clima cálido");
+        recomendacion.setMotivo("Ideal para clima cálido");
         recomendacion.setUsuario(usuario);
         recomendacion.setOutfit(outfit);
         recomendacionRepository.save(recomendacion);
@@ -58,15 +58,21 @@ class RecomendacionServiceTest {
 
     @Test
     void testCrearRecomendacion() throws Exception {
+        UsuarioEntity nuevoUsuario = usuarioRepository.save(new UsuarioEntity());
+        nuevoUsuario.setNombre("Usuario nuevo");
+
+        OutfitEntity nuevoOutfit = outfitRepository.save(new OutfitEntity());
+        nuevoOutfit.setNombre("Outfit oficina");
+
         RecomendacionEntity nueva = new RecomendacionEntity();
-        nueva.setDescripcion("Perfecta para oficina");
-        nueva.setUsuario(usuario);
-        nueva.setOutfit(outfit);
+        nueva.setMotivo("Perfecta para oficina");
+        nueva.setUsuario(nuevoUsuario);
+        nueva.setOutfit(nuevoOutfit);
 
         RecomendacionEntity creada = recomendacionService.createRecomendacion(nueva);
 
         assertNotNull(creada);
-        assertEquals("Perfecta para oficina", creada.getDescripcion());
+        assertEquals("Perfecta para oficina", creada.getMotivo());
         assertTrue(recomendacionRepository.findById(creada.getId()).isPresent());
     }
 
@@ -74,14 +80,14 @@ class RecomendacionServiceTest {
     void testGetRecomendaciones() {
         List<RecomendacionEntity> lista = recomendacionService.getRecomendaciones();
         assertFalse(lista.isEmpty());
-        assertEquals("Ideal para clima cálido", lista.get(0).getDescripcion());
+        assertEquals("Ideal para clima cálido", lista.get(0).getMotivo());
     }
 
     @Test
     void testGetRecomendacionPorId() throws Exception {
         RecomendacionEntity encontrada = recomendacionService.getRecomendacion(recomendacion.getId());
         assertNotNull(encontrada);
-        assertEquals("Ideal para clima cálido", encontrada.getDescripcion());
+        assertEquals("Ideal para clima cálido", encontrada.getMotivo());
     }
 
     @Test
@@ -92,28 +98,28 @@ class RecomendacionServiceTest {
     @Test
     void testUpdateRecomendacion() throws Exception {
         RecomendacionEntity actualizada = new RecomendacionEntity();
-        actualizada.setDescripcion("Actualizada para evento nocturno");
+        actualizada.setMotivo("Actualizada para evento nocturno");
         actualizada.setUsuario(usuario);
         actualizada.setOutfit(outfit);
 
         RecomendacionEntity result = recomendacionService.updateRecomendacion(recomendacion.getId(), actualizada);
-        assertEquals("Actualizada para evento nocturno", result.getDescripcion());
+        assertEquals("Actualizada para evento nocturno", result.getMotivo());
     }
 
     @Test
     void testDeleteRecomendacion() throws Exception {
         RecomendacionEntity nueva = new RecomendacionEntity();
-        nueva.setDescripcion("Eliminar esta recomendación");
+        nueva.setMotivo("Eliminar esta recomendación");
         nueva.setUsuario(usuario);
         nueva.setOutfit(outfit);
         recomendacionRepository.save(nueva);
 
-        recomendacionService.deleteRecomendacion(nueva.getId());
+        recomendacionService.deleteRecomendacion(nueva.getId(), usuario.getId());
         assertFalse(recomendacionRepository.findById(nueva.getId()).isPresent());
     }
 
     @Test
     void testDeleteRecomendacionNoExistente() {
-        assertThrows(EntityNotFoundException.class, () -> recomendacionService.deleteRecomendacion(888L));
+        assertThrows(EntityNotFoundException.class, () -> recomendacionService.deleteRecomendacion(888L, null));
     }
 }

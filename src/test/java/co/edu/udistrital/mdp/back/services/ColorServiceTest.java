@@ -31,6 +31,7 @@ class ColorServiceTest {
     void setUp() {
         color = new ColorEntity();
         color.setNombre("Rojo");
+        color.setCodigoHex("#FF0000");
         colorRepository.save(color);
     }
 
@@ -38,11 +39,13 @@ class ColorServiceTest {
     void testCreateColor() throws Exception {
         ColorEntity nuevo = new ColorEntity();
         nuevo.setNombre("Azul");
+        nuevo.setCodigoHex("#0000FF");
 
         ColorEntity creado = colorService.createColor(nuevo);
 
         assertNotNull(creado);
         assertEquals("Azul", creado.getNombre());
+        assertEquals("#0000FF", creado.getCodigoHex());
         assertTrue(colorRepository.findById(creado.getId()).isPresent());
     }
 
@@ -60,6 +63,7 @@ class ColorServiceTest {
 
         assertNotNull(encontrado);
         assertEquals("Rojo", encontrado.getNombre());
+        assertEquals("#FF0000", encontrado.getCodigoHex());
     }
 
     @Test
@@ -71,10 +75,12 @@ class ColorServiceTest {
     void testUpdateColor() throws Exception {
         ColorEntity actualizado = new ColorEntity();
         actualizado.setNombre("Verde");
+        actualizado.setCodigoHex("#00FF00");
 
         ColorEntity result = colorService.updateColor(color.getId(), actualizado);
 
         assertEquals("Verde", result.getNombre());
+        assertEquals("#00FF00", result.getCodigoHex());
         assertEquals(color.getId(), result.getId());
     }
 
@@ -82,6 +88,7 @@ class ColorServiceTest {
     void testUpdateColorNoExistente() {
         ColorEntity actualizado = new ColorEntity();
         actualizado.setNombre("Amarillo");
+        actualizado.setCodigoHex("#FFFF00");
 
         assertThrows(EntityNotFoundException.class, () -> colorService.updateColor(888L, actualizado));
     }
@@ -90,6 +97,7 @@ class ColorServiceTest {
     void testDeleteColor() throws Exception {
         ColorEntity nuevo = new ColorEntity();
         nuevo.setNombre("Gris");
+        nuevo.setCodigoHex("#808080");
         colorRepository.save(nuevo);
 
         colorService.deleteColor(nuevo.getId());
