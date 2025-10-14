@@ -1,0 +1,393 @@
+{
+	"info": {
+		"_postman_id": "88499165-34ef-45f6-a1b2-136d6380fcee",
+		"name": "Outfit",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "49239403",
+		"_collection_link": "https://ejfernandezr-2674108.postman.co/workspace/Erik's-Workspace~ffb27f8c-9318-43bb-817d-ef877f9df316/collection/49239403-88499165-34ef-45f6-a1b2-136d6380fcee?action=share&source=collection_link&creator=49239403"
+	},
+	"item": [
+		{
+			"name": "Crear un outfit",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\r\n    \"nombre\": \"Outfit Verano Casual\",\r\n\r\n    \"precioEstimado\": \"120.000\",\r\n\r\n    \"image\":  \"imagen.jpg\"\r\n\r\n\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/outfits",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"outfits"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Crear un outfit",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\r\n    \"nombre\": \"Outfit Verano Casual\",\r\n\r\n    \"precioEstimado\": \"120.000\"\r\n\r\n    \r\n\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/outfits",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"outfits"
+							]
+						}
+					},
+					"status": "Created",
+					"code": 201,
+					"_postman_previewlanguage": "",
+					"header": [],
+					"cookie": [
+						{
+							"expires": "Invalid Date",
+							"domain": "",
+							"path": ""
+						}
+					],
+					"body": "{\r\n\r\n    \"id\": 1,\r\n\r\n    \"nombre\": \"Outfit Verano Casual\",\r\n\r\n    \"precioEstimado\": \"120.000\",\r\n\r\n    \"image\":  \"imagen.jpg\"\r\n\r\n}"
+				}
+			]
+		},
+		{
+			"name": "Obtener todos los outfits",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/outfits",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"outfits"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Obtener todos los outfits",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "text",
+					"header": [],
+					"cookie": [
+						{
+							"expires": "Invalid Date",
+							"domain": "",
+							"path": ""
+						}
+					],
+					"body": "[\r\n\r\n    {\r\n\r\n        \"id\": 1,\r\n\r\n        \"name\": \"Outfit Verano Casual\",\r\n\r\n        \"precioEstimado\": \"120.000\",\r\n\r\n        \"image\":  \"imagen.jpg\",\r\n\r\n        \"prendas\": [],\r\n\r\n        \"categorias\": [],\r\n\r\n        \"listasDeseos\": []\r\n\r\n    }\r\n\r\n]"
+				}
+			]
+		},
+		{
+			"name": "Obtener un outfit",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/outfits/{{outfit_id_1}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"outfits",
+						"{{outfit_id_1}}"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Obtener un outfit",
+					"originalRequest": {
+						"method": "GET",
+						"header": []
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "",
+					"header": [],
+					"cookie": [
+						{
+							"expires": "Invalid Date",
+							"domain": "",
+							"path": ""
+						}
+					],
+					"body": "{\r\n\r\n    \"id\": 1,\r\n\r\n    \"nombre\": \"Outfit Verano Casual\",\r\n\r\n    \"precioEstimado\": \"120.000\",\r\n\r\n    \"image\":  \"imagen.jpg\",\r\n\r\n    \"prendas\": [],\r\n\r\n    \"categorias\": [],\r\n\r\n    \"listasDeseos\": []\r\n\r\n}"
+				}
+			]
+		},
+		{
+			"name": "Obtener un outfit que no existe",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/outfits/0",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"outfits",
+						"0"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Obtener un outfit que no existe",
+					"originalRequest": {
+						"method": "GET",
+						"header": []
+					},
+					"status": "Not Found",
+					"code": 404,
+					"_postman_previewlanguage": "",
+					"header": [],
+					"cookie": [
+						{
+							"expires": "Invalid Date",
+							"domain": "",
+							"path": ""
+						}
+					],
+					"body": "{\r\n\r\n    \"apierror\": {\r\n\r\n        \"status\": \"NOT_FOUND\",\r\n\r\n        \"timestamp\": \"21-02-2023 10:01:09\",\r\n\r\n        \"message\": \"The outfit with the given id was not found\"\r\n\r\n    }\r\n\r\n}"
+				}
+			]
+		},
+		{
+			"name": "Editar un outfit",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\r\n    \"nombre\": \"Outfit Verano Casual 2\",\r\n\r\n    \"precioEstimado\": \"120.000\",\r\n\r\n    \"image\":  \"imagen.jpg\"\r\n\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/outfit/{{outfit_id_1}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"outfit",
+						"{{outfit_id_1}}"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Editar un outfit",
+					"originalRequest": {
+						"method": "GET",
+						"header": []
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "",
+					"header": [],
+					"cookie": [
+						{
+							"expires": "Invalid Date",
+							"domain": "",
+							"path": ""
+						}
+					],
+					"body": "{\r\n\r\n    \"id\": 1,\r\n\r\n    \"nombre\": \"Outfit Verano Casual 2\",\r\n\r\n    \"precioEstimado\": \"120.000\",\r\n\r\n    \"image\":  \"imagen.jpg\"\r\n\r\n}"
+				}
+			]
+		},
+		{
+			"name": "Editar un outfit que no existe",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/outfits/0",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"outfits",
+						"0"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Editar un outfit que no existe",
+					"originalRequest": {
+						"method": "GET",
+						"header": []
+					},
+					"status": "Not Found",
+					"code": 404,
+					"_postman_previewlanguage": "",
+					"header": [],
+					"cookie": [
+						{
+							"expires": "Invalid Date",
+							"domain": "",
+							"path": ""
+						}
+					],
+					"body": "{\r\n\r\n    \"apierror\": {\r\n\r\n        \"status\": \"NOT_FOUND\",\r\n\r\n        \"timestamp\": \"21-02-2023 10:04:10\",\r\n\r\n        \"message\": \"The outfit with the given id was not found\"\r\n\r\n    }\r\n\r\n}"
+				}
+			]
+		},
+		{
+			"name": "Borrar un outfit",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/outfits/{{outfit_id_1}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"outfits",
+						"{{outfit_id_1}}"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Borrar un outfit",
+					"originalRequest": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/outfits/{{outfit_id_1}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"outfits",
+								"{{outfit_id_1}}"
+							]
+						}
+					},
+					"status": "No Content",
+					"code": 204,
+					"_postman_previewlanguage": "",
+					"header": [],
+					"cookie": [
+						{
+							"expires": "Invalid Date",
+							"domain": "",
+							"path": ""
+						}
+					],
+					"body": ""
+				}
+			]
+		},
+		{
+			"name": "Borrar un outfit que no existe",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/outfits/0",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"outfits",
+						"0"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Borrar un outfit que no existe",
+					"originalRequest": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/outfits/0",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"outfits",
+								"0"
+							]
+						}
+					},
+					"status": "Not Found",
+					"code": 404,
+					"_postman_previewlanguage": "",
+					"header": [],
+					"cookie": [
+						{
+							"expires": "Invalid Date",
+							"domain": "",
+							"path": ""
+						}
+					],
+					"body": "{\r\n\r\n    \"apierror\": {\r\n\r\n        \"status\": \"NOT_FOUND\",\r\n\r\n        \"timestamp\": \"21-02-2023 10:05:19\",\r\n\r\n        \"message\": \"The outfit with the given id was not found\"\r\n\r\n    }\r\n\r\n}"
+				}
+			]
+		}
+	]
+}
