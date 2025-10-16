@@ -1,13 +1,10 @@
 package co.edu.udistrital.mdp.back.dto;
-import java.util.Date;
 
 import lombok.Data;
-import lombok.Getter;
-
-import lombok.Setter;
 
 @Data
 public class OutfitDTO {
+    private Long id;
     private String nombre;
     private Double precioEstimado;
     private ImagenDTO imagen;

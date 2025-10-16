@@ -2,8 +2,9 @@ package co.edu.udistrital.mdp.back.dto;
 
 import java.util.List;
 
-public class ColorDetailDTO extends ColorDTO {
-    
+import lombok.Data;
+
+@Data
+public class ColorDetailDTO extends ColorDTO { 
      private List<PrendaDTO> prendas;
-    
 }
