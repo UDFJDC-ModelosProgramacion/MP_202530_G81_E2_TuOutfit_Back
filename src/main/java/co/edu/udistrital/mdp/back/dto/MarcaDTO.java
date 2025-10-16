@@ -1,11 +1,12 @@
 package co.edu.udistrital.mdp.back.dto;
 
+import lombok.Data;
+
+@Data
 public class MarcaDTO {
-    
-    private long id;
+    private Long id;
     private String nombre;
     private String logo;
     private String ubicacion;
-    // private ImagenDTO imagen;
-
+    private ImagenDTO imagen;
 }
