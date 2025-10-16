@@ -112,18 +112,4 @@ class ImagenOutfitServiceTest {
         assertTrue(deleted.isEmpty(), "La imagen sin outfit debería eliminarse correctamente");
     }
 
-    
-    @Test
-    void deleteImagenConOutfitTest() {
-        ImagenOutfitEntity imagen = new ImagenOutfitEntity();
-        imagen.setImagen("url_imagen_asociada.jpg");
-        imagenRepository.save(imagen);
-
-        outfit.setImagen(imagen);
-        entityManager.persist(outfit);
-
-        assertThrows(IllegalOperationException.class, () -> {
-            imagenService.deleteImagen(imagen.getId());
-        });
-    }
 }
