@@ -5,7 +5,6 @@ import static org.junit.jupiter.api.Assertions.*;
 import java.util.ArrayList;
 import java.util.List;
 
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,39 +54,41 @@ class OutfitServiceTest {
         }
     }
 
-   @Test
-void testCreateOutfit() throws Exception {
-    
-    CategoriaEntity categoria = factory.manufacturePojo(CategoriaEntity.class);
-    entityManager.persist(categoria);
+    @Test
+    void testCreateOutfit() throws Exception {
+        CategoriaEntity categoria = factory.manufacturePojo(CategoriaEntity.class);
+        entityManager.persist(categoria);
 
-    
-    PrendaEntity prenda = factory.manufacturePojo(PrendaEntity.class);
-    entityManager.persist(prenda);
+        PrendaEntity prenda = factory.manufacturePojo(PrendaEntity.class);
+        entityManager.persist(prenda);
 
-   
-    OutfitEntity outfit = factory.manufacturePojo(OutfitEntity.class);
-    outfit.setCategorias(List.of(categoria));
-    outfit.setPrendas(List.of(prenda));
+        OutfitEntity outfit = factory.manufacturePojo(OutfitEntity.class);
+        outfit.setCategoria(categoria); 
+        outfit.setPrendas(List.of(prenda));
 
-   
-    OutfitEntity nuevo = outfitService.createOutfit(outfit);
+        OutfitEntity nuevo = outfitService.createOutfit(outfit);
 
-    assertNotNull(nuevo);
-    assertEquals(outfit.getNombre(), nuevo.getNombre());
-}
+        assertNotNull(nuevo);
+        assertEquals(outfit.getNombre(), nuevo.getNombre());
+        assertEquals(categoria.getId(), nuevo.getCategoria().getId());
+    }
+
     @Test
     void testCreateOutfitWithEmptyPrendas() {
+        CategoriaEntity categoria = factory.manufacturePojo(CategoriaEntity.class);
+        entityManager.persist(categoria);
+
         OutfitEntity outfit = factory.manufacturePojo(OutfitEntity.class);
-        outfit.setPrendas(new ArrayList<>()); 
+        outfit.setCategoria(categoria);
+        outfit.setPrendas(new ArrayList<>());
 
         assertThrows(IllegalOperationException.class, () -> outfitService.createOutfit(outfit));
     }
 
     @Test
-    void testCreateOutfitWithNullCategorias() {
+    void testCreateOutfitWithNullCategoria() {
         OutfitEntity outfit = factory.manufacturePojo(OutfitEntity.class);
-        outfit.setCategorias(null);
+        outfit.setCategoria(null); 
         outfit.setPrendas(new ArrayList<>(prendaList));
 
         assertThrows(IllegalOperationException.class, () -> outfitService.createOutfit(outfit));
@@ -117,21 +118,23 @@ void testCreateOutfit() throws Exception {
     @Test
     void testUpdateOutfit() throws EntityNotFoundException, IllegalOperationException {
         OutfitEntity existente = outfitList.get(0);
+        CategoriaEntity categoria = factory.manufacturePojo(CategoriaEntity.class);
+        entityManager.persist(categoria);
 
         OutfitEntity cambios = factory.manufacturePojo(OutfitEntity.class);
-        cambios.setPrendas(new ArrayList<>(prendaList)); 
+        cambios.setPrendas(new ArrayList<>(prendaList));
+        cambios.setCategoria(categoria);
         cambios.setId(existente.getId());
 
         OutfitEntity actualizado = outfitService.updateOutfit(existente.getId(), cambios);
 
         assertEquals(cambios.getNombre(), actualizado.getNombre());
+        assertEquals(categoria.getId(), actualizado.getCategoria().getId());
     }
 
     @Test
     void testDeleteOutfit() throws EntityNotFoundException, IllegalOperationException {
         OutfitEntity entity = outfitList.get(0);
-
-        // quitar prendas para permitir eliminar
         entity.setPrendas(new ArrayList<>());
 
         outfitService.deleteOutfit(entity.getId());
