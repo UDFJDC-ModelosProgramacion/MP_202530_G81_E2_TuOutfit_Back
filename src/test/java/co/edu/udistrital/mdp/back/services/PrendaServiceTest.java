@@ -17,7 +17,7 @@ import co.edu.udistrital.mdp.back.entities.PrendaEntity;
 import co.edu.udistrital.mdp.back.entities.MarcaEntity;
 import co.edu.udistrital.mdp.back.entities.CategoriaEntity;
 import co.edu.udistrital.mdp.back.entities.ColorEntity;
-import co.edu.udistrital.mdp.back.entities.ImagenEntity;
+import co.edu.udistrital.mdp.back.entities.ImagenPrendaEntity;
 import co.edu.udistrital.mdp.back.exceptions.EntityNotFoundException;
 import co.edu.udistrital.mdp.back.exceptions.IllegalOperationException;
 import uk.co.jemos.podam.api.PodamFactory;
@@ -40,7 +40,7 @@ class PrendaServiceTest {
     private List<MarcaEntity> marcaList = new ArrayList<>();
     private List<CategoriaEntity> categoriaList = new ArrayList<>();
     private List<ColorEntity> colorList = new ArrayList<>();
-    private List<ImagenEntity> imagenList = new ArrayList<>();
+    private List<ImagenPrendaEntity> imagenList = new ArrayList<>();
 
     /**
      * Configuración inicial de la prueba.
@@ -59,7 +59,7 @@ class PrendaServiceTest {
         entityManager.getEntityManager().createQuery("delete from MarcaEntity").executeUpdate();
         entityManager.getEntityManager().createQuery("delete from CategoriaEntity").executeUpdate();
         entityManager.getEntityManager().createQuery("delete from ColorEntity").executeUpdate();
-        entityManager.getEntityManager().createQuery("delete from ImagenEntity").executeUpdate();
+        entityManager.getEntityManager().createQuery("delete from ImagenPrendaEntity").executeUpdate();
     }
 
 
@@ -92,7 +92,7 @@ class PrendaServiceTest {
 
         // Imágenes y prendas
         for (int i = 0; i < 3; i++) {
-            ImagenEntity imagen = factory.manufacturePojo(ImagenEntity.class);
+            ImagenPrendaEntity imagen = factory.manufacturePojo(ImagenPrendaEntity.class);
             entityManager.persist(imagen);
             imagenList.add(imagen);
 
@@ -115,7 +115,7 @@ class PrendaServiceTest {
         ColorEntity color = factory.manufacturePojo(ColorEntity.class);
         entityManager.persist(color);
 
-        ImagenEntity imagen = factory.manufacturePojo(ImagenEntity.class);
+        ImagenPrendaEntity imagen = factory.manufacturePojo(ImagenPrendaEntity.class);
         entityManager.persist(imagen);
 
         PrendaEntity toCreate = factory.manufacturePojo(PrendaEntity.class);

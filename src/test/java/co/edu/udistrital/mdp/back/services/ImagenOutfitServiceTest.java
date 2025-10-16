@@ -3,6 +3,7 @@ package co.edu.udistrital.mdp.back.services;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -12,23 +13,24 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.context.annotation.Import;
 import org.springframework.transaction.annotation.Transactional;
 
-import co.edu.udistrital.mdp.back.entities.ImagenEntity;
+import co.edu.udistrital.mdp.back.entities.ImagenOutfitEntity;
 import co.edu.udistrital.mdp.back.entities.OutfitEntity;
-import co.edu.udistrital.mdp.back.entities.PrendaEntity;
-import co.edu.udistrital.mdp.back.entities.MarcaEntity;
 import co.edu.udistrital.mdp.back.exceptions.EntityNotFoundException;
 import co.edu.udistrital.mdp.back.exceptions.IllegalOperationException;
-
+import co.edu.udistrital.mdp.back.repositories.ImagenOutfitRepository;
 import uk.co.jemos.podam.api.PodamFactory;
 import uk.co.jemos.podam.api.PodamFactoryImpl;
 
 @DataJpaTest
 @Transactional
-@Import(ImagenService.class)
-class ImagenServiceTest {
+@Import(ImagenOutfitService.class)
+class ImagenOutfitServiceTest {
 
     @Autowired
-    private ImagenService imagenService;
+    private ImagenOutfitService imagenService;
+
+    @Autowired
+    private ImagenOutfitRepository imagenRepository;
 
     @Autowired
     private TestEntityManager entityManager;
@@ -36,43 +38,33 @@ class ImagenServiceTest {
     private PodamFactory factory = new PodamFactoryImpl();
 
     private OutfitEntity outfit;
-    private PrendaEntity prenda;
-    private MarcaEntity marca;
 
     @BeforeEach
     void setUp() {
         outfit = factory.manufacturePojo(OutfitEntity.class);
-        prenda = factory.manufacturePojo(PrendaEntity.class);
-        marca = factory.manufacturePojo(MarcaEntity.class);
-
+        outfit.setImagen(null); 
         entityManager.persist(outfit);
-        entityManager.persist(prenda);
-        entityManager.persist(marca);
     }
 
     @Test
     void createImagenTest() throws EntityNotFoundException, IllegalOperationException {
-        ImagenEntity imagen = factory.manufacturePojo(ImagenEntity.class);
+        ImagenOutfitEntity imagen = factory.manufacturePojo(ImagenOutfitEntity.class);
         imagen.setOutfit(outfit);
-        imagen.setPrenda(prenda);
-        imagen.setMarca(marca);
 
-        ImagenEntity nueva = imagenService.createImagen(imagen);
+        ImagenOutfitEntity nueva = imagenService.createImagen(imagen);
 
         assertNotNull(nueva);
-        ImagenEntity encontrada = entityManager.find(ImagenEntity.class, nueva.getId());
+        ImagenOutfitEntity encontrada = entityManager.find(ImagenOutfitEntity.class, nueva.getId());
         assertEquals(imagen.getImagen(), encontrada.getImagen());
     }
 
     @Test
     void getImagenesTest() {
-        ImagenEntity imagen = factory.manufacturePojo(ImagenEntity.class);
+        ImagenOutfitEntity imagen = factory.manufacturePojo(ImagenOutfitEntity.class);
         imagen.setOutfit(outfit);
-        imagen.setPrenda(prenda);
-        imagen.setMarca(marca);
         entityManager.persist(imagen);
 
-        List<ImagenEntity> lista = imagenService.getImagenes();
+        List<ImagenOutfitEntity> lista = imagenService.getImagenes();
 
         assertFalse(lista.isEmpty());
         assertTrue(lista.stream().anyMatch(i -> i.getId().equals(imagen.getId())));
@@ -80,44 +72,58 @@ class ImagenServiceTest {
 
     @Test
     void getImagenTest() throws EntityNotFoundException {
-        ImagenEntity imagen = factory.manufacturePojo(ImagenEntity.class);
+        ImagenOutfitEntity imagen = factory.manufacturePojo(ImagenOutfitEntity.class);
         imagen.setOutfit(outfit);
-        imagen.setPrenda(prenda);
-        imagen.setMarca(marca);
         entityManager.persist(imagen);
 
-        ImagenEntity encontrada = imagenService.getImagen(imagen.getId());
+        ImagenOutfitEntity encontrada = imagenService.getImagen(imagen.getId());
         assertNotNull(encontrada);
         assertEquals(imagen.getId(), encontrada.getId());
     }
 
     @Test
     void updateImagenTest() throws EntityNotFoundException, IllegalOperationException {
-        ImagenEntity imagen = factory.manufacturePojo(ImagenEntity.class);
+        ImagenOutfitEntity imagen = factory.manufacturePojo(ImagenOutfitEntity.class);
         imagen.setOutfit(outfit);
-        imagen.setPrenda(prenda);
-        imagen.setMarca(marca);
         entityManager.persist(imagen);
 
         String nuevaRuta = "https://servidor.com/nueva_imagen.png";
         imagen.setImagen(nuevaRuta);
 
-        ImagenEntity actualizada = imagenService.updateImagen(imagen.getId(), imagen);
+        ImagenOutfitEntity actualizada = imagenService.updateImagen(imagen.getId(), imagen);
 
         assertEquals(nuevaRuta, actualizada.getImagen());
     }
 
+    
     @Test
-    void deleteImagenTest() throws EntityNotFoundException, IllegalOperationException {
-        ImagenEntity imagen = factory.manufacturePojo(ImagenEntity.class);
-        imagen.setOutfit(null);
-        imagen.setPrenda(null);
-        imagen.setMarca(null);
-        entityManager.persist(imagen);
+    @Transactional
+    void deleteImagenSinOutfitTest() throws Exception {
+      
+        ImagenOutfitEntity imagen = new ImagenOutfitEntity();
+        imagen.setImagen("url_imagen_libre.jpg");
+        imagen = imagenRepository.save(imagen);
 
+      
         imagenService.deleteImagen(imagen.getId());
 
-        ImagenEntity eliminada = entityManager.find(ImagenEntity.class, imagen.getId());
-        assertNull(eliminada);
+     
+        Optional<ImagenOutfitEntity> deleted = imagenRepository.findById(imagen.getId());
+        assertTrue(deleted.isEmpty(), "La imagen sin outfit debería eliminarse correctamente");
+    }
+
+    
+    @Test
+    void deleteImagenConOutfitTest() {
+        ImagenOutfitEntity imagen = new ImagenOutfitEntity();
+        imagen.setImagen("url_imagen_asociada.jpg");
+        imagenRepository.save(imagen);
+
+        outfit.setImagen(imagen);
+        entityManager.persist(outfit);
+
+        assertThrows(IllegalOperationException.class, () -> {
+            imagenService.deleteImagen(imagen.getId());
+        });
     }
 }
