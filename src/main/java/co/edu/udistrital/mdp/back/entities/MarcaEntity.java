@@ -32,5 +32,5 @@ public class MarcaEntity extends BaseEntity {
     // Una marca tiene una sola imagen (ej: logo)
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "imagen_id")
-    private ImagenEntity imagen;
+    private ImagenPrendaEntity imagen;
 }

@@ -42,7 +42,7 @@ public class PrendaEntity extends BaseEntity {
     @PodamExclude
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "imagen_id")
-    private ImagenEntity imagen;
+    private ImagenPrendaEntity imagen;
 
     @PodamExclude
     @ManyToOne
