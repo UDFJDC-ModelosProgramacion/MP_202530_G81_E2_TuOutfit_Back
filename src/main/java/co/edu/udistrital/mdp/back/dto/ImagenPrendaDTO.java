@@ -9,6 +9,6 @@ import lombok.Setter;
 @Data
 public class ImagenPrendaDTO {
 private String imagen;
-//private PrendaDTO prenda;
-//private MarcaDTO marca;
+private PrendaDTO prenda;
+private MarcaDTO marca;
 }
