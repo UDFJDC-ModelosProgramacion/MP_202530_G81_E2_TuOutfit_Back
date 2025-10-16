@@ -7,8 +7,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Data
-public class OutfitDTO {
+public class OcasionDTO {
     private String nombre;
-    private Double precioEstimado;
-    private ImagenDTO imagen;
+    
 }
