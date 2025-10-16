@@ -27,9 +27,12 @@ public class OutfitEntity extends BaseEntity {
     @JoinColumn(name = "imagen_id")
     private ImagenEntity imagen;
 
-    @PodamExclude
-    @OneToMany(mappedBy = "outfit", cascade = CascadeType.PERSIST, orphanRemoval = true)
-    private List<CategoriaEntity> categorias;
+     @PodamExclude
+    @ManyToOne
+    private CategoriaEntity categoria;
+
+     @OneToMany(mappedBy = "outfit", cascade = CascadeType.PERSIST, orphanRemoval = true)
+    private List<RecomendacionEntity> recomendaciones;
 
     // Relación Outfit - Lista de deseos (lado inverso, NO dueño)
     @PodamExclude

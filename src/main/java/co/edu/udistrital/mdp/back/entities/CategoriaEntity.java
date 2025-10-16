@@ -22,14 +22,8 @@ public class CategoriaEntity extends BaseEntity {
     private String nombre;
 
     @PodamExclude
-    // Muchas prendas pueden pertenecer a una categoría
-    @OneToMany(mappedBy = "categoria", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<PrendaEntity> prendas = new ArrayList<>();
-
-    @PodamExclude
-    // Muchas categorías pueden pertenecer a un Outfit
-    @ManyToOne
-    private OutfitEntity outfit;
+    @OneToMany(mappedBy = "categoria", cascade = CascadeType.PERSIST, orphanRemoval = true)
+    private List<OutfitEntity> outfits;
 
     @PodamExclude
     @ManyToMany(mappedBy = "categorias")
