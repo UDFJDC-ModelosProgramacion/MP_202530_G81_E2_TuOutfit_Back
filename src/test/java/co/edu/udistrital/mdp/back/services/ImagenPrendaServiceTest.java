@@ -41,7 +41,7 @@ class ImagenPrendaServiceTest {
         ImagenPrendaEntity imagenPrenda = factory.manufacturePojo(ImagenPrendaEntity.class);
         imagenPrenda.setImagen("https://servidor.com/imagen1.png"); 
 
-        ImagenPrendaEntity nueva = imagenPrendaService.createImagenPrenda(imagenPrenda);
+        ImagenPrendaEntity nueva = imagenPrendaService.createImagenPrenda(null, imagenPrenda);
 
         assertNotNull(nueva);
         ImagenPrendaEntity encontrada = entityManager.find(ImagenPrendaEntity.class, nueva.getId());
@@ -54,7 +54,7 @@ class ImagenPrendaServiceTest {
         imagenPrenda.setImagen(""); 
 
         assertThrows(IllegalOperationException.class, () -> {
-            imagenPrendaService.createImagenPrenda(imagenPrenda);
+            imagenPrendaService.createImagenPrenda(null, imagenPrenda);
         });
     }
 
@@ -65,7 +65,7 @@ class ImagenPrendaServiceTest {
 
         entityManager.persist(imagenPrenda);
 
-        List<ImagenPrendaEntity> lista = imagenPrendaService.getImagenesPrenda();
+        List<ImagenPrendaEntity> lista = imagenPrendaService.getImagenPrendas(null);
 
         assertFalse(lista.isEmpty());
         assertTrue(lista.stream().anyMatch(i -> i.getId().equals(imagenPrenda.getId())));
@@ -78,7 +78,7 @@ class ImagenPrendaServiceTest {
 
         entityManager.persist(imagenPrenda);
 
-        ImagenPrendaEntity encontrada = imagenPrendaService.getImagenPrenda(imagenPrenda.getId());
+        ImagenPrendaEntity encontrada = imagenPrendaService.getImagenPrenda(imagenPrenda.getId(), null);
         assertNotNull(encontrada);
         assertEquals(imagenPrenda.getId(), encontrada.getId());
     }
@@ -86,7 +86,7 @@ class ImagenPrendaServiceTest {
     @Test
     void getImagenPrendaInexistenteTest() {
         assertThrows(EntityNotFoundException.class, () -> {
-            imagenPrendaService.getImagenPrenda(999L);
+            imagenPrendaService.getImagenPrenda(999L, null);
         });
     }
 
@@ -100,7 +100,7 @@ class ImagenPrendaServiceTest {
         String nuevaRuta = "https://servidor.com/nueva_imagen.png";
         imagenPrenda.setImagen(nuevaRuta);
 
-        ImagenPrendaEntity actualizada = imagenPrendaService.updateImagenPrenda(imagenPrenda.getId(), imagenPrenda);
+        ImagenPrendaEntity actualizada = imagenPrendaService.updateImagenPrenda(imagenPrenda.getId(), null, imagenPrenda);
 
         assertEquals(nuevaRuta, actualizada.getImagen());
     }
@@ -114,7 +114,7 @@ class ImagenPrendaServiceTest {
 
         entityManager.persist(imagenPrenda);
 
-        imagenPrendaService.deleteImagenPrenda(imagenPrenda.getId());
+        imagenPrendaService.deleteImagenPrenda(imagenPrenda.getId(), null);
 
         ImagenPrendaEntity eliminada = entityManager.find(ImagenPrendaEntity.class, imagenPrenda.getId());
         assertNull(eliminada);
@@ -132,7 +132,7 @@ class ImagenPrendaServiceTest {
         entityManager.persist(imagenPrenda);
 
         assertThrows(IllegalOperationException.class, () -> {
-            imagenPrendaService.deleteImagenPrenda(imagenPrenda.getId());
+            imagenPrendaService.deleteImagenPrenda(imagenPrenda.getId(), null);
         });
     }
 }

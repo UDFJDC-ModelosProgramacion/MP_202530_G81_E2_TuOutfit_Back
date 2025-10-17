@@ -51,7 +51,7 @@ class ImagenOutfitServiceTest {
         ImagenOutfitEntity imagen = factory.manufacturePojo(ImagenOutfitEntity.class);
         imagen.setOutfit(outfit);
 
-        ImagenOutfitEntity nueva = imagenService.createImagen(imagen);
+        ImagenOutfitEntity nueva = imagenService.createImagenOutfit(null, imagen);
 
         assertNotNull(nueva);
         ImagenOutfitEntity encontrada = entityManager.find(ImagenOutfitEntity.class, nueva.getId());
@@ -64,7 +64,7 @@ class ImagenOutfitServiceTest {
         imagen.setOutfit(outfit);
         entityManager.persist(imagen);
 
-        List<ImagenOutfitEntity> lista = imagenService.getImagenes();
+        List<ImagenOutfitEntity> lista = imagenService.getImagenOutfits(null);
 
         assertFalse(lista.isEmpty());
         assertTrue(lista.stream().anyMatch(i -> i.getId().equals(imagen.getId())));
@@ -76,7 +76,7 @@ class ImagenOutfitServiceTest {
         imagen.setOutfit(outfit);
         entityManager.persist(imagen);
 
-        ImagenOutfitEntity encontrada = imagenService.getImagen(imagen.getId());
+        ImagenOutfitEntity encontrada = imagenService.getImagenOutfit(imagen.getId(), null);
         assertNotNull(encontrada);
         assertEquals(imagen.getId(), encontrada.getId());
     }
@@ -90,7 +90,7 @@ class ImagenOutfitServiceTest {
         String nuevaRuta = "https://servidor.com/nueva_imagen.png";
         imagen.setImagen(nuevaRuta);
 
-        ImagenOutfitEntity actualizada = imagenService.updateImagen(imagen.getId(), imagen);
+        ImagenOutfitEntity actualizada = imagenService.updateImagenOutfit(imagen.getId(), null, imagen);
 
         assertEquals(nuevaRuta, actualizada.getImagen());
     }
@@ -105,7 +105,7 @@ class ImagenOutfitServiceTest {
         imagen = imagenRepository.save(imagen);
 
       
-        imagenService.deleteImagen(imagen.getId());
+        imagenService.deleteImagenOutfit(imagen.getId(), null);
 
      
         Optional<ImagenOutfitEntity> deleted = imagenRepository.findById(imagen.getId());
