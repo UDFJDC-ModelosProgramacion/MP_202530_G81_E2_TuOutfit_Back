@@ -10,7 +10,7 @@ import uk.co.jemos.podam.common.PodamExclude;
 
 @Data
 @Entity
-public class ImagenEntity extends BaseEntity {
+public class ImagenOutfitEntity extends BaseEntity {
 
    // URL o ruta de la imagen almacenada
    private String imagen;
@@ -20,13 +20,4 @@ public class ImagenEntity extends BaseEntity {
    @OneToOne(mappedBy = "imagen")
    private OutfitEntity outfit;
 
-   @PodamExclude
-   // Una imagen puede pertenecer a una prenda
-   @OneToOne(mappedBy = "imagen")
-   private PrendaEntity prenda;
-
-   @PodamExclude
-   // Una imagen puede pertenecer a una marca (ej: logo)
-   @OneToOne(mappedBy = "imagen")
-   private MarcaEntity marca; 
 }

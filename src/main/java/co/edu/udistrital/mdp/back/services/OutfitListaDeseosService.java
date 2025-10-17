@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import co.edu.udistrital.mdp.back.entities.ListaDeseosEntity;
 import co.edu.udistrital.mdp.back.entities.OutfitEntity;
 import co.edu.udistrital.mdp.back.exceptions.EntityNotFoundException;
+import co.edu.udistrital.mdp.back.exceptions.ErrorMessage;
 import co.edu.udistrital.mdp.back.exceptions.IllegalOperationException;
 import co.edu.udistrital.mdp.back.repositories.ListaDeseosRepository;
 import co.edu.udistrital.mdp.back.repositories.OutfitRepository;
@@ -45,10 +46,10 @@ public class OutfitListaDeseosService {
         log.info("Inicia proceso de asociar lista de deseos {} al outfit {}", listaId, outfitId);
 
         OutfitEntity outfit = outfitRepository.findById(outfitId)
-                .orElseThrow(() -> new EntityNotFoundException("El outfit con id " + outfitId + " no existe"));
+                .orElseThrow(() -> new EntityNotFoundException(ErrorMessage.OUTFIT_NOT_FOUND));
 
         ListaDeseosEntity listaDeseos = listaDeseosRepository.findById(listaId)
-                .orElseThrow(() -> new EntityNotFoundException("La lista de deseos con id " + listaId + " no existe"));
+                .orElseThrow(() -> new EntityNotFoundException(ErrorMessage.LISTADESEOS_NOT_FOUND));
 
         if (outfit.getListasDeseos().contains(listaDeseos)) {
             throw new IllegalOperationException("La lista ya está asociada a este outfit");
@@ -72,7 +73,7 @@ public class OutfitListaDeseosService {
         log.info("Inicia consulta de listas de deseos del outfit con id = {}", outfitId);
 
         OutfitEntity outfit = outfitRepository.findById(outfitId)
-                .orElseThrow(() -> new EntityNotFoundException("El outfit con id " + outfitId + " no existe"));
+                .orElseThrow(() -> new EntityNotFoundException(ErrorMessage.OUTFIT_NOT_FOUND));
 
         return outfit.getListasDeseos();
     }
@@ -93,10 +94,10 @@ public class OutfitListaDeseosService {
         log.info("Inicia consulta de lista de deseos {} asociada al outfit {}", listaId, outfitId);
 
         OutfitEntity outfit = outfitRepository.findById(outfitId)
-                .orElseThrow(() -> new EntityNotFoundException("El outfit con id " + outfitId + " no existe"));
+                .orElseThrow(() -> new EntityNotFoundException(ErrorMessage.OUTFIT_NOT_FOUND));
 
         ListaDeseosEntity listaDeseos = listaDeseosRepository.findById(listaId)
-                .orElseThrow(() -> new EntityNotFoundException("La lista de deseos con id " + listaId + " no existe"));
+                .orElseThrow(() -> new EntityNotFoundException(ErrorMessage.LISTADESEOS_NOT_FOUND));
 
         if (!outfit.getListasDeseos().contains(listaDeseos)) {
             throw new IllegalOperationException("La lista de deseos no está asociada a este outfit");
@@ -121,11 +122,11 @@ public class OutfitListaDeseosService {
         log.info("Inicia proceso de reemplazar listas de deseos del outfit {}", outfitId);
 
         OutfitEntity outfit = outfitRepository.findById(outfitId)
-                .orElseThrow(() -> new EntityNotFoundException("El outfit con id " + outfitId + " no existe"));
+                .orElseThrow(() -> new EntityNotFoundException(ErrorMessage.OUTFIT_NOT_FOUND));
 
         for (ListaDeseosEntity lista : nuevasListas) {
             listaDeseosRepository.findById(lista.getId())
-                    .orElseThrow(() -> new EntityNotFoundException("La lista con id " + lista.getId() + " no existe"));
+                    .orElseThrow(() -> new EntityNotFoundException(ErrorMessage.LISTADESEOS_NOT_FOUND));
         }
 
         outfit.setListasDeseos(nuevasListas);
@@ -145,10 +146,10 @@ public class OutfitListaDeseosService {
         log.info("Inicia proceso de eliminar asociación de la lista de deseos {} del outfit {}", listaId, outfitId);
 
         OutfitEntity outfit = outfitRepository.findById(outfitId)
-                .orElseThrow(() -> new EntityNotFoundException("El outfit con id " + outfitId + " no existe"));
+                .orElseThrow(() -> new EntityNotFoundException(ErrorMessage.OUTFIT_NOT_FOUND));
 
         ListaDeseosEntity listaDeseos = listaDeseosRepository.findById(listaId)
-                .orElseThrow(() -> new EntityNotFoundException("La lista con id " + listaId + " no existe"));
+                .orElseThrow(() -> new EntityNotFoundException(ErrorMessage.LISTADESEOS_NOT_FOUND));
 
         outfit.getListasDeseos().remove(listaDeseos);
         log.info("Finaliza proceso de eliminar asociación de la lista de deseos {} del outfit {}", listaId, outfitId);

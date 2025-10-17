@@ -88,7 +88,7 @@ class OutfitPrendaServiceTest {
     @Test
     void testAddInvalidPrenda() {
         assertThrows(EntityNotFoundException.class, () -> {
-            OutfitEntity outfit = factory.manufacturePojo(OutfitEntity.class);
+            outfit = factory.manufacturePojo(OutfitEntity.class);
             entityManager.persist(outfit);
             outfitPrendaService.addPrenda(outfit.getId(), 0L);
         });

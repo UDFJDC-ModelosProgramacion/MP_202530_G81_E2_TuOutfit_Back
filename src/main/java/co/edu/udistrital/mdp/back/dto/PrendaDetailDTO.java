@@ -8,6 +8,6 @@ import lombok.Data;
 public class PrendaDetailDTO extends PrendaDTO {
     private List<ColorDTO> colores;
     private List<OutfitDTO> outfits;
-    private List<ImagenDTO> imagenes;
+    private List<ImagenOutfitDTO> imagenes;
     private List<ComentarioDTO> comentarios;
 }

@@ -115,7 +115,7 @@ class OcasionServiceTest {
     }
 
     @Test
-    void testUpdateOcasion_nombreDuplicado() throws Exception {
+    void testUpdateOcasion_nombreDuplicado() {
         // Creamos otra ocasión con nombre distinto
         OcasionEntity otra = new OcasionEntity();
         otra.setNombre("Deporte");

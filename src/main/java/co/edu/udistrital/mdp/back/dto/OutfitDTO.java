@@ -7,5 +7,5 @@ public class OutfitDTO {
     private Long id;
     private String nombre;
     private Double precioEstimado;
-    private ImagenDTO imagen;
+    private ImagenOutfitDTO imagen;
 }
