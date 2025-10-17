@@ -8,5 +8,5 @@ public class MarcaDTO {
     private String nombre;
     private String logo;
     private String ubicacion;
-    private ImagenDTO imagen;
+    private ImagenOutfitDTO imagen;
 }

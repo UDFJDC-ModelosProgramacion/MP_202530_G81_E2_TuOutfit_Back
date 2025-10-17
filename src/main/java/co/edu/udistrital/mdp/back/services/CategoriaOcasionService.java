@@ -3,6 +3,7 @@ package co.edu.udistrital.mdp.back.services;
 import co.edu.udistrital.mdp.back.entities.CategoriaEntity;
 import co.edu.udistrital.mdp.back.entities.OcasionEntity;
 import co.edu.udistrital.mdp.back.exceptions.EntityNotFoundException;
+import co.edu.udistrital.mdp.back.exceptions.ErrorMessage;
 import co.edu.udistrital.mdp.back.repositories.CategoriaRepository;
 import co.edu.udistrital.mdp.back.repositories.OcasionRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -25,16 +26,16 @@ public class CategoriaOcasionService {
     @Transactional
     public List<OcasionEntity> getOcasionesPorCategoria(Long categoriaId) throws EntityNotFoundException {
         CategoriaEntity categoria = categoriaRepository.findById(categoriaId)
-                .orElseThrow(() -> new EntityNotFoundException("Categoria no encontrada"));
+                .orElseThrow(() -> new EntityNotFoundException(ErrorMessage.CATEGORIA_NOT_FOUND));
         return categoria.getOcasiones();
     }
 
     @Transactional
     public OcasionEntity addOcasionACategoria(Long categoriaId, Long ocasionId) throws EntityNotFoundException {
         CategoriaEntity categoria = categoriaRepository.findById(categoriaId)
-                .orElseThrow(() -> new EntityNotFoundException("Categoria no encontrada"));
+                .orElseThrow(() -> new EntityNotFoundException(ErrorMessage.CATEGORIA_NOT_FOUND));
         OcasionEntity ocasion = ocasionRepository.findById(ocasionId)
-                .orElseThrow(() -> new EntityNotFoundException("Ocasion no encontrada"));
+                .orElseThrow(() -> new EntityNotFoundException(ErrorMessage.OCASION_NOT_FOUND));
 
         categoria.getOcasiones().add(ocasion);
         categoriaRepository.save(categoria);
@@ -44,9 +45,9 @@ public class CategoriaOcasionService {
     @Transactional
     public void removeOcasionDeCategoria(Long categoriaId, Long ocasionId) throws EntityNotFoundException {
         CategoriaEntity categoria = categoriaRepository.findById(categoriaId)
-                .orElseThrow(() -> new EntityNotFoundException("Categoria no encontrada"));
+                .orElseThrow(() -> new EntityNotFoundException(ErrorMessage.CATEGORIA_NOT_FOUND));
         OcasionEntity ocasion = ocasionRepository.findById(ocasionId)
-                .orElseThrow(() -> new EntityNotFoundException("Ocasion no encontrada"));
+                .orElseThrow(() -> new EntityNotFoundException(ErrorMessage.OCASION_NOT_FOUND));
 
         categoria.getOcasiones().remove(ocasion);
         categoriaRepository.save(categoria);
