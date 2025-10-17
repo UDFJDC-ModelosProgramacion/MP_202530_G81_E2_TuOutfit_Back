@@ -98,7 +98,7 @@ class UsuarioServiceTest {
 	 */
     @Test
     void testGetUsuarios() {
-        List<UsuarioEntity> usuarioList = usuarioService.getUsuarios();
+        usuarioList = usuarioService.getUsuarios();
         assertEquals(usuarioList.size(), usuarioList.size());
     }
 

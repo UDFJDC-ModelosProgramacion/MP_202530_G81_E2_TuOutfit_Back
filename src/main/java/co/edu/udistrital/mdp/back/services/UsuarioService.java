@@ -94,25 +94,25 @@ public class UsuarioService {
 	 * @throws IllegalOperationException 
 	 */
 	@Transactional
-	public UsuarioEntity updateUsuario(Long UsuarioId, UsuarioEntity Usuario) throws EntityNotFoundException, IllegalOperationException {
-		log.info("Inicia proceso de actualizar el autor con id = {}", UsuarioId);
-		Optional<UsuarioEntity> UsuarioEntity = usuarioRepository.findById(UsuarioId);
-		if (UsuarioEntity.isEmpty())
+	public UsuarioEntity updateUsuario(Long usuarioId, UsuarioEntity usuario) throws EntityNotFoundException, IllegalOperationException {
+		log.info("Inicia proceso de actualizar el autor con id = {}", usuarioId);
+		Optional<UsuarioEntity> usuarioEntity = usuarioRepository.findById(usuarioId);
+		if (usuarioEntity.isEmpty())
 			throw new EntityNotFoundException(ErrorMessage.USUARIO_NOT_FOUND);
-		if (Usuario.getNombre() == null || Usuario.getNombre().trim().isEmpty()) {
+		if (usuario.getNombre() == null || usuario.getNombre().trim().isEmpty()) {
         	throw new IllegalOperationException("El nombre no puede estar vacío");
     	}
-    	if (Usuario.getCorreo() == null || Usuario.getCorreo().trim().isEmpty()) {
+    	if (usuario.getCorreo() == null || usuario.getCorreo().trim().isEmpty()) {
         	throw new IllegalOperationException("El correo no puede estar vacío");
     	}
 		// Verificar que el nuevo correo no esté repetido en otro usuario
-		Optional<UsuarioEntity> existingUser = usuarioRepository.findByCorreo(Usuario.getCorreo());
-		if (existingUser.isPresent() && !existingUser.get().getId().equals(UsuarioId)) {
+		Optional<UsuarioEntity> existingUser = usuarioRepository.findByCorreo(usuario.getCorreo());
+		if (existingUser.isPresent() && !existingUser.get().getId().equals(usuarioId)) {
 			throw new IllegalOperationException("Ya existe un usuario con ese correo");
 		}
-		log.info("Termina proceso de actualizar el autor con id = {}", UsuarioId);
-		Usuario.setId(UsuarioId);
-		return usuarioRepository.save(Usuario);
+		log.info("Termina proceso de actualizar el autor con id = {}", usuarioId);
+		usuario.setId(usuarioId);
+		return usuarioRepository.save(usuario);
 	}
 
 	/**

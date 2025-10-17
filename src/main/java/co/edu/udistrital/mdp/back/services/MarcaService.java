@@ -11,6 +11,7 @@ import co.edu.udistrital.mdp.back.entities.TiendaEntity;
 import co.edu.udistrital.mdp.back.repositories.MarcaRepository;
 import co.edu.udistrital.mdp.back.repositories.TiendaRepository;
 import co.edu.udistrital.mdp.back.exceptions.EntityNotFoundException;
+import co.edu.udistrital.mdp.back.exceptions.ErrorMessage;
 import co.edu.udistrital.mdp.back.exceptions.IllegalOperationException;
 
 import lombok.extern.slf4j.Slf4j;
@@ -52,7 +53,7 @@ public class MarcaService {
         log.info("Inicia proceso de actualizar marca");
 
         MarcaEntity marca = marcaRepository.findById(marcaId)
-                .orElseThrow(() -> new EntityNotFoundException("Marca no encontrada"));
+                .orElseThrow(() -> new EntityNotFoundException(ErrorMessage.MARCA_NOT_FOUND));
 
         // Validar nombre único
         if (!marca.getNombre().equals(marcaDetails.getNombre()) && marcaRepository.existsByNombre(marcaDetails.getNombre()))
@@ -81,7 +82,7 @@ public class MarcaService {
         log.info("Inicia proceso de eliminar marca");
 
         MarcaEntity marca = marcaRepository.findById(marcaId)
-                .orElseThrow(() -> new EntityNotFoundException("Marca no encontrada"));
+                .orElseThrow(() -> new EntityNotFoundException(ErrorMessage.MARCA_NOT_FOUND));
 
         // Validar relación con prendas
         if (marca.getPrendas() != null && !marca.getPrendas().isEmpty())
@@ -97,6 +98,6 @@ public class MarcaService {
 
     public MarcaEntity getMarcaById(Long marcaId) throws EntityNotFoundException {
         return marcaRepository.findById(marcaId)
-                .orElseThrow(() -> new EntityNotFoundException("Marca no encontrada"));
+                .orElseThrow(() -> new EntityNotFoundException(ErrorMessage.MARCA_NOT_FOUND));
     }
 }

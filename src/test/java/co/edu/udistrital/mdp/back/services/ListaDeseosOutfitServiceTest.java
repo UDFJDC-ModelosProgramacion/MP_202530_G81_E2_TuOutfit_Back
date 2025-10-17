@@ -73,7 +73,7 @@ class ListaDeseosOutfitServiceTest {
      * Prueba para agregar un outfit a una lista de deseos.
      */
     @Test
-    void testAddOutfitCorrecto() throws EntityNotFoundException, IllegalOperationException {
+    void testAddOutfitCorrecto() throws EntityNotFoundException {
         OutfitEntity nuevo = factory.manufacturePojo(OutfitEntity.class);
         entityManager.persist(nuevo);
 

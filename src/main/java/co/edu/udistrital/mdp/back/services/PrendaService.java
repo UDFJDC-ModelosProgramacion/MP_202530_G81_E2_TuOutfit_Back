@@ -14,6 +14,7 @@ import co.edu.udistrital.mdp.back.repositories.PrendaRepository;
 import co.edu.udistrital.mdp.back.repositories.MarcaRepository;
 import co.edu.udistrital.mdp.back.repositories.CategoriaRepository;
 import co.edu.udistrital.mdp.back.exceptions.EntityNotFoundException;
+import co.edu.udistrital.mdp.back.exceptions.ErrorMessage;
 import co.edu.udistrital.mdp.back.exceptions.IllegalOperationException;
 
 import lombok.extern.slf4j.Slf4j;
@@ -59,7 +60,7 @@ public class PrendaService {
         log.info("Inicia proceso de actualizar prenda");
 
         PrendaEntity prenda = prendaRepository.findById(prendaId)
-                .orElseThrow(() -> new EntityNotFoundException("Prenda no encontrada"));
+                .orElseThrow(() -> new EntityNotFoundException(ErrorMessage.PRENDA_NOT_FOUND));
 
         // Validar nombre
         if (prendaDetails.getNombre() == null || prendaDetails.getNombre().isEmpty())
@@ -90,7 +91,7 @@ public class PrendaService {
         log.info("Inicia proceso de eliminar prenda");
 
         PrendaEntity prenda = prendaRepository.findById(prendaId)
-                .orElseThrow(() -> new EntityNotFoundException("Prenda no encontrada"));
+                .orElseThrow(() -> new EntityNotFoundException(ErrorMessage.PRENDA_NOT_FOUND));
 
         // Validar relaciones
         if (prenda.getImagen() != null || !prenda.getOutfits().isEmpty())
@@ -106,6 +107,6 @@ public class PrendaService {
 
     public PrendaEntity getPrendaById(Long prendaId) throws EntityNotFoundException {
         return prendaRepository.findById(prendaId)
-                .orElseThrow(() -> new EntityNotFoundException("Prenda no encontrada"));
+                .orElseThrow(() -> new EntityNotFoundException(ErrorMessage.PRENDA_NOT_FOUND));
     }
 }
