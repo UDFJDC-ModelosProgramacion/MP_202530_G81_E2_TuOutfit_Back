@@ -14,7 +14,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n\r\n    \"nombre\": \"Outfit Verano Casual\",\r\n\r\n    \"precioEstimado\": \"120.000\",\r\n\r\n    \"image\":  \"imagen.jpg\"\r\n\r\n\r\n}",
+					"raw": "{\r\n\r\n    \"nombre\": \"Outfit Verano Casual\",\r\n\r\n    \"precioEstimado\": \"120000\",\r\n\r\n    \"categoria\":{\r\n        \"id\":1,\r\n        \"edad\":20,\r\n        \"nombre\":\"Verano Casual\"\r\n    }\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -67,7 +67,7 @@
 							"path": ""
 						}
 					],
-					"body": "{\r\n\r\n    \"id\": 1,\r\n\r\n    \"nombre\": \"Outfit Verano Casual\",\r\n\r\n    \"precioEstimado\": \"120.000\",\r\n\r\n    \"image\":  \"imagen.jpg\"\r\n\r\n}"
+					"body": "{\r\n\r\n    \"id\": 1,\r\n\r\n    \"nombre\": \"Outfit Verano Casual\",\r\n\r\n    \"precioEstimado\": \"120000\",\r\n\r\n     \"categoria\":{\r\n        \"id\":1,\r\n        \"edad\":20,\r\n        \"nombre\":\"Verano Casual\"\r\n    }\r\n\r\n}"
 				}
 			]
 		},
@@ -119,7 +119,7 @@
 							"path": ""
 						}
 					],
-					"body": "[\r\n\r\n    {\r\n\r\n        \"id\": 1,\r\n\r\n        \"name\": \"Outfit Verano Casual\",\r\n\r\n        \"precioEstimado\": \"120.000\",\r\n\r\n        \"image\":  \"imagen.jpg\",\r\n\r\n        \"prendas\": [],\r\n\r\n        \"categorias\": [],\r\n\r\n        \"listasDeseos\": []\r\n\r\n    }\r\n\r\n]"
+					"body": "[\r\n\r\n    {\r\n\r\n        \"id\": 1,\r\n\r\n        \"name\": \"Outfit Verano Casual\",\r\n\r\n        \"precioEstimado\": \"120000\",\r\n\r\n         \"categoria\":{\r\n        \"id\":1,\r\n        \"edad\":20,\r\n        \"nombre\":\"Verano Casual\"\r\n    }\r\n\r\n        \"prendas\": [],\r\n\r\n        \"imagenoutfit\": [],\r\n\r\n        \"listasDeseos\": [],\r\n\r\n        \"recomendaciones\": []\r\n\r\n    }\r\n\r\n]"
 				}
 			]
 		},
@@ -157,7 +157,7 @@
 							"path": ""
 						}
 					],
-					"body": "{\r\n\r\n    \"id\": 1,\r\n\r\n    \"nombre\": \"Outfit Verano Casual\",\r\n\r\n    \"precioEstimado\": \"120.000\",\r\n\r\n    \"image\":  \"imagen.jpg\",\r\n\r\n    \"prendas\": [],\r\n\r\n    \"categorias\": [],\r\n\r\n    \"listasDeseos\": []\r\n\r\n}"
+					"body": "{\r\n\r\n    \"id\": 1,\r\n\r\n    \"nombre\": \"Outfit Verano Casual\",\r\n\r\n    \"precioEstimado\": \"120000\",\r\n\r\n      \"categoria\":{\r\n        \"id\":1,\r\n        \"edad\":20,\r\n        \"nombre\":\"Verano Casual\"\r\n    }\r\n\r\n        \"prendas\": [],\r\n\r\n        \"imagenoutfit\": [],\r\n\r\n        \"listasDeseos\": [],\r\n\r\n        \"recomendaciones\": []\r\n\r\n}"
 				}
 			]
 		},
@@ -206,7 +206,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n\r\n    \"nombre\": \"Outfit Verano Casual 2\",\r\n\r\n    \"precioEstimado\": \"120.000\",\r\n\r\n    \"image\":  \"imagen.jpg\"\r\n\r\n}",
+					"raw": "{\r\n\r\n    \"nombre\": \"Outfit Verano Casual 2\",\r\n\r\n    \"precioEstimado\": \"120000\",\r\n\r\n    \"categoria\":{\r\n        \"id\":1,\r\n        \"edad\":20,\r\n        \"nombre\":\"Verano Casual\"\r\n    }\r\n\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -242,7 +242,7 @@
 							"path": ""
 						}
 					],
-					"body": "{\r\n\r\n    \"id\": 1,\r\n\r\n    \"nombre\": \"Outfit Verano Casual 2\",\r\n\r\n    \"precioEstimado\": \"120.000\",\r\n\r\n    \"image\":  \"imagen.jpg\"\r\n\r\n}"
+					"body": "{\r\n\r\n    \"id\": 1,\r\n\r\n    \"nombre\": \"Outfit Verano Casual 2\",\r\n\r\n    \"precioEstimado\": \"120000\",\r\n\r\n    \"categoria\":{\r\n        \"id\":1,\r\n        \"edad\":20,\r\n        \"nombre\":\"Verano Casual\"\r\n    }\r\n\r\n}"
 				}
 			]
 		},
@@ -251,15 +251,6 @@
 			"request": {
 				"method": "PUT",
 				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
 				"url": {
 					"raw": "{{baseUrl}}/outfits/0",
 					"host": [
