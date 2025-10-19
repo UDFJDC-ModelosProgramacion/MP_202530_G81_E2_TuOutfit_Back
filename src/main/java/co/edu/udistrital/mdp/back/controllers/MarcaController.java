@@ -38,7 +38,6 @@ public class MarcaController {
     public List<MarcaDTO> findAll() {
         List<MarcaEntity> marcas = marcaService.getAllMarcas();
         
-        // CORRECCIÓN: Mapear a List<MarcaDTO> ya que la firma del método es List<MarcaDTO>
         return modelMapper.map(marcas, new TypeToken<List<MarcaDTO>>() {
         }.getType());
     }

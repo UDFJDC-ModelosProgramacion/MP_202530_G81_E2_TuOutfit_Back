@@ -33,65 +33,56 @@ public class PrendaController {
     @Autowired
     private ModelMapper modelMapper;
 
-    // 1. CREATE (POST /api/prendas)
+
     @PostMapping
     @ResponseStatus(code = HttpStatus.CREATED)
     public PrendaDTO create(@RequestBody PrendaDTO prendaDTO) throws IllegalOperationException, EntityNotFoundException {
-        // Mapea DTO de ENTRADA a Entity
+ 
         PrendaEntity prendaToCreate = modelMapper.map(prendaDTO, PrendaEntity.class);
-        
-        // Llama al Service con la Entity
+
         PrendaEntity prendaCreadaEntity = prendaService.createPrenda(prendaToCreate);
-        
-        // Mapea la Entity de SALIDA a DTO
+
         return modelMapper.map(prendaCreadaEntity, PrendaDTO.class);
     }
 
-    // 2. FIND ALL (GET /api/prendas)
+
     @GetMapping
     @ResponseStatus(code = HttpStatus.OK)
     public List<PrendaDTO> findAll() {
-        // Llama al Service, que devuelve List<PrendaEntity>
+
         List<PrendaEntity> prendas = prendaService.getAllPrendas(); 
         
-        // Mapea List<PrendaEntity> a List<PrendaDTO> (versión ligera)
         return modelMapper.map(prendas, new TypeToken<List<PrendaDTO>>() {
         }.getType());
     }
 
-    // 3. FIND ONE (GET /api/prendas/{id})
+
     @GetMapping(value = "/{id}")
     @ResponseStatus(code = HttpStatus.OK)
     public PrendaDetailDTO findOne(@PathVariable Long id) throws EntityNotFoundException {
-        // Llama al Service, que devuelve una PrendaEntity
+
         PrendaEntity prendaEntity = prendaService.getPrendaById(id);
         
-        // Mapea PrendaEntity a PrendaDetailDTO (versión con detalle y asociaciones)
         return modelMapper.map(prendaEntity, PrendaDetailDTO.class);
     }
 
-    // 4. UPDATE (PUT /api/prendas/{id})
     @PutMapping(value = "/{id}")
     @ResponseStatus(code = HttpStatus.OK)
     public PrendaDTO update(@PathVariable Long id, @RequestBody PrendaDTO prendaDTO)
             throws EntityNotFoundException, IllegalOperationException {
         
-        // Mapea DTO de ENTRADA a Entity. Nota: ModelMapper aquí debe configurarse para 
-        // manejar correctamente el ID de la Marca y Categoría dentro del DTO.
         PrendaEntity prendaDetailsEntity = modelMapper.map(prendaDTO, PrendaEntity.class);
         
-        // Llama al Service con el ID y la Entity
+    
         PrendaEntity prendaActualizadaEntity = prendaService.updatePrenda(id, prendaDetailsEntity);
         
-        // Mapea la Entity de SALIDA a DTO
         return modelMapper.map(prendaActualizadaEntity, PrendaDTO.class);
     }
 
-    // 5. DELETE (DELETE /api/prendas/{id})
     @DeleteMapping(value = "/{id}")
     @ResponseStatus(code = HttpStatus.NO_CONTENT)
     public void delete(@PathVariable Long id) throws EntityNotFoundException, IllegalOperationException {
-        // Llama al Service directamente
+
         prendaService.deletePrenda(id);
     }
 }

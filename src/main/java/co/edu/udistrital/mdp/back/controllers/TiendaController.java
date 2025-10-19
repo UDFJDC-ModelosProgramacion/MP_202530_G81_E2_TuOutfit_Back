@@ -32,7 +32,7 @@ public class TiendaController {
     @Autowired
     private ModelMapper modelMapper;
 
-    // 1. CREATE (POST /api/tiendas)
+
     @PostMapping
     @ResponseStatus(code = HttpStatus.CREATED)
     public TiendaDTO create(@RequestBody TiendaDTO tiendaDTO) throws IllegalOperationException {
@@ -44,7 +44,7 @@ public class TiendaController {
         return modelMapper.map(tiendaCreadaEntity, TiendaDTO.class);
     }
 
-    // 2. FIND ALL (GET /api/tiendas)
+
     @GetMapping
     @ResponseStatus(code = HttpStatus.OK)
     public List<TiendaDTO> findAll() {
@@ -55,7 +55,7 @@ public class TiendaController {
         }.getType());
     }
 
-    // 3. FIND ONE (GET /api/tiendas/{id})
+
     @GetMapping(value = "/{id}")
     @ResponseStatus(code = HttpStatus.OK)
     public TiendaDTO findOne(@PathVariable Long id) throws EntityNotFoundException {
@@ -65,7 +65,7 @@ public class TiendaController {
         return modelMapper.map(tiendaEntity, TiendaDTO.class);
     }
 
-    // 4. UPDATE (PUT /api/tiendas/{id})
+
     @PutMapping(value = "/{id}")
     @ResponseStatus(code = HttpStatus.OK)
     public TiendaDTO update(@PathVariable Long id, @RequestBody TiendaDTO tiendaDTO)
@@ -78,7 +78,7 @@ public class TiendaController {
         return modelMapper.map(tiendaActualizadaEntity, TiendaDTO.class);
     }
 
-    // 5. DELETE (DELETE /api/tiendas/{id})
+
     @DeleteMapping(value = "/{id}")
     @ResponseStatus(code = HttpStatus.NO_CONTENT)
     public void delete(@PathVariable Long id) throws EntityNotFoundException {
