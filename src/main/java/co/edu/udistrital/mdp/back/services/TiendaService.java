@@ -1,5 +1,7 @@
 package co.edu.udistrital.mdp.back.services;
 
+import java.util.List; // Necesario para devolver listas
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -70,5 +72,29 @@ public class TiendaService {
 
         tiendaRepository.delete(tienda);
         log.info("Tienda eliminada correctamente");
+    }
+    
+    // ------------------------------------------------------------------
+    // MÉTODOS DE CONSULTA FALTANTES (READ)
+    // ------------------------------------------------------------------
+
+    /**
+     * Obtiene la lista de todos los registros de Tienda.
+     * @return Colección de objetos de TiendaEntity.
+     */
+    public List<TiendaEntity> getAllTiendas() {
+        log.info("Inicia proceso de consultar todas las tiendas");
+        return tiendaRepository.findAll();
+    }
+
+    /**
+     * Obtiene los datos de una instancia de Tienda a partir de su ID.
+     * @param tiendaId Identificador de la instancia a consultar.
+     * @return Instancia de TiendaEntity con los datos consultados.
+     */
+    public TiendaEntity getTiendaById(Long tiendaId) throws EntityNotFoundException {
+        log.info("Inicia proceso de consultar la tienda con id = {}", tiendaId);
+        return tiendaRepository.findById(tiendaId)
+                .orElseThrow(() -> new EntityNotFoundException("Tienda no encontrada"));
     }
 }
