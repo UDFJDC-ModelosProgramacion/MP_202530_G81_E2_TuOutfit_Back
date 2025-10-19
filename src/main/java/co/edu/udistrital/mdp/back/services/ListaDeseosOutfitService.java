@@ -104,7 +104,7 @@ public class ListaDeseosOutfitService {
      * @throws EntityNotFoundException si la lista o alguno de los outfits no existen
      */
     @Transactional
-    public List<OutfitEntity> replaceOutfits(Long listaId, List<OutfitEntity> outfits)
+    public List<OutfitEntity> addOutfits(Long listaId, List<OutfitEntity> outfits)
             throws EntityNotFoundException {
         log.info("Inicia proceso de reemplazar los outfits de la lista {}", listaId);
 

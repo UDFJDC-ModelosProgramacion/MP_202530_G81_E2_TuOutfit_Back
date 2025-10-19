@@ -14,8 +14,6 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.context.annotation.Import;
 
 import co.edu.udistrital.mdp.back.entities.ComentarioEntity;
-import co.edu.udistrital.mdp.back.entities.OutfitEntity;
-import co.edu.udistrital.mdp.back.entities.PrendaEntity;
 import co.edu.udistrital.mdp.back.entities.UsuarioEntity;
 import co.edu.udistrital.mdp.back.exceptions.EntityNotFoundException;
 import co.edu.udistrital.mdp.back.exceptions.IllegalOperationException;
@@ -36,7 +34,7 @@ class ComentarioServiceTest {
     private PodamFactory factory = new PodamFactoryImpl();
 
     private List<ComentarioEntity> comentarioList = new ArrayList<>();
-    private UsuarioEntity usuario;
+    private UsuarioEntity usuarioEntity;
 
     /**
      * Configuración inicial de la prueba.
@@ -59,143 +57,190 @@ class ComentarioServiceTest {
      * Inserta los datos iniciales para el correcto funcionamiento de las pruebas.
      */
     private void insertData() {
-        usuario = factory.manufacturePojo(UsuarioEntity.class);
-        usuario.setCorreo("user@test.com");
-        usuario.setNombre("Juan Pérez");
-        entityManager.persist(usuario);
-
-        // Crear y guardar un outfit de prueba
-        OutfitEntity outfit = factory.manufacturePojo(OutfitEntity.class);
-        entityManager.persist(outfit);
-
-        // Crear y guardar una prenda de prueba
-        PrendaEntity prenda = factory.manufacturePojo(PrendaEntity.class);
-        entityManager.persist(prenda);
-
-        for (int i = 0; i < 3; i++) {
-            ComentarioEntity comentarioEntity = factory.manufacturePojo(ComentarioEntity.class);
-            comentarioEntity.setUsuario(usuario);
-            comentarioEntity.setTexto("Comentario " + (i + 1));
-            comentarioEntity.setOutfit(outfit);
-            comentarioEntity.setPrenda(prenda);
-            entityManager.persist(comentarioEntity);
-            comentarioList.add(comentarioEntity);
-        }
-    }
+		usuarioEntity = factory.manufacturePojo(UsuarioEntity.class);
+		entityManager.persist(usuarioEntity);
+		
+		for (int i = 0; i < 3; i++) {
+			ComentarioEntity entity = factory.manufacturePojo(ComentarioEntity.class);
+			entity.setUsuario(usuarioEntity);
+			entityManager.persist(entity);
+			comentarioList.add(entity);
+		}
+		
+		usuarioEntity.setComentarios(comentarioList);
+	}
 
     /**
-     * Prueba para crear un comentario correctamente.
+     * Prueba para crear un comentario.
      */
     @Test
-    void testCreateComentarioCorrecto() throws IllegalOperationException, EntityNotFoundException {
-        ComentarioEntity toCreate = factory.manufacturePojo(ComentarioEntity.class);
-        toCreate.setTexto("Excelente outfit");
-        // Evita referencias transientes:
-        toCreate.setUsuario(null);
-        toCreate.setOutfit(null);
-        toCreate.setPrenda(null);
+	void testCreateComentario() throws EntityNotFoundException {
+		ComentarioEntity newEntity = factory.manufacturePojo(ComentarioEntity.class);
+				
+		ComentarioEntity result = comentarioService.createComentario(usuarioEntity.getId(), newEntity);
+		assertNotNull(result);
+		ComentarioEntity entity = entityManager.find(ComentarioEntity.class, result.getId());
+		assertEquals(newEntity.getId(), entity.getId());
+		assertEquals(newEntity.getTexto(), entity.getTexto());
+		assertEquals(newEntity.getCalificacion(), entity.getCalificacion());
+	}
 
-        ComentarioEntity result = comentarioService.createComentario(usuario.getId(), toCreate);
-        assertNotNull(result);
-        assertEquals("Excelente outfit", result.getTexto());
-        assertEquals(usuario.getId(), result.getUsuario().getId());
-    }
 
     /**
-     * Prueba para crear un comentario vacío.
+     * Prueba para crear un comentario de un usuario que no existe.
      */
     @Test
-    void testCreateComentarioVacio() {
-        assertThrows(IllegalOperationException.class, () -> {
-            ComentarioEntity toCreate = factory.manufacturePojo(ComentarioEntity.class);
-            toCreate.setTexto("");
-            comentarioService.createComentario(usuario.getId(), toCreate);
-        });
-    }
-
-    /**
-     * Prueba para crear un comentario con usuario inexistente.
-     */
-    @Test
-    void testCreateComentarioUsuarioNoExistente() {
-        assertThrows(EntityNotFoundException.class, () -> {
-            ComentarioEntity toCreate = factory.manufacturePojo(ComentarioEntity.class);
-            toCreate.setTexto("Comentario de prueba");
-            comentarioService.createComentario(0L, toCreate);
-        });
-    }
+	void testCreateComentarioUsuarioNoValido() {
+		assertThrows(EntityNotFoundException.class, () -> {
+			ComentarioEntity newEntity = factory.manufacturePojo(ComentarioEntity.class);
+			comentarioService.createComentario(0L, newEntity);
+		});
+	}
 
     /**
      * Prueba para consultar todos los comentarios.
      */
-    @Test
-    void testGetComentarios() {
-        List<ComentarioEntity> lista = comentarioService.getComentarios();
-        assertEquals(comentarioList.size(), lista.size());
-    }
+   @Test
+	void testGetComentarios() throws EntityNotFoundException {
+		List<ComentarioEntity> list = comentarioService.getComentarios(usuarioEntity.getId());
+		assertEquals(comentarioList.size(), list.size());
+		for (ComentarioEntity entity : list) {
+			boolean found = false;
+			for (ComentarioEntity storedEntity : comentarioList) {
+				if (entity.getId().equals(storedEntity.getId())) {
+					found = true;
+				}
+			}
+			assertTrue(found);
+		}
+	}
 
     /**
-     * Prueba para consultar un comentario existente.
-     */
-    @Test
-    void testGetComentarioExistente() throws EntityNotFoundException {
-        ComentarioEntity entity = comentarioList.get(0);
-        ComentarioEntity result = comentarioService.getComentario(entity.getId());
-        assertNotNull(result);
-        assertEquals(entity.getTexto(), result.getTexto());
-        assertEquals(entity.getUsuario().getId(), result.getUsuario().getId());
-    }
+	 * Prueba para consultar la lista de Comentarios de un usuario que no existe.
+	 */
+	@Test
+	void testGetComentariosUsuarioNoValido() {
+		assertThrows(EntityNotFoundException.class, () -> {
+			comentarioService.getComentarios(0L);
+		});
+	}
 
     /**
-     * Prueba para consultar un comentario que no existe.
+     * Prueba para consultar un comentario.
      */
     @Test
-    void testGetComentarioNoExistente() {
-        assertThrows(EntityNotFoundException.class, () -> comentarioService.getComentario(0L));
-    }
+	void testGetComentario() throws EntityNotFoundException {
+		ComentarioEntity entity = comentarioList.get(0);
+		ComentarioEntity resultEntity = comentarioService.getComentario(usuarioEntity.getId(), entity.getId());
+		assertNotNull(resultEntity);
+		assertEquals(entity.getId(), resultEntity.getId());
+		assertEquals(entity.getTexto(), resultEntity.getTexto());
+		assertEquals(entity.getCalificacion(), resultEntity.getCalificacion());
+	}
 
     /**
-     * Prueba para actualizar un comentario correctamente.
-     * @throws IllegalOperationException 
+     * Prueba para consultar un comentario de un libro que no existe.
      */
     @Test
-    void testUpdateComentarioCorrecto() throws EntityNotFoundException, IllegalOperationException {
-        ComentarioEntity entity = comentarioList.get(0);
-        ComentarioEntity update = factory.manufacturePojo(ComentarioEntity.class);
-        update.setTexto("Comentario actualizado");
-
-        ComentarioEntity result = comentarioService.updateComentario(entity.getId(), update);
-        assertEquals("Comentario actualizado", result.getTexto());
-    }
+	void testGetComentarioUsuarioNoValido() {
+		assertThrows(EntityNotFoundException.class, () -> {
+			comentarioService.getComentarios(0L);
+		});
+	}
 
     /**
-     * Prueba para actualizar un comentario vacío.
+     * Prueba para actualizar un comentario. 
      */
     @Test
-    void testUpdateComentarioVacio() {
-        assertThrows(IllegalOperationException.class, () -> {
-            ComentarioEntity entity = comentarioList.get(0);
-            ComentarioEntity update = factory.manufacturePojo(ComentarioEntity.class);
-            update.setTexto("");
-            comentarioService.updateComentario(entity.getId(), update);
-        });
-    }
+	void testUpdateComentario() throws EntityNotFoundException {
+		ComentarioEntity entity = comentarioList.get(0);
+		ComentarioEntity pojoEntity = factory.manufacturePojo(ComentarioEntity.class);
+
+		pojoEntity.setId(entity.getId());
+
+		comentarioService.updateComentario(usuarioEntity.getId(), entity.getId(), pojoEntity);
+
+		ComentarioEntity resp = entityManager.find(ComentarioEntity.class, entity.getId());
+
+		assertEquals(pojoEntity.getId(), resp.getId());
+		assertEquals(pojoEntity.getTexto(), resp.getTexto());
+		assertEquals(pojoEntity.getCalificacion(), resp.getCalificacion());
+	}
 
     /**
-     * Prueba para eliminar un comentario correctamente.
+     * Prueba para actualizar un comentario de un usuario que no existe.
      */
     @Test
-    void testDeleteComentarioCorrecto() throws EntityNotFoundException {
-        ComentarioEntity entity = comentarioList.get(0);
-        comentarioService.deleteComentario(entity.getId());
-        assertNull(entityManager.find(ComentarioEntity.class, entity.getId()));
-    }
+	void testUpdateComentarioUsuarioNoValido() {
+		assertThrows(EntityNotFoundException.class, ()->{
+			ComentarioEntity entity = comentarioList.get(0);
+			ComentarioEntity pojoEntity = factory.manufacturePojo(ComentarioEntity.class);
+			pojoEntity.setId(entity.getId());
+			comentarioService.updateComentario(0L, entity.getId(), pojoEntity);
+		});
+	}
+
 
     /**
-     * Prueba para eliminar un comentario que no existe.
+     * Prueba para actualizar un Comentario que no existe de un usuario.
      */
     @Test
-    void testDeleteComentarioNoExistente() {
-        assertThrows(EntityNotFoundException.class, () -> comentarioService.deleteComentario(0L));
-    }
+	void testUpdateComentarioNoValido(){
+		assertThrows(EntityNotFoundException.class, ()->{
+			ComentarioEntity pojoEntity = factory.manufacturePojo(ComentarioEntity.class);
+			comentarioService.updateComentario(usuarioEntity.getId(), 0L, pojoEntity);
+		});
+	}
+
+    /**
+     * Prueba para eliminar un Comentario.
+	 * @throws IllegalOperationException 
+     */
+	@Test
+	void testDeleteComentario() throws EntityNotFoundException, IllegalOperationException {
+		ComentarioEntity entity = comentarioList.get(0);
+		comentarioService.deleteComentario(usuarioEntity.getId(), entity.getId());
+		ComentarioEntity deleted = entityManager.find(ComentarioEntity.class, entity.getId());
+		assertNull(deleted);
+	}
+
+
+
+
+
+    /**
+     * Prueba para eliminar un Comentario de un usuario que no existe.
+     */
+	@Test
+	void testDeleteComentarioUsuarioNoValido()  {
+		assertThrows(EntityNotFoundException.class, ()->{
+			ComentarioEntity entity = comentarioList.get(0);
+			comentarioService.deleteComentario(0L, entity.getId());
+		});
+	}
+
+	/**
+     * Prueba para eliminar un Comentario que no existe de un usuario.
+     */
+	@Test
+	void testDeleteComentarioNoValido()  {
+		assertThrows(EntityNotFoundException.class, ()->{
+			comentarioService.deleteComentario(usuarioEntity.getId(), 0L);
+		});
+	}
+	
+	 /**
+     * Prueba para eliminarle un comentario a un usuario del cual no pertenece.
+     */
+	@Test
+	void testDeleteComentarioSinUsuarioAsociado() {
+		assertThrows(IllegalOperationException.class, () -> {
+			
+			UsuarioEntity newUsuario =  factory.manufacturePojo(UsuarioEntity.class);
+			entityManager.persist(newUsuario);
+			
+			ComentarioEntity entity = comentarioList.get(0);
+			comentarioService.deleteComentario(newUsuario.getId(), entity.getId());
+		});
+	}
 }

@@ -13,6 +13,7 @@ public class ErrorMessage {
     public static final String RECOMENDACION_NOT_FOUND ="La recomendación con el id dado no fue encontrado";
     public static final String TIENDA_NOT_FOUND ="La tienda con el id dado no fue encontrado";
     public static final String USUARIO_NOT_FOUND ="El usuario con el id dado no fue encontrado";
+    public static final String COMENTARIO_NO_ASOCIADO_A_USUARIO ="El comentario no esta asociado con el usuario";
     
     private ErrorMessage() {
 		throw new IllegalStateException("Clase de utilidad");

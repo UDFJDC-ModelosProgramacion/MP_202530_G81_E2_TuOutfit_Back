@@ -22,16 +22,16 @@ public class OutfitEntity extends BaseEntity {
     @ManyToMany(mappedBy = "outfits")
     private List<PrendaEntity> prendas = new ArrayList<>();
 
-   @ManyToOne(cascade = CascadeType.ALL)
-@JoinColumn(name = "imagen_id")
-private ImagenOutfitEntity imagen;
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "imagen_id")
+    private ImagenOutfitEntity imagen;
 
-     @PodamExclude
+    @PodamExclude
     @ManyToOne
     private CategoriaEntity categoria;
 
-   @OneToMany(mappedBy = "outfit")
-private List<RecomendacionEntity> recomendaciones;
+    @OneToMany(mappedBy = "outfit")
+    private List<RecomendacionEntity> recomendaciones;
 
     // Relación Outfit - Lista de deseos (lado inverso, NO dueño)
     @PodamExclude
