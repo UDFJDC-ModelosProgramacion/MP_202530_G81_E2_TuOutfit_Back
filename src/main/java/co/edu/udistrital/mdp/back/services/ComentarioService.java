@@ -1,6 +1,7 @@
 package co.edu.udistrital.mdp.back.services;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,102 +28,125 @@ public class ComentarioService {
     private UsuarioRepository usuarioRepository;
 
     /**
-     * Crea un comentario y lo asocia a un usuario.
-     *
-     * @param usuarioId   Identificador del usuario
-     * @param comentario  Comentario a crear
-     * @return Comentario creado
-     * @throws EntityNotFoundException    si el usuario no existe
-     * @throws IllegalOperationException  si el comentario no tiene texto
-     */
-
-    @Transactional
-    public ComentarioEntity createComentario(Long usuarioId, ComentarioEntity comentario)
-            throws EntityNotFoundException, IllegalOperationException {
-
-        log.info("Inicia proceso de creación de comentario para usuario con id = {}", usuarioId);
-
-        UsuarioEntity usuario = usuarioRepository.findById(usuarioId)
-                .orElseThrow(() -> new EntityNotFoundException(ErrorMessage.USUARIO_NOT_FOUND));
-
-        if (comentario.getTexto() == null || comentario.getTexto().isEmpty()) {
-            throw new IllegalOperationException("El comentario no puede estar vacío");
-        }
-
-        comentario.setUsuario(usuario);
-        ComentarioEntity saved = comentarioRepository.save(comentario);
-
-        log.info("Finaliza proceso de creación de comentario con id = {} para usuario con id = {}", saved.getId(), usuarioId);
-        return saved;
-    }
-
-	/**
-	 * Obtiene la lista de los registros de Comentario.
+	 * Se encarga de crear un Comentario en la base de datos.
 	 *
-	 * @return Colección de objetos de ComentarioEntity.
+	 * @param comentarioEntity Objeto de ComentarioEntity con los datos nuevos
+	 * @param usuarioId       id del Usuario el cual sera padre del nuevo Comentario.
+	 * @return Objeto de ComentarioEntity con los datos nuevos y su ID.
+	 * @throws EntityNotFoundException si el usuario no existe.
+	 *
 	 */
 	@Transactional
-	public List<ComentarioEntity> getComentarios() {
-		log.info("Inicia proceso de consultar todos los comentarios");
-		return comentarioRepository.findAll();
+	public ComentarioEntity createComentario(Long usuarioId, ComentarioEntity comentarioEntity) throws EntityNotFoundException {
+		log.info("Inicia proceso de crear comentario");
+        Optional<UsuarioEntity> usuarioEntity = usuarioRepository.findById(usuarioId);
+		if (usuarioEntity.isEmpty())
+			throw new EntityNotFoundException(ErrorMessage.USUARIO_NOT_FOUND);
+
+		comentarioEntity.setUsuario(usuarioEntity.get());
+
+		log.info("Termina proceso de creación del comentario");
+		return comentarioRepository.save(comentarioEntity);
 	}
 
 	/**
-	 * Obtiene los datos de una instancia de Comentario a partir de su ID.
+	 * Obtiene la lista de los registros de Comentario que pertenecen a un Usuario.
 	 *
-	 * @param comentarioId Identificador de la instancia a consultar
+	 * @param usuarioId id del Usuario el cual es padre de los Comentarios.
+	 * @return Colección de objetos de ComentarioEntity.
+	 */
+
+	@Transactional
+	public List<ComentarioEntity> getComentarios(Long usuarioId) throws EntityNotFoundException {
+		log.info("Inicia proceso de consultar los comentarios asociados al usaurio con id = {0}", usuarioId);
+		Optional<UsuarioEntity> usuarioEntity = usuarioRepository.findById(usuarioId);
+		if (usuarioEntity.isEmpty())
+			throw new EntityNotFoundException(ErrorMessage.USUARIO_NOT_FOUND);
+
+		log.info("Termina proceso de consultar los comentarios asociados al usuario con id = {0}", usuarioId);
+		return usuarioEntity.get().getComentarios();
+	}
+
+	/**
+	 * Obtiene los datos de una instancia de Comentario a partir de su ID. La existencia
+	 * del elemento padre Usuaro se debe garantizar.
+	 *
+	 * @param usuarioId   El id del Usuario buscado
+	 * @param comentarioId Identificador del Comentario a consultar
 	 * @return Instancia de ComentarioEntity con los datos del Comentario consultado.
+	 *
 	 */
 	@Transactional
-    public ComentarioEntity getComentario(Long comentarioId) throws EntityNotFoundException {
-        log.info("Inicia proceso de consultar comentario con id = {}", comentarioId);
-        return comentarioRepository.findById(comentarioId)
-                .orElseThrow(() -> new EntityNotFoundException(ErrorMessage.COMENTARIO_NOT_FOUND));
-    }
+	public ComentarioEntity getComentario(Long usuarioId, Long comentarioId) throws EntityNotFoundException {
+		log.info("Inicia proceso de consultar el comentario con id = {0} del usuario con id = " + usuarioId,
+				comentarioId);
+		Optional<UsuarioEntity> usuarioEntity = usuarioRepository.findById(usuarioId);
+		if (usuarioEntity.isEmpty())
+			throw new EntityNotFoundException(ErrorMessage.USUARIO_NOT_FOUND);
+
+		Optional<ComentarioEntity> comentarioEntity = comentarioRepository.findById(comentarioId);
+		if (comentarioEntity.isEmpty())
+			throw new EntityNotFoundException(ErrorMessage.COMENTARIO_NOT_FOUND);
+
+		log.info("Termina proceso de consultar el comentario con id = {0} del usuario con id = " + usuarioId,
+				comentarioId);
+		return comentarioRepository.findByUsuarioIdAndId(usuarioId, comentarioId);
+	}
 
 	/**
 	 * Actualiza la información de una instancia de Comentario.
 	 *
-	 * @param comentarioId     Identificador de la instancia a actualizar
 	 * @param comentarioEntity Instancia de ComentarioEntity con los nuevos datos.
+	 * @param usuarioId       id del Usuario el cual sera padre del Comentario actualizado.
+	 * @param comentarioId     id del comentario que será actualizada.
 	 * @return Instancia de ComentarioEntity con los datos actualizados.
+	 *
 	 */
 	@Transactional
-    public ComentarioEntity updateComentario(Long comentarioId, ComentarioEntity comentario)
-            throws EntityNotFoundException, IllegalOperationException {
+	public ComentarioEntity updateComentario(Long usuarioId, Long comentarioId, ComentarioEntity comentario) throws EntityNotFoundException {
+		log.info("Inicia proceso de actualizar el comentario con id = {0} del usuario con id = " + usuarioId,
+				comentarioId);
+		Optional<UsuarioEntity> usuarioEntity = usuarioRepository.findById(usuarioId);
+		if (usuarioEntity.isEmpty())
+			throw new EntityNotFoundException(ErrorMessage.USUARIO_NOT_FOUND);
 
-        log.info("Inicia proceso de actualizar comentario con id = {}", comentarioId);
+		Optional<ComentarioEntity> comentarioEntity = comentarioRepository.findById(comentarioId);
+		if (comentarioEntity.isEmpty())
+			throw new EntityNotFoundException(ErrorMessage.COMENTARIO_NOT_FOUND);
 
-        ComentarioEntity entity = comentarioRepository.findById(comentarioId)
-                .orElseThrow(() -> new EntityNotFoundException(ErrorMessage.COMENTARIO_NOT_FOUND));
-
-        if (comentario.getTexto() == null || comentario.getTexto().isEmpty()) {
-            throw new IllegalOperationException("El comentario no puede estar vacío");
-        }
-
-        entity.setTexto(comentario.getTexto());
-        ComentarioEntity updated = comentarioRepository.save(entity);
-
-        log.info("Finaliza proceso de actualizar comentario con id = {}", comentarioId);
-        return updated;
-    }
+		comentario.setId(comentarioId);
+		comentario.setUsuario(usuarioEntity.get());
+		log.info("Termina proceso de actualizar el comentario con id = {0} del usuario con id = " + usuarioId,
+				usuarioId);
+		return comentarioRepository.save(comentario);
+	}
 
 	/**
 	 * Elimina una instancia de Comentario de la base de datos.
 	 *
 	 * @param comentarioId Identificador de la instancia a eliminar.
-	 * @throws EntityNotFoundException si el Comentario no existe.
+	 * @param usuarioId   id del Usuario el cual es padre del Comentario.
+	 * @throws EntityNotFoundException Si el comentario no esta asociado al usuario.
+	 * @throws IllegalOperationException 
+	 *
 	 */
-    
 	@Transactional
-    public void deleteComentario(Long comentarioId) throws EntityNotFoundException {
-        log.info("Inicia proceso de eliminar comentario con id = {}", comentarioId);
+	public void deleteComentario(Long usuarioId, Long comentarioId) throws EntityNotFoundException, IllegalOperationException {
+		log.info("Inicia proceso de borrar el comentario con id = {0} del usuario con id = " + usuarioId,
+				comentarioId);
+		Optional<UsuarioEntity> usuarioEntity = usuarioRepository.findById(usuarioId);
+		if (usuarioEntity.isEmpty())
+			throw new EntityNotFoundException(ErrorMessage.USUARIO_NOT_FOUND);
 
-        ComentarioEntity entity = comentarioRepository.findById(comentarioId)
-                .orElseThrow(() -> new EntityNotFoundException(ErrorMessage.COMENTARIO_NOT_FOUND));
-
-        comentarioRepository.delete(entity);
-
-        log.info("Finaliza proceso de eliminar comentario con id = {}", comentarioId);
-    }
+		Optional<ComentarioEntity> comentarioEntity = comentarioRepository.findById(comentarioId);
+		if (comentarioEntity.isEmpty())
+			throw new EntityNotFoundException(ErrorMessage.COMENTARIO_NOT_FOUND);
+		
+		if(!comentarioEntity.get().getUsuario().getId().equals(usuarioId))
+			throw new IllegalOperationException(ErrorMessage.COMENTARIO_NO_ASOCIADO_A_USUARIO);
+		
+		comentarioRepository.deleteById(comentarioId);
+		log.info("Termina proceso de borrar el comentario con id = {0} del usuario con id = " + usuarioId,
+				comentarioId);
+	}
 }
