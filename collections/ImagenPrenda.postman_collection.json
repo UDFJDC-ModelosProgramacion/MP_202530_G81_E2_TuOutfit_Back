@@ -1,20 +1,20 @@
 {
 	"info": {
-		"_postman_id": "854f5d39-a686-4611-9456-3d94067d257e",
-		"name": "Imagen",
+		"_postman_id": "4e9a3470-b24d-4abd-9484-5bf4e704e16a",
+		"name": "ImagenPrenda",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "49239403",
-		"_collection_link": "https://ejfernandezr-2674108.postman.co/workspace/Erik's-Workspace~ffb27f8c-9318-43bb-817d-ef877f9df316/collection/49239403-854f5d39-a686-4611-9456-3d94067d257e?action=share&source=collection_link&creator=49239403"
+		"_collection_link": "https://ejfernandezr-2674108.postman.co/workspace/Erik's-Workspace~ffb27f8c-9318-43bb-817d-ef877f9df316/collection/49239403-4e9a3470-b24d-4abd-9484-5bf4e704e16a?action=share&source=collection_link&creator=49239403"
 	},
 	"item": [
 		{
-			"name": "Crear una imagen",
+			"name": "Crear una imagen prenda",
 			"request": {
 				"method": "POST",
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n\r\n    \"imagen\": \"imagen.jpg\",\r\n\r\n    \"outfit\": \"Outfit Verano Casual\",\r\n\r\n    \"prenda\": \"Camiseta azul\",\r\n\r\n    \"marca\": \"Dior\"\r\n\r\n}",
+					"raw": "{\r\n\r\n    \"imagen\": \"imagen.jpg\",\r\n\r\n    \"prenda\":{\r\n        \"id\":1,\r\n        \"nombre\":\"Camiseta azul\",\r\n        \"precio\":40000\r\n\r\n    },\r\n    \"marca\":{\r\n        \"id\":1,\r\n        \"nombre\":\"Dior\",\r\n        \"ubicacion\":\"CC Centro Mayor\"\r\n    }\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -22,18 +22,18 @@
 					}
 				},
 				"url": {
-					"raw": "{{baseURL}}/imagenes",
+					"raw": "{{baseURL}}/imagenprendas",
 					"host": [
 						"{{baseURL}}"
 					],
 					"path": [
-						"imagenes"
+						"imagenprendas"
 					]
 				}
 			},
 			"response": [
 				{
-					"name": "Crear una imagen",
+					"name": "Crear una imagen prenda",
 					"originalRequest": {
 						"method": "POST",
 						"header": [],
@@ -47,12 +47,12 @@
 							}
 						},
 						"url": {
-							"raw": "{{baseURL}}/imagenes",
+							"raw": "{{baseURL}}/imagenprendas",
 							"host": [
 								"{{baseURL}}"
 							],
 							"path": [
-								"imagenes"
+								"imagenprendas"
 							]
 						}
 					},
@@ -67,22 +67,22 @@
 							"path": ""
 						}
 					],
-					"body": "{\r\n\r\n    \"id\": 1,\r\n\r\n    \"imagen\": \"imagen.jpg\",\r\n\r\n    \"outfit\": \"Outfit Verano Casual\",\r\n\r\n    \"prenda\": \"Camiseta azul\",\r\n\r\n    \"marca\": \"Dior\"\r\n\r\n}"
+					"body": "{\r\n\r\n    \"id\": 1,\r\n\r\n    \"imagen\": \"imagen.jpg\",\r\n\r\n       \"prenda\":{\r\n        \"id\":1,\r\n        \"nombre\":\"Camiseta azul\",\r\n        \"precio\":40000\r\n\r\n    },\r\n    \"marca\":{\r\n        \"id\":1,\r\n        \"nombre\":\"Dior\",\r\n        \"ubicacion\":\"CC Centro Mayor\"\r\n    }\r\n\r\n}"
 				}
 			]
 		},
 		{
-			"name": "Obtener todas las imagenes",
+			"name": "Obtener todas las imagen prendas",
 			"request": {
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "{{baseUrl}}/imagenes",
+					"raw": "{{baseUrl}}/imagenprendas",
 					"host": [
 						"{{baseUrl}}"
 					],
 					"path": [
-						"imagenes"
+						"imagenprendas"
 					]
 				}
 			},
@@ -93,12 +93,12 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{baseUrl}}/imagenes",
+							"raw": "{{baseUrl}}/imagenprendas",
 							"host": [
 								"{{baseUrl}}"
 							],
 							"path": [
-								"imagenes"
+								"imagenprendas"
 							]
 						}
 					},
@@ -113,40 +113,40 @@
 							"path": ""
 						}
 					],
-					"body": "[\r\n\r\n    {\r\n\r\n        \"id\": 1,\r\n\r\n        \"imagen\": \"imagen.jpg\",\r\n\r\n        \"outfit\": \"Outfit Verano Casual\",\r\n\r\n        \"prenda\": \"Camiseta azul\",\r\n\r\n        \"marca\": \"Dior\"\r\n\r\n    }\r\n\r\n]"
+					"body": "[\r\n\r\n    {\r\n\r\n        \"id\": 1,\r\n\r\n        \"imagen\": \"imagen.jpg\",\r\n\r\n           \"prenda\":{\r\n        \"id\":1,\r\n        \"nombre\":\"Camiseta azul\",\r\n        \"precio\":40000\r\n\r\n    },\r\n    \"marca\":{\r\n        \"id\":1,\r\n        \"nombre\":\"Dior\",\r\n        \"ubicacion\":\"CC Centro Mayor\"\r\n    }\r\n\r\n    }\r\n\r\n]"
 				}
 			]
 		},
 		{
-			"name": "Obtener una imagen",
+			"name": "Obtener una imagen prenda",
 			"request": {
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "{{baseUrl}}/imagenes/{{imagen_id_1}}",
+					"raw": "{{baseUrl}}/imagenprendas/{{imagenprenda_id_1}}",
 					"host": [
 						"{{baseUrl}}"
 					],
 					"path": [
-						"imagenes",
-						"{{imagen_id_1}}"
+						"imagenprendas",
+						"{{imagenprenda_id_1}}"
 					]
 				}
 			},
 			"response": [
 				{
-					"name": "Obtener una imagen",
+					"name": "Obtener una imagen prenda",
 					"originalRequest": {
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{baseUrl}}/imagenes/{{imagen_id_1}}",
+							"raw": "{{baseUrl}}/imagenprendas/{{imagenprenda_id_1}}",
 							"host": [
 								"{{baseUrl}}"
 							],
 							"path": [
-								"imagenes",
-								"{{imagen_id_1}}"
+								"imagenprendas",
+								"{{imagenprenda_id_1}}"
 							]
 						}
 					},
@@ -161,39 +161,39 @@
 							"path": ""
 						}
 					],
-					"body": "{\r\n\r\n    \"id\": 1,\r\n\r\n    \"imagen\": \"imagen.jpg\",\r\n\r\n    \"outfit\": \"Outfit Verano Casual\",\r\n\r\n    \"prenda\": \"Camiseta azul\",\r\n\r\n    \"marca\": \"Dior\"\r\n\r\n}"
+					"body": "{\r\n\r\n    \"id\": 1,\r\n\r\n    \"imagen\": \"imagen.jpg\",\r\n\r\n       \"prenda\":{\r\n        \"id\":1,\r\n        \"nombre\":\"Camiseta azul\",\r\n        \"precio\":40000\r\n\r\n    },\r\n    \"marca\":{\r\n        \"id\":1,\r\n        \"nombre\":\"Dior\",\r\n        \"ubicacion\":\"CC Centro Mayor\"\r\n    }\r\n\r\n}"
 				}
 			]
 		},
 		{
-			"name": "Obtener una imagen que no existe",
+			"name": "Obtener una imagen prenda que no existe",
 			"request": {
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "{{baseUrl}}/imagenes/0",
+					"raw": "{{baseUrl}}/imagenprendas/0",
 					"host": [
 						"{{baseUrl}}"
 					],
 					"path": [
-						"imagenes",
+						"imagenprendas",
 						"0"
 					]
 				}
 			},
 			"response": [
 				{
-					"name": "Obtener una imagen que no existe",
+					"name": "Obtener una imagen prenda que no existe",
 					"originalRequest": {
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{baseUrl}}/imagenes/0",
+							"raw": "{{baseUrl}}/imagenprendas/0",
 							"host": [
 								"{{baseUrl}}"
 							],
 							"path": [
-								"imagenes",
+								"imagenprendas",
 								"0"
 							]
 						}
@@ -214,13 +214,13 @@
 			]
 		},
 		{
-			"name": "Editar una imagen",
+			"name": "Editar una imagen prenda",
 			"request": {
 				"method": "PUT",
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n\r\n    \"imagen\": \"imagen.jpg\",\r\n\r\n    \"outfit\": \"Outfit Verano Casual 1\",\r\n\r\n    \"prenda\": \"Camiseta azul\",\r\n\r\n    \"marca\": \"Dior\"\r\n\r\n}",
+					"raw": "{\r\n\r\n    \"imagen\": \"imagen.jpg\",\r\n\r\n       \"prenda\":{\r\n        \"id\":1,\r\n        \"nombre\":\"Camiseta azul\",\r\n        \"precio\":40000\r\n\r\n    },\r\n    \"marca\":{\r\n        \"id\":1,\r\n        \"nombre\":\"Dior\",\r\n        \"ubicacion\":\"CC Centro Mayor\"\r\n    }\r\n\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -228,19 +228,19 @@
 					}
 				},
 				"url": {
-					"raw": "{{baseUrl}}/imagenes/{{imagen_id_1}}",
+					"raw": "{{baseUrl}}/imagenprendas/{{imagenprenda_id_1}}",
 					"host": [
 						"{{baseUrl}}"
 					],
 					"path": [
-						"imagenes",
-						"{{imagen_id_1}}"
+						"imagenprendas",
+						"{{imagenprenda_id_1}}"
 					]
 				}
 			},
 			"response": [
 				{
-					"name": "Editar una imagen",
+					"name": "Editar una imagen prenda",
 					"originalRequest": {
 						"method": "PUT",
 						"header": [],
@@ -254,13 +254,13 @@
 							}
 						},
 						"url": {
-							"raw": "{{baseUrl}}/imagenes/{{imagen_id_1}}",
+							"raw": "{{baseUrl}}/imagenprendas/{{imagenprenda_id_1}}",
 							"host": [
 								"{{baseUrl}}"
 							],
 							"path": [
-								"imagenes",
-								"{{imagen_id_1}}"
+								"imagenprendas",
+								"{{imagenprenda_id_1}}"
 							]
 						}
 					},
@@ -275,39 +275,39 @@
 							"path": ""
 						}
 					],
-					"body": "{\r\n\r\n    \"id\": 1,\r\n\r\n    \"imagen\": \"imagen.jpg\",\r\n\r\n    \"outfit\": \"Outfit Verano Casual 1\",\r\n\r\n    \"prenda\": \"Camiseta azul\",\r\n\r\n    \"marca\": \"Dior\"\r\n\r\n}"
+					"body": "{\r\n\r\n    \"id\": 1,\r\n\r\n    \"imagen\": \"imagen.jpg\",\r\n\r\n       \"prenda\":{\r\n        \"id\":1,\r\n        \"nombre\":\"Camiseta azul\",\r\n        \"precio\":40000\r\n\r\n    },\r\n    \"marca\":{\r\n        \"id\":1,\r\n        \"nombre\":\"Dior\",\r\n        \"ubicacion\":\"CC Centro Mayor\"\r\n    }\r\n\r\n}"
 				}
 			]
 		},
 		{
-			"name": "Editar una imagen que no existe",
+			"name": "Editar una imagen prenda que no existe",
 			"request": {
 				"method": "PUT",
 				"header": [],
 				"url": {
-					"raw": "{{baseUrl}}/imagenes/0",
+					"raw": "{{baseUrl}}/imagenprendas/0",
 					"host": [
 						"{{baseUrl}}"
 					],
 					"path": [
-						"imagenes",
+						"imagenprendas",
 						"0"
 					]
 				}
 			},
 			"response": [
 				{
-					"name": "Editar una imagen que no existe",
+					"name": "Editar una imagen prenda que no existe",
 					"originalRequest": {
 						"method": "PUT",
 						"header": [],
 						"url": {
-							"raw": "{{baseUrl}}/imagenes/0",
+							"raw": "{{baseUrl}}/imagenprendas/0",
 							"host": [
 								"{{baseUrl}}"
 							],
 							"path": [
-								"imagenes",
+								"imagenprendas",
 								"0"
 							]
 						}
@@ -328,35 +328,35 @@
 			]
 		},
 		{
-			"name": "Borrar una imagen",
+			"name": "Borrar una imagen prenda",
 			"request": {
 				"method": "DELETE",
 				"header": [],
 				"url": {
-					"raw": "{{baseUrl}}/imagenes/{{imagen_id_1}}",
+					"raw": "{{baseUrl}}/imagenprendas/{{imagenprenda_id_1}}",
 					"host": [
 						"{{baseUrl}}"
 					],
 					"path": [
-						"imagenes",
-						"{{imagen_id_1}}"
+						"imagenprendas",
+						"{{imagenprenda_id_1}}"
 					]
 				}
 			},
 			"response": [
 				{
-					"name": "Borrar una imagen",
+					"name": "Borrar una imagen prenda",
 					"originalRequest": {
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "{{baseUrl}}/imagenes/{{imagen_id_1}}",
+							"raw": "{{baseUrl}}/imagenprendas/{{imagenprenda_id_1}}",
 							"host": [
 								"{{baseUrl}}"
 							],
 							"path": [
-								"imagenes",
-								"{{imagen_id_1}}"
+								"imagenprendas",
+								"{{imagenprenda_id_1}}"
 							]
 						}
 					},
@@ -376,34 +376,34 @@
 			]
 		},
 		{
-			"name": "Borrar una imagen que no existe",
+			"name": "Borrar una imagen prenda que no existe",
 			"request": {
 				"method": "DELETE",
 				"header": [],
 				"url": {
-					"raw": "{{baseUrl}}/imagenes/0",
+					"raw": "{{baseUrl}}/imagenprendas/0",
 					"host": [
 						"{{baseUrl}}"
 					],
 					"path": [
-						"imagenes",
+						"imagenprendas",
 						"0"
 					]
 				}
 			},
 			"response": [
 				{
-					"name": "Borrar una imagen que no existe",
+					"name": "Borrar una imagen prenda que no existe",
 					"originalRequest": {
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "{{baseUrl}}/imagenes/0",
+							"raw": "{{baseUrl}}/imagenprendas/0",
 							"host": [
 								"{{baseUrl}}"
 							],
 							"path": [
-								"imagenes",
+								"imagenprendas",
 								"0"
 							]
 						}

@@ -13,6 +13,7 @@ import org.springframework.context.annotation.Import;
 import org.springframework.transaction.annotation.Transactional;
 
 import co.edu.udistrital.mdp.back.entities.ImagenPrendaEntity;
+
 import co.edu.udistrital.mdp.back.exceptions.EntityNotFoundException;
 import co.edu.udistrital.mdp.back.exceptions.IllegalOperationException;
 import uk.co.jemos.podam.api.PodamFactory;
@@ -33,7 +34,13 @@ class ImagenPrendaServiceTest {
 
     @BeforeEach
     void setUp() {
+       ImagenPrendaEntity imagenPrendaBase = new ImagenPrendaEntity();
+    imagenPrendaBase.setImagen("https://servidor.com/imagenBase.png");
+    imagenPrendaBase.setPrenda(null);
+    imagenPrendaBase.setMarca(null);
 
+    entityManager.persist(imagenPrendaBase);
+    entityManager.flush();
     }
 
     @Test
