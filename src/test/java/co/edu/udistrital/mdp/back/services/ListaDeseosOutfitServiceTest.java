@@ -177,7 +177,7 @@ class ListaDeseosOutfitServiceTest {
             nuevaLista.add(outfit);
         }
 
-        listaDeseosOutfitService.replaceOutfits(listaDeseos.getId(), nuevaLista);
+        listaDeseosOutfitService.addOutfits(listaDeseos.getId(), nuevaLista);
 
         List<OutfitEntity> outfits = listaDeseosOutfitService.getOutfits(listaDeseos.getId());
         for (OutfitEntity o : nuevaLista) {
@@ -195,7 +195,7 @@ class ListaDeseosOutfitServiceTest {
             OutfitEntity outfit = factory.manufacturePojo(OutfitEntity.class);
             entityManager.persist(outfit);
             nuevaLista.add(outfit);
-            listaDeseosOutfitService.replaceOutfits(0L, nuevaLista);
+            listaDeseosOutfitService.addOutfits(0L, nuevaLista);
         });
     }
 

@@ -32,7 +32,7 @@ public class ColorService {
             throw new IllegalOperationException("El nombre del color no es válido");
         }
 
-        if (colorEntity.getCodigoHex() == null || !((String) colorEntity.getCodigoHex()).matches("^#([A-Fa-f0-9]{6})$")) {
+        if (colorEntity.getCodigoHex() == null || !(colorEntity.getCodigoHex()).matches("^#([A-Fa-f0-9]{6})$")) {
             throw new IllegalOperationException("El código HEX del color no es válido (ej: #FFFFFF)");
         }
 
@@ -82,7 +82,7 @@ public class ColorService {
             throw new IllegalOperationException("El nombre del color no es válido");
         }
 
-        if (colorEntity.getCodigoHex() == null || !((String) colorEntity.getCodigoHex()).matches("^#([A-Fa-f0-9]{6})$")) {
+        if (colorEntity.getCodigoHex() == null || !(colorEntity.getCodigoHex()).matches("^#([A-Fa-f0-9]{6})$")) {
             throw new IllegalOperationException("El código HEX del color no es válido (ej: #FFFFFF)");
         }
 

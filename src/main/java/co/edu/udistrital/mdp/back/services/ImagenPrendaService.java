@@ -23,9 +23,10 @@ public class ImagenPrendaService {
 
     /**
      * Crea una nueva ImagenPrenda.
+     * @param outfitId 
      */
     @Transactional
-    public ImagenPrendaEntity createImagenPrenda(ImagenPrendaEntity imagenPrendaEntity)
+    public ImagenPrendaEntity createImagenPrenda(Long prendaId, ImagenPrendaEntity imagenPrendaEntity)
             throws IllegalOperationException {
         log.info("Inicia proceso de creación de una imagen de prenda");
 
@@ -38,18 +39,20 @@ public class ImagenPrendaService {
 
     /**
      * Obtiene todas las imágenes de prenda.
+     * @param prendaId 
      */
     @Transactional
-    public List<ImagenPrendaEntity> getImagenesPrenda() {
+    public List<ImagenPrendaEntity> getImagenPrendas(Long prendaId) {
         log.info("Inicia proceso de consultar todas las imágenes de prenda");
         return imagenPrendaRepository.findAll();
     }
 
     /**
      * Obtiene una imagen de prenda por su ID.
+     * @param imagenprendaId2 
      */
     @Transactional
-    public ImagenPrendaEntity getImagenPrenda(Long imagenPrendaId) throws EntityNotFoundException {
+    public ImagenPrendaEntity getImagenPrenda(Long imagenPrendaId, Long imagenprendaId2) throws EntityNotFoundException {
         log.info("Inicia proceso de consultar la imagen de prenda con id = {}", imagenPrendaId);
         Optional<ImagenPrendaEntity> imagenPrendaEntity = imagenPrendaRepository.findById(imagenPrendaId);
         if (imagenPrendaEntity.isEmpty())
@@ -60,9 +63,10 @@ public class ImagenPrendaService {
 
     /**
      * Actualiza una imagen de prenda existente.
+     * @param imagenprendaId2 
      */
     @Transactional
-    public ImagenPrendaEntity updateImagenPrenda(Long imagenPrendaId, ImagenPrendaEntity imagenPrenda)
+    public ImagenPrendaEntity updateImagenPrenda(Long imagenPrendaId, Long imagenprendaId2, ImagenPrendaEntity imagenPrenda)
             throws EntityNotFoundException, IllegalOperationException {
         log.info("Inicia proceso de actualizar la imagen de prenda con id = {}", imagenPrendaId);
         Optional<ImagenPrendaEntity> imagenPrendaEntity = imagenPrendaRepository.findById(imagenPrendaId);
@@ -79,9 +83,10 @@ public class ImagenPrendaService {
 
     /**
      * Elimina una imagen de prenda si no está asociada a una prenda o marca.
+     * @param imagenprendaId2 
      */
     @Transactional
-    public void deleteImagenPrenda(Long imagenPrendaId) throws EntityNotFoundException, IllegalOperationException {
+    public void deleteImagenPrenda(Long imagenPrendaId, Long imagenprendaId2) throws EntityNotFoundException, IllegalOperationException {
         log.info("Inicia proceso de borrar la imagen de prenda con id = {}", imagenPrendaId);
         Optional<ImagenPrendaEntity> imagenPrendaEntity = imagenPrendaRepository.findById(imagenPrendaId);
         if (imagenPrendaEntity.isEmpty())

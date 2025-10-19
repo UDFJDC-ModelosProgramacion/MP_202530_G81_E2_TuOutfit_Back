@@ -1,0 +1,443 @@
+{
+	"info": {
+		"_postman_id": "b76581b8-59b6-4df3-82e0-fe9aee86915d",
+		"name": "Prenda",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "48728405",
+		"_collection_link": "https://kevinagudelo04-3848481.postman.co/workspace/Kevin-Agudelo's-Workspace~f0007b89-5da0-426b-8701-b68b03611b9f/collection/48728405-b76581b8-59b6-4df3-82e0-fe9aee86915d?action=share&source=collection_link&creator=48728405"
+	},
+	"item": [
+		{
+			"name": "Crear prenda",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"nombre\": \"Camiseta deportiva\",\r\n  \"talla\": \"M\",\r\n  \"color\": \"Rojo\",\r\n  \"precio\": 129900,\r\n  \"descripcion\": \"Camiseta ligera de poliéster, ideal para entrenamientos.\",\r\n  \"imagen\": \"https://cdn.example.com/prendas/camiseta_roja.png\",\r\n  \"marca\": {\r\n    \"id\": 1\r\n  }\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/prendas\n",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"prendas\n"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Crear prenda",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"id\": 1,\r\n  \"nombre\": \"Camiseta deportiva\",\r\n  \"talla\": \"M\",\r\n  \"color\": \"Rojo\",\r\n  \"precio\": 129900,\r\n  \"descripcion\": \"Camiseta ligera de poliéster, ideal para entrenamientos.\",\r\n  \"imagen\": \"https://cdn.example.com/prendas/camiseta_roja.png\",\r\n  \"marca\": {\r\n    \"id\": 1,\r\n    \"nombre\": \"Nike\",\r\n    \"logo\": \"https://cdn.example.com/logos/nike.png\",\r\n    \"sitioOficial\": \"https://www.nike.com\"\r\n  }\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/prendas\n",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"prendas\n"
+							]
+						}
+					},
+					"status": "Created",
+					"code": 201,
+					"_postman_previewlanguage": "",
+					"header": [],
+					"cookie": [
+						{
+							"expires": "Invalid Date",
+							"domain": "",
+							"path": ""
+						}
+					],
+					"body": ""
+				}
+			]
+		},
+		{
+			"name": "Obtener prendas",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/prendas\n",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"prendas\n"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Obtener prendas",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "[\r\n  {\r\n    \"id\": 1,\r\n    \"nombre\": \"Camiseta deportiva\",\r\n    \"talla\": \"M\",\r\n    \"color\": \"Rojo\",\r\n    \"precio\": 129900,\r\n    \"imagen\": \"https://cdn.example.com/prendas/camiseta_roja.png\",\r\n    \"marca\": {\r\n      \"id\": 1,\r\n      \"nombre\": \"Nike\"\r\n    }\r\n  },\r\n  {\r\n    \"id\": 2,\r\n    \"nombre\": \"Pantalón de entrenamiento\",\r\n    \"talla\": \"L\",\r\n    \"color\": \"Negro\",\r\n    \"precio\": 189900,\r\n    \"imagen\": \"https://cdn.example.com/prendas/pantalon_negro.png\",\r\n    \"marca\": {\r\n      \"id\": 2,\r\n      \"nombre\": \"Adidas\"\r\n    }\r\n  }\r\n]\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/prendas\n",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"prendas\n"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "",
+					"header": [],
+					"cookie": [
+						{
+							"expires": "Invalid Date",
+							"domain": "",
+							"path": ""
+						}
+					],
+					"body": ""
+				}
+			]
+		},
+		{
+			"name": "Obtener una prenda que no existe",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/prendas/0",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"prendas",
+						"0"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Obtener una prenda que no existe",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\r\n    \"apierror\": {\r\n\r\n        \"status\": \"NOT_FOUND\",\r\n\r\n        \"timestamp\": \"21-02-2023 10:01:09\",\r\n\r\n        \"message\": \"La prenda no existe, intente de nuevo\"\r\n\r\n    }\r\n\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/prendas/0",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"prendas",
+								"0"
+							]
+						}
+					},
+					"status": "Not Found",
+					"code": 404,
+					"_postman_previewlanguage": "",
+					"header": [],
+					"cookie": [
+						{
+							"expires": "Invalid Date",
+							"domain": "",
+							"path": ""
+						}
+					],
+					"body": ""
+				}
+			]
+		},
+		{
+			"name": "Actualizar una prenda",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"nombre\": \"Camiseta entrenamiento 2025\",\r\n  \"talla\": \"M\",\r\n  \"color\": \"Azul\",\r\n  \"precio\": 139900,\r\n  \"descripcion\": \"Versión mejorada con tela transpirable.\",\r\n  \"imagen\": \"https://cdn.example.com/prendas/camiseta_azul.png\",\r\n  \"marca\": {\r\n    \"id\": 1\r\n  }\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/prendas/{{prenda_id}}\n",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"prendas",
+						"{{prenda_id}}\n"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Actualizar una prenda",
+					"originalRequest": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"id\": 1,\r\n  \"nombre\": \"Camiseta entrenamiento 2025\",\r\n  \"talla\": \"M\",\r\n  \"color\": \"Azul\",\r\n  \"precio\": 139900,\r\n  \"descripcion\": \"Versión mejorada con tela transpirable.\",\r\n  \"imagen\": \"https://cdn.example.com/prendas/camiseta_azul.png\",\r\n  \"marca\": {\r\n    \"id\": 1,\r\n    \"nombre\": \"Nike\"\r\n  }\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/prendas/{{prenda_id}}\n",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"prendas",
+								"{{prenda_id}}\n"
+							]
+						}
+					},
+					"_postman_previewlanguage": "",
+					"header": [],
+					"cookie": [
+						{
+							"expires": "Invalid Date",
+							"domain": "",
+							"path": ""
+						}
+					],
+					"body": ""
+				}
+			]
+		},
+		{
+			"name": "Actualizar prenda que no existe",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/prendas/0",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"prendas",
+						"0"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Actualizar prenda que no existe",
+					"originalRequest": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\r\n    \"apierror\": {\r\n\r\n        \"status\": \"NOT_FOUND\",\r\n\r\n        \"timestamp\": \"21-02-2023 10:04:10\",\r\n\r\n        \"message\": \"La prenda no existe\"\r\n\r\n    }\r\n\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/prendas/0",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"prendas",
+								"0"
+							]
+						}
+					},
+					"status": "Not Found",
+					"code": 404,
+					"_postman_previewlanguage": "",
+					"header": [],
+					"cookie": [
+						{
+							"expires": "Invalid Date",
+							"domain": "",
+							"path": ""
+						}
+					],
+					"body": ""
+				}
+			]
+		},
+		{
+			"name": "Borrar prenda",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/prendas/{{prenda_id}}\n",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"prendas",
+						"{{prenda_id}}\n"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Borrar prenda",
+					"originalRequest": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/prendas/{{prenda_id}}\n",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"prendas",
+								"{{prenda_id}}\n"
+							]
+						}
+					},
+					"status": "No Content",
+					"code": 204,
+					"_postman_previewlanguage": "",
+					"header": [],
+					"cookie": [
+						{
+							"expires": "Invalid Date",
+							"domain": "",
+							"path": ""
+						}
+					],
+					"body": ""
+				}
+			]
+		},
+		{
+			"name": "Borrar prenda que no existe",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/prendas/{{prenda_id_1}}",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"prendas",
+						"{{prenda_id_1}}"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Borrar prenda que no existe",
+					"originalRequest": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\r\n    \"apierror\": {\r\n\r\n        \"status\": \"NOT_FOUND\",\r\n\r\n        \"timestamp\": \"21-02-2023 10:05:19\",\r\n\r\n        \"message\": \"The author with the given id was not found\"\r\n\r\n    }\r\n\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/prendas/{{prenda_id_1}}",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"prendas",
+								"{{prenda_id_1}}"
+							]
+						}
+					},
+					"status": "Not Found",
+					"code": 404,
+					"_postman_previewlanguage": "",
+					"header": [],
+					"cookie": [
+						{
+							"expires": "Invalid Date",
+							"domain": "",
+							"path": ""
+						}
+					],
+					"body": ""
+				}
+			]
+		}
+	]
+}

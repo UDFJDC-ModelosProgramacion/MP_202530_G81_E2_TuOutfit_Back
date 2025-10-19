@@ -10,4 +10,5 @@ import co.edu.udistrital.mdp.back.entities.ComentarioEntity;
 
 @Repository
 public interface ComentarioRepository extends JpaRepository<ComentarioEntity, Long> {
+    ComentarioEntity findByUsuarioIdAndId(Long usuarioId, Long id);
 }

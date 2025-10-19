@@ -133,7 +133,7 @@ class OutfitServiceTest {
     }
 
     @Test
-    void testDeleteOutfit() throws EntityNotFoundException, IllegalOperationException {
+    void testDeleteOutfit() throws EntityNotFoundException {
         OutfitEntity entity = outfitList.get(0);
         entity.setPrendas(new ArrayList<>());
 

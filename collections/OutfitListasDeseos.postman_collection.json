@@ -1,19 +1,19 @@
 {
 	"info": {
-		"_postman_id": "5631094c-eae0-4c04-b138-27ba1ec8bbd3",
-		"name": "ListaDeseosOutfits",
+		"_postman_id": "32d8f7b3-69c4-451f-b05a-23e2a7d12721",
+		"name": "OutfitListasDeseos",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "48511056"
 	},
 	"item": [
 		{
-			"name": "Agregar un outfit a una lista de deseos",
+			"name": "Agregar una lista de deseos a un outfit",
 			"request": {
 				"method": "POST",
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"listaDeseos_id\": 1,\r\n    \"outfit_id\": 3\r\n}\r\n",
+					"raw": "{\r\n    \"outfit_id\": 1,\r\n    \"listaDeseos_id\": 2\r\n}\r\n",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -21,27 +21,27 @@
 					}
 				},
 				"url": {
-					"raw": "{{baseUrl}}/listasdeseos/{{listadeseos_id}}/outfits/{{outfit_id_1}}",
+					"raw": "{{baseUrl}}/outfits/{{outfit_id}}/listasdeseos/{{listadeseos_id_1}}",
 					"host": [
 						"{{baseUrl}}"
 					],
 					"path": [
-						"listasdeseos",
-						"{{listadeseos_id}}",
 						"outfits",
-						"{{outfit_id_1}}"
+						"{{outfit_id}}",
+						"listasdeseos",
+						"{{listadeseos_id_1}}"
 					]
 				}
 			},
 			"response": [
 				{
-					"name": "Agregar un outfit a una lista de deseos",
+					"name": "Agregar una lista de deseos a un outfit",
 					"originalRequest": {
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"mensaje\": \"Outfit agregado correctamente a la lista de deseos\",\r\n    \"listaDeseos\": {\r\n        \"id\": 1,\r\n        \"usuario\": {\r\n            \"id\": 1,\r\n            \"nombre\": \"Julio Cesar Calderon Ospina\"\r\n        }\r\n    },\r\n    \"outfit\": {\r\n        \"id\": 2,\r\n        \"nombre\": \"Outfit deportivo\",\r\n        \"descripcion\": \"Sudadera y tenis blancos\"\r\n    }\r\n}\r\n",
+							"raw": "{\r\n    \"mensaje\": \"Lista de deseos agregada correctamente al outfit\",\r\n    \"outfit\": {\r\n        \"id\": 1,\r\n        \"nombre\": \"Outfit elegante\"\r\n    },\r\n    \"listaDeseos\": {\r\n        \"id\": 2,\r\n        \"usuario\": {\r\n        \"id\": 1,\r\n        \"nombre\": \"Julio Cesar Calderon Ospina\"\r\n        }\r\n    }\r\n}\r\n",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -49,15 +49,15 @@
 							}
 						},
 						"url": {
-							"raw": "{{baseUrl}}/listasdeseos/{{listadeseos_id}}/outfits/{{outfit_id_1}}",
+							"raw": "{{baseUrl}}/outfits/{{outfit_id}}/listasdeseos/{{listadeseos_id_1}}",
 							"host": [
 								"{{baseUrl}}"
 							],
 							"path": [
-								"listasdeseos",
-								"{{listadeseos_id}}",
 								"outfits",
-								"{{outfit_id_1}}"
+								"{{outfit_id}}",
+								"listasdeseos",
+								"{{listadeseos_id_1}}"
 							]
 						}
 					},
@@ -77,38 +77,32 @@
 			]
 		},
 		{
-			"name": "Agregar un outfit que no existe a una lista de deseos",
+			"name": "Agregar una lista de deseos que no existe a un outfit",
 			"request": {
 				"method": "POST",
 				"header": [],
 				"url": {
-					"raw": "{{baseUrl}}/listasdeseos/{{listadeseos_id}}/outfits/0",
+					"raw": "{{baseUrl}}/outfits/{{outfit_id}}/listasdeseos/0",
 					"host": [
 						"{{baseUrl}}"
 					],
 					"path": [
-						"listasdeseos",
-						"{{listadeseos_id}}",
 						"outfits",
+						"{{outfit_id}}",
+						"listasdeseos",
 						"0"
 					]
 				}
 			},
 			"response": [
 				{
-					"name": "Agregar un outfit que no existe a una lista de deseos",
+					"name": "Agregar una lista de deseos que no existe a un outfit",
 					"originalRequest": {
 						"method": "POST",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json",
-								"type": "text"
-							}
-						],
+						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"apierror\": {\r\n        \"status\": \"NOT_FOUND\",\r\n        \"message\": \"El outfit con el ID dado no fue encontrado\"\r\n    }\r\n}",
+							"raw": "{\r\n    \"apierror\": {\r\n        \"status\": \"NOT_FOUND\",\r\n        \"message\": \"La lista de deseos con el ID dado no fue encontrada\"\r\n    }\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -116,14 +110,14 @@
 							}
 						},
 						"url": {
-							"raw": "{{baseUrl}}/listasdeseos/{{listadeseos_id}}/outfits/0",
+							"raw": "{{baseUrl}}/outfits/{{outfit_id}}/listasdeseos/0",
 							"host": [
 								"{{baseUrl}}"
 							],
 							"path": [
-								"listasdeseos",
-								"{{listadeseos_id}}",
 								"outfits",
+								"{{outfit_id}}",
+								"listasdeseos",
 								"0"
 							]
 						}
@@ -144,25 +138,25 @@
 			]
 		},
 		{
-			"name": "Obtener todos los outfits de una lista de deseos",
+			"name": "Obtener todas las listas de deseos de un outfit",
 			"request": {
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "{{baseUrl}}/listasdeseos/{{listadeseos_id}}/outfits",
+					"raw": "{{baseUrl}}/outfits/{outfit_id}}/listasdeseos",
 					"host": [
 						"{{baseUrl}}"
 					],
 					"path": [
-						"listasdeseos",
-						"{{listadeseos_id}}",
-						"outfits"
+						"outfits",
+						"{outfit_id}}",
+						"listasdeseos"
 					]
 				}
 			},
 			"response": [
 				{
-					"name": "Obtener todos los outfits de una lista de deseos",
+					"name": "Obtener todas las listas de deseos de un outfit",
 					"originalRequest": {
 						"method": "GET",
 						"header": [
@@ -174,7 +168,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "[\r\n    {\r\n        \"id\": 1,\r\n        \"usuario\": {\r\n        \"id\": 1,\r\n        \"nombre\": \"Julio Cesar Calderon Ospina\",\r\n        \"correo\": \"jccalderono8@gmail.com\"\r\n        },\r\n        \"outfits\": [\r\n        {\r\n            \"id\": 1,\r\n            \"nombre\": \"Outfit elegante\",\r\n            \"descripcion\": \"Smoking azul celeste\"\r\n        },\r\n        {\r\n            \"id\": 2,\r\n            \"nombre\": \"Outfit deportivo\",\r\n            \"descripcion\": \"Sudadera y tenis blancos\"\r\n        }\r\n        ]\r\n    }\r\n]\r\n",
+							"raw": "[\r\n    {\r\n        \"id\": 1,\r\n        \"usuario\": {\r\n        \"id\": 1,\r\n        \"nombre\": \"Julio Cesar Calderon Ospina\",\r\n        \"correo\": \"jccalderono8@gmail.com\"\r\n        }\r\n    },\r\n    {\r\n        \"id\": 2,\r\n        \"usuario\": {\r\n        \"id\": 2,\r\n        \"nombre\": \"Maria Fernanda López\",\r\n        \"correo\": \"mflopez@example.com\"\r\n        }\r\n    }\r\n]\r\n",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -182,14 +176,14 @@
 							}
 						},
 						"url": {
-							"raw": "{{baseUrl}}/listasdeseos/{{listadeseos_id}}/outfits",
+							"raw": "{{baseUrl}}/outfits/{outfit_id}}/listasdeseos",
 							"host": [
 								"{{baseUrl}}"
 							],
 							"path": [
-								"listasdeseos",
-								"{{listadeseos_id}}",
-								"outfits"
+								"outfits",
+								"{outfit_id}}",
+								"listasdeseos"
 							]
 						}
 					},
@@ -208,38 +202,32 @@
 			]
 		},
 		{
-			"name": "Obtener un outfit de una lista de deseos",
+			"name": "Obtener una lista de deseos de un outfit",
 			"request": {
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "{{baseUrl}}/listasdeseos/{{listadeseos_id}}/outfits/{{outfit_id_1}}",
+					"raw": "{{baseUrl}}/outfits/{{outfit_id}}/listasdeseos/{{listadeseos_id_1}}",
 					"host": [
 						"{{baseUrl}}"
 					],
 					"path": [
-						"listasdeseos",
-						"{{listadeseos_id}}",
 						"outfits",
-						"{{outfit_id_1}}"
+						"{{outfit_id}}",
+						"listasdeseos",
+						"{{listadeseos_id_1}}"
 					]
 				}
 			},
 			"response": [
 				{
-					"name": "Obtener un outfit de una lista de deseos",
+					"name": "Obtener una lista de deseos de un outfit",
 					"originalRequest": {
 						"method": "GET",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json",
-								"type": "text"
-							}
-						],
+						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"id\": 1,\r\n    \"usuario\": {\r\n        \"id\": 1,\r\n        \"nombre\": \"Julio Cesar Calderon Ospina\",\r\n        \"correo\": \"jccalderono8@gmail.com\"\r\n    },\r\n    \"outfits\": [\r\n        {\r\n        \"id\": 1,\r\n        \"nombre\": \"Outfit elegante\",\r\n        \"descripcion\": \"Smoking azul celeste\"\r\n        }\r\n    ]\r\n}\r\n",
+							"raw": "{\r\n    \"id\": 2,\r\n    \"usuario\": {\r\n        \"id\": 1,\r\n        \"nombre\": \"Julio Cesar Calderon Ospina\",\r\n        \"correo\": \"jccalderono8@gmail.com\"\r\n    }\r\n}\r\n",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -247,15 +235,15 @@
 							}
 						},
 						"url": {
-							"raw": "{{baseUrl}}/listasdeseos/{{listadeseos_id}}/outfits/{{outfit_id_1}}",
+							"raw": "{{baseUrl}}/outfits/{{outfit_id}}/listasdeseos/{{listadeseos_id_1}}",
 							"host": [
 								"{{baseUrl}}"
 							],
 							"path": [
-								"listasdeseos",
-								"{{listadeseos_id}}",
 								"outfits",
-								"{{outfit_id_1}}"
+								"{{outfit_id}}",
+								"listasdeseos",
+								"{{listadeseos_id_1}}"
 							]
 						}
 					},
@@ -275,26 +263,26 @@
 			]
 		},
 		{
-			"name": "Obtener un outfit que no existe de una lista de deseos",
+			"name": "Obtener una lista de deseos que no existe de un outfit",
 			"request": {
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "{{baseUrl}}/listasdeseos/{{listadeseos_id}}/outfits/0",
+					"raw": "{{baseUrl}}/outfits/{{outfit_id}}/listasdeseos/0",
 					"host": [
 						"{{baseUrl}}"
 					],
 					"path": [
-						"listasdeseos",
-						"{{listadeseos_id}}",
 						"outfits",
+						"{{outfit_id}}",
+						"listasdeseos",
 						"0"
 					]
 				}
 			},
 			"response": [
 				{
-					"name": "Obtener un outfit que no existe de una lista de deseos",
+					"name": "Obtener una lista de deseos que no existe de un outfit",
 					"originalRequest": {
 						"method": "GET",
 						"header": [
@@ -306,7 +294,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"apierror\": {\r\n        \"status\": \"NOT_FOUND\",\r\n        \"message\": \"El outfit con el ID dado no fue encontrado\"\r\n    }\r\n}",
+							"raw": "{\r\n    \"apierror\": {\r\n        \"status\": \"NOT_FOUND\",\r\n        \"message\": \"La lista de deseos con el ID dado no fue encontrada\"\r\n    }\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -314,14 +302,14 @@
 							}
 						},
 						"url": {
-							"raw": "{{baseUrl}}/listasdeseos/{{listadeseos_id}}/outfits/0",
+							"raw": "{{baseUrl}}/outfits/{{outfit_id}}/listasdeseos/0",
 							"host": [
 								"{{baseUrl}}"
 							],
 							"path": [
-								"listasdeseos",
-								"{{listadeseos_id}}",
 								"outfits",
+								"{{outfit_id}}",
+								"listasdeseos",
 								"0"
 							]
 						}
@@ -342,13 +330,13 @@
 			]
 		},
 		{
-			"name": "Asociar outfits a una lista de deseos",
+			"name": "Asociar listas de deseos a un outfit",
 			"request": {
 				"method": "PUT",
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"outfits\": [1, 2, 3]\r\n}\r\n",
+					"raw": "{\r\n  \"listasDeseos\": [1, 2]\r\n}\r\n",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -356,26 +344,26 @@
 					}
 				},
 				"url": {
-					"raw": "{{baseUrl}}/listasdeseos/{{listadeseos_id}}/outfits",
+					"raw": "{{baseUrl}}/outfits/{{outfit_id}}/listasdeseos",
 					"host": [
 						"{{baseUrl}}"
 					],
 					"path": [
-						"listasdeseos",
-						"{{listadeseos_id}}",
-						"outfits"
+						"outfits",
+						"{{outfit_id}}",
+						"listasdeseos"
 					]
 				}
 			},
 			"response": [
 				{
-					"name": "Asociar outfits a una lista de deseos",
+					"name": "Asociar listas de deseos a un outfit",
 					"originalRequest": {
 						"method": "PUT",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"mensaje\": \"Outfits asociados correctamente a la lista de deseos\",\r\n    \"listaDeseos\": {\r\n        \"id\": 1,\r\n        \"usuario\": {\r\n        \"id\": 1,\r\n        \"nombre\": \"Julio Cesar Calderon Ospina\"\r\n        }\r\n    },\r\n    \"outfits\": [\r\n        {\r\n        \"id\": 1,\r\n        \"nombre\": \"Outfit elegante\"\r\n        },\r\n        {\r\n        \"id\": 2,\r\n        \"nombre\": \"Outfit deportivo\"\r\n        },\r\n        {\r\n        \"id\": 3,\r\n        \"nombre\": \"Outfit casual\"\r\n        }\r\n    ]\r\n}\r\n",
+							"raw": "{\r\n    \"mensaje\": \"Listas de deseos asociadas correctamente al outfit\",\r\n    \"outfit\": {\r\n        \"id\": 1,\r\n        \"nombre\": \"Outfit deportivo\"\r\n    },\r\n    \"listasDeseos\": [\r\n        {\r\n        \"id\": 1,\r\n        \"usuario\": { \"id\": 1, \"nombre\": \"Julio Cesar Calderon Ospina\" }\r\n        },\r\n        {\r\n        \"id\": 2,\r\n        \"usuario\": { \"id\": 2, \"nombre\": \"Maria Fernanda López\" }\r\n        }\r\n    ]\r\n}\r\n",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -383,14 +371,14 @@
 							}
 						},
 						"url": {
-							"raw": "{{baseUrl}}/listasdeseos/{{listadeseos_id}}/outfits",
+							"raw": "{{baseUrl}}/outfits/{{outfit_id}}/listasdeseos",
 							"host": [
 								"{{baseUrl}}"
 							],
 							"path": [
-								"listasdeseos",
-								"{{listadeseos_id}}",
-								"outfits"
+								"outfits",
+								"{{outfit_id}}",
+								"listasdeseos"
 							]
 						}
 					},
@@ -410,13 +398,13 @@
 			]
 		},
 		{
-			"name": "Asociar outfits que no existen a una lista de deseos",
+			"name": "Asociar listas de deseos que no existen a un outfit",
 			"request": {
 				"method": "PUT",
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"outfits\": [999, 1000]\r\n}\r\n",
+					"raw": "{\r\n    \"listasDeseos\": [999, 1000]\r\n}\r\n",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -424,26 +412,26 @@
 					}
 				},
 				"url": {
-					"raw": "{{baseUrl}}/listasdeseos/{{listadeseos_id}}/outfits",
+					"raw": "{{baseUrl}}/outfits/{{outfit_id}}/listasdeseos",
 					"host": [
 						"{{baseUrl}}"
 					],
 					"path": [
-						"listasdeseos",
-						"{{listadeseos_id}}",
-						"outfits"
+						"outfits",
+						"{{outfit_id}}",
+						"listasdeseos"
 					]
 				}
 			},
 			"response": [
 				{
-					"name": "Asociar outfits que no existen a una lista de deseos",
+					"name": "Asociar listas de deseos que no existen a un outfit",
 					"originalRequest": {
 						"method": "PUT",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"apierror\": {\r\n        \"status\": \"NOT_FOUND\",\r\n        \"message\": \"El outfit con el ID dado no fue encontrado\"\r\n    }\r\n}",
+							"raw": "{\r\n    \"apierror\": {\r\n        \"status\": \"NOT_FOUND\",\r\n        \"message\": \"La lista de deseos con el ID dado no fue encontrada\"\r\n    }\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -451,14 +439,14 @@
 							}
 						},
 						"url": {
-							"raw": "{{baseUrl}}/listasdeseos/{{listadeseos_id}}/outfits",
+							"raw": "{{baseUrl}}/outfits/{{outfit_id}}/listasdeseos",
 							"host": [
 								"{{baseUrl}}"
 							],
 							"path": [
-								"listasdeseos",
-								"{{listadeseos_id}}",
-								"outfits"
+								"outfits",
+								"{{outfit_id}}",
+								"listasdeseos"
 							]
 						}
 					},
@@ -478,37 +466,37 @@
 			]
 		},
 		{
-			"name": "Borrar un outfit de una lista de deseos",
+			"name": "Borrar una lista de deseos de un outfit",
 			"request": {
 				"method": "DELETE",
 				"header": [],
 				"url": {
-					"raw": "{{baseUrl}}/listasdeseos/{{listadeseos_id}}/outfits{{outfit_id_2}}",
+					"raw": "{{baseUrl}}/outfits/{{outfit_id}}/listasdeseos{{listadeseos_id_2}}",
 					"host": [
 						"{{baseUrl}}"
 					],
 					"path": [
-						"listasdeseos",
-						"{{listadeseos_id}}",
-						"outfits{{outfit_id_2}}"
+						"outfits",
+						"{{outfit_id}}",
+						"listasdeseos{{listadeseos_id_2}}"
 					]
 				}
 			},
 			"response": [
 				{
-					"name": "Borrar un outfit de una lista de deseos",
+					"name": "Borrar una lista de deseos de un outfit",
 					"originalRequest": {
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "{{baseUrl}}/listasdeseos/{{listadeseos_id}}/outfits{{outfit_id_2}}",
+							"raw": "{{baseUrl}}/outfits/{{outfit_id}}/listasdeseos{{listadeseos_id_2}}",
 							"host": [
 								"{{baseUrl}}"
 							],
 							"path": [
-								"listasdeseos",
-								"{{listadeseos_id}}",
-								"outfits{{outfit_id_2}}"
+								"outfits",
+								"{{outfit_id}}",
+								"listasdeseos{{listadeseos_id_2}}"
 							]
 						}
 					},
@@ -528,26 +516,26 @@
 			]
 		},
 		{
-			"name": "Borrar un outfit que no existe de una lista de deseos",
+			"name": "Borrar una lista de deseos que no existe de un outfit",
 			"request": {
 				"method": "DELETE",
 				"header": [],
 				"url": {
-					"raw": "{{baseUrl}}/listasdeseos/{{listadeseos_id}}/outfits/0",
+					"raw": "{{baseUrl}}/outfits/{{outfit_id}}/llistasdeseos/0",
 					"host": [
 						"{{baseUrl}}"
 					],
 					"path": [
-						"listasdeseos",
-						"{{listadeseos_id}}",
 						"outfits",
+						"{{outfit_id}}",
+						"llistasdeseos",
 						"0"
 					]
 				}
 			},
 			"response": [
 				{
-					"name": "Borrar un outfit que no existe de una lista de deseos",
+					"name": "Borrar una lista de deseos que no existe de un outfit",
 					"originalRequest": {
 						"method": "DELETE",
 						"header": [
@@ -559,7 +547,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"apierror\": {\r\n        \"status\": \"NOT_FOUND\",\r\n        \"message\": \"El outfit con el ID dado no fue encontrado\"\r\n    }\r\n}",
+							"raw": "{\r\n    \"apierror\": {\r\n        \"status\": \"NOT_FOUND\",\r\n        \"message\": \"La lista de deseos con el ID dado no fue encontrada\"\r\n    }\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -567,14 +555,14 @@
 							}
 						},
 						"url": {
-							"raw": "{{baseUrl}}/listasdeseos/{{listadeseos_id}}/outfits/0",
+							"raw": "{{baseUrl}}/outfits/{{outfit_id}}/llistasdeseos/0",
 							"host": [
 								"{{baseUrl}}"
 							],
 							"path": [
-								"listasdeseos",
-								"{{listadeseos_id}}",
 								"outfits",
+								"{{outfit_id}}",
+								"llistasdeseos",
 								"0"
 							]
 						}
