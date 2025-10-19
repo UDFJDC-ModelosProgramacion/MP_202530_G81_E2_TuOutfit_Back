@@ -1,0 +1,521 @@
+{
+	"info": {
+		"_postman_id": "85a07a7a-0fd8-4bb0-badc-c0e7a2e4d20c",
+		"name": "Tienda",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "48728405",
+		"_collection_link": "https://kevinagudelo04-3848481.postman.co/workspace/Kevin-Agudelo's-Workspace~f0007b89-5da0-426b-8701-b68b03611b9f/collection/48728405-85a07a7a-0fd8-4bb0-badc-c0e7a2e4d20c?action=share&source=collection_link&creator=48728405"
+	},
+	"item": [
+		{
+			"name": "Crear Tienda",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Successful POST request\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
+							"});",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"direccion\": \"Calle 123 #45-67, Bogotá\",\n  \"horario\": \"Lunes a sábado de 10:00 a 20:00\",\n  \"ubicacion\": \"https://cdn.example.com/imagenes/tienda1.png\",\n  \"marca\": {\n    \"id\": 1\n  }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/tiendas\n ",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"tiendas\n "
+					]
+				},
+				"description": "This is a POST request, submitting data to an API via the request body. This request submits JSON data, and the data is reflected in the response.\n\nA successful POST request typically returns a `200 OK` or `201 Created` response code."
+			},
+			"response": [
+				{
+					"name": "Crear Tienda",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id\": 1,\n  \"direccion\": \"Calle 123 #45-67, Bogotá\",\n  \"horario\": \"Lunes a sábado de 10:00 a 20:00\",\n  \"ubicacion\": \"https://cdn.example.com/imagenes/tienda1.png\",\n  \"marca\": {\n    \"id\": 1\n  }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/tiendas\n ",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"tiendas\n "
+							]
+						}
+					},
+					"status": "Created",
+					"code": 201,
+					"_postman_previewlanguage": "",
+					"header": [],
+					"cookie": [
+						{
+							"expires": "Invalid Date",
+							"domain": "",
+							"path": ""
+						}
+					],
+					"body": ""
+				}
+			]
+		},
+		{
+			"name": "Obtener Tiendas",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/tiendas",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"tiendas"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Obtener Tiendas",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": 1,\r\n  \"direccion\": \"Calle 123 #45-67, Bogotá\",\r\n  \"horario\": \"Lunes a sábado de 10:00 a 20:00\",\r\n  \"ubicacion\": \"https://cdn.example.com/imagenes/tienda1.png\",\r\n  \"marca\": {\r\n    \"id\": 1\r\n  }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/tiendas",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"tiendas"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "",
+					"header": [],
+					"cookie": [
+						{
+							"expires": "Invalid Date",
+							"domain": "",
+							"path": ""
+						}
+					],
+					"body": ""
+				}
+			]
+		},
+		{
+			"name": "Obtener una Tienda",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/tiendas/{{tienda_id_1}}",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"tiendas",
+						"{{tienda_id_1}}"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Obtener una Tienda",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": 1,\r\n  \"direccion\": \"Calle 123 #45-67, Bogotá\",\r\n  \"horario\": \"Lunes a sábado de 10:00 a 20:00\",\r\n  \"ubicacion\": \"https://cdn.example.com/imagenes/tienda1.png\",\r\n  \"marca\": {\r\n    \"id\": 1\r\n  }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/tiendas/{{tienda_id_1}}",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"tiendas",
+								"{{tienda_id_1}}"
+							]
+						}
+					},
+					"_postman_previewlanguage": "",
+					"header": [],
+					"cookie": [
+						{
+							"expires": "Invalid Date",
+							"domain": "",
+							"path": ""
+						}
+					],
+					"body": ""
+				}
+			]
+		},
+		{
+			"name": "Obtener Tienda que no existe",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/tiendas/0",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"tiendas",
+						"0"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Obtener Tienda que no existe",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\r\n    \"apierror\": {\r\n\r\n        \"status\": \"NOT_FOUND\",\r\n\r\n        \"timestamp\": \"21-02-2023 10:01:09\",\r\n\r\n        \"message\": \"La tienda no existe\"\r\n\r\n    }\r\n\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/tiendas/0",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"tiendas",
+								"0"
+							]
+						}
+					},
+					"status": "Not Found",
+					"code": 404,
+					"_postman_previewlanguage": "",
+					"header": [],
+					"cookie": [
+						{
+							"expires": "Invalid Date",
+							"domain": "",
+							"path": ""
+						}
+					],
+					"body": ""
+				}
+			]
+		},
+		{
+			"name": "Actualizar Tienda",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": 1,\r\n  \"direccion\": \"Calle 10 #45-67, Bogotá\",\r\n  \"horario\": \"Lunes a domingo de 8:00 a 20:00\",\r\n  \"marca\": {\r\n    \"id\": 1\r\n  }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/tiendas/{{tienda_id_1}}",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"tiendas",
+						"{{tienda_id_1}}"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Actualizar Tienda",
+					"originalRequest": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": 1,\r\n  \"direccion\": \"Calle 10 #45-67, Bogotá\",\r\n  \"horario\": \"Lunes a domingo de 8:00 a 20:00\",\r\n  \"marca\": {\r\n    \"id\": 1\r\n  }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/tiendas/{{tienda_id_1}}",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"tiendas",
+								"{{tienda_id_1}}"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "",
+					"header": [],
+					"cookie": [
+						{
+							"expires": "Invalid Date",
+							"domain": "",
+							"path": ""
+						}
+					],
+					"body": ""
+				}
+			]
+		},
+		{
+			"name": "Actualizar tienda que no existe",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "\r\n    \"apierror\": {\r\n\r\n        \"status\": \"NOT_FOUND\",\r\n\r\n        \"timestamp\": \"21-10-2025 10:04:10\",\r\n\r\n        \"message\": \"No existe ninguna tienda relacionada\"\r\n\r\n    }\r\n\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/tiendas/0",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"tiendas",
+						"0"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Actualizar tienda que no existe",
+					"originalRequest": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "\r\n    \"apierror\": {\r\n\r\n        \"status\": \"NOT_FOUND\",\r\n\r\n        \"timestamp\": \"21-10-2025 10:04:10\",\r\n\r\n        \"message\": \"No existe ninguna tienda relacionada\"\r\n\r\n    }\r\n\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/tiendas/0",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"tiendas",
+								"0"
+							]
+						}
+					},
+					"status": "Not Found",
+					"code": 404,
+					"_postman_previewlanguage": "",
+					"header": [],
+					"cookie": [
+						{
+							"expires": "Invalid Date",
+							"domain": "",
+							"path": ""
+						}
+					],
+					"body": ""
+				}
+			]
+		},
+		{
+			"name": "Borrar tienda",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/tiendas/{{tienda_id_1}}",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"tiendas",
+						"{{tienda_id_1}}"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Borrar tienda",
+					"originalRequest": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/tiendas/{{tienda_id_1}}",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"tiendas",
+								"{{tienda_id_1}}"
+							]
+						}
+					},
+					"status": "No Content",
+					"code": 204,
+					"_postman_previewlanguage": "",
+					"header": [],
+					"cookie": [
+						{
+							"expires": "Invalid Date",
+							"domain": "",
+							"path": ""
+						}
+					],
+					"body": ""
+				}
+			]
+		},
+		{
+			"name": "Borrar tienda que no existe",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/tiendas/0",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"tiendas",
+						"0"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Borrar tienda que no existe",
+					"originalRequest": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\r\n    \"apierror\": {\r\n\r\n        \"status\": \"NOT_FOUND\",\r\n\r\n        \"timestamp\": \"21-02-2023 10:05:19\",\r\n\r\n        \"message\": \"La tienda no ha sido encontrada, no se puede eliminar\"\r\n    }\r\n\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/tiendas/0",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"tiendas",
+								"0"
+							]
+						}
+					},
+					"_postman_previewlanguage": "",
+					"header": [],
+					"cookie": [
+						{
+							"expires": "Invalid Date",
+							"domain": "",
+							"path": ""
+						}
+					],
+					"body": ""
+				}
+			]
+		}
+	]
+}

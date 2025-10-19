@@ -1,0 +1,500 @@
+{
+	"info": {
+		"_postman_id": "ed5702bc-08bc-472b-beee-391c57e78f5d",
+		"name": "Marca",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "48728405",
+		"_collection_link": "https://kevinagudelo04-3848481.postman.co/workspace/Kevin-Agudelo's-Workspace~f0007b89-5da0-426b-8701-b68b03611b9f/collection/48728405-ed5702bc-08bc-472b-beee-391c57e78f5d?action=share&source=collection_link&creator=48728405"
+	},
+	"item": [
+		{
+			"name": "Crear tienda",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"nombre\": \"Nike\",\r\n  \"logo\": \"https://cdn.example.com/logos/nike.png\",\r\n  \"sitioOficial\": \"https://www.nike.com\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/marcas",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"marcas"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Crear tienda",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": \"1\",\r\n  \"nombre\": \"Nike\",\r\n  \"logo\": \"https://cdn.example.com/logos/nike.png\",\r\n  \"sitioOficial\": \"https://www.nike.com\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/marcas",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"marcas"
+							]
+						}
+					},
+					"status": "Created",
+					"code": 201,
+					"_postman_previewlanguage": "",
+					"header": [],
+					"cookie": [
+						{
+							"expires": "Invalid Date",
+							"domain": "",
+							"path": ""
+						}
+					],
+					"body": ""
+				}
+			]
+		},
+		{
+			"name": "Obtener Marcas",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/marcas",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"marcas"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Obtener Marcas",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": \"1\",\r\n  \"nombre\": \"Nike\",\r\n  \"logo\": \"https://cdn.example.com/logos/nike.png\",\r\n  \"sitioOficial\": \"https://www.nike.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/marcas",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"marcas"
+							]
+						}
+					},
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": null
+				}
+			]
+		},
+		{
+			"name": "Obtener una Marca",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/marcas/{{marca_id_1}}",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"marcas",
+						"{{marca_id_1}}"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Obtener una Marca",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"id\": 1,\r\n  \"nombre\": \"Nike\",\r\n  \"logo\": \"https://cdn.example.com/logos/nike.png\",\r\n  \"sitioOficial\": \"https://www.nike.com\",\r\n  \"tiendas\": [\r\n    {\r\n      \"id\": 1,\r\n      \"direccion\": \"Calle 123 #45-67, Bogotá\",\r\n      \"horario\": \"Lunes a sábado de 10:00 a 20:00\",\r\n      \"ubicacion\": \"https://cdn.example.com/imagenes/tienda1.png\"\r\n    }\r\n  ]\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/marcas/{{marca_id_1}}",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"marcas",
+								"{{marca_id_1}}"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "",
+					"header": [],
+					"cookie": [
+						{
+							"expires": "Invalid Date",
+							"domain": "",
+							"path": ""
+						}
+					],
+					"body": ""
+				}
+			]
+		},
+		{
+			"name": "Obtener Tienda que no existe",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/marcas/0",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"marcas",
+						"0"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Obtener Tienda que no existe",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\r\n    \"apierror\": {\r\n\r\n        \"status\": \"NOT_FOUND\",\r\n\r\n        \"timestamp\": \"21-02-2023 10:01:09\",\r\n\r\n        \"message\": \"The author with the given id was not found\"\r\n\r\n    }\r\n\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/marcas/0",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"marcas",
+								"0"
+							]
+						}
+					},
+					"status": "Not Found",
+					"code": 404,
+					"_postman_previewlanguage": "",
+					"header": [],
+					"cookie": [
+						{
+							"expires": "Invalid Date",
+							"domain": "",
+							"path": ""
+						}
+					],
+					"body": ""
+				}
+			]
+		},
+		{
+			"name": "Actualizar Marca",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": \"1\",\r\n  \"nombre\": \"Nike\",\r\n  \"logo\": \"https://cdn.example.com/logos/nike.png\",\r\n  \"sitioOficial\": \"https://www.nike.com\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/marcas/{{marca_id_1}}",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"marcas",
+						"{{marca_id_1}}"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Actualizar Marca",
+					"originalRequest": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": \"1\",\r\n  \"nombre\": \"Adidas\",\r\n  \"logo\": \"https://cdn.example.com/logos/adidas.png\",\r\n  \"sitioOficial\": \"https://www.adidas.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/marcas/{{marca_id_1}}",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"marcas",
+								"{{marca_id_1}}"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "",
+					"header": [],
+					"cookie": [
+						{
+							"expires": "Invalid Date",
+							"domain": "",
+							"path": ""
+						}
+					],
+					"body": ""
+				}
+			]
+		},
+		{
+			"name": "Actualizar Marca que no existe",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/marcas/0",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"marcas",
+						"0"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Actualizar Marca que no existe",
+					"originalRequest": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\r\n    \"apierror\": {\r\n\r\n        \"status\": \"NOT_FOUND\",\r\n\r\n        \"timestamp\": \"21-02-2023 10:04:10\",\r\n\r\n        \"message\": \"La marca no existe\"\r\n\r\n    }\r\n\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/marcas/0",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"marcas",
+								"0"
+							]
+						}
+					},
+					"status": "Not Found",
+					"code": 404,
+					"_postman_previewlanguage": "",
+					"header": [],
+					"cookie": [
+						{
+							"expires": "Invalid Date",
+							"domain": "",
+							"path": ""
+						}
+					],
+					"body": ""
+				}
+			]
+		},
+		{
+			"name": "Borrar marca",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/marcas/{{marca_id_1}}",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"marcas",
+						"{{marca_id_1}}"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Borrar marca",
+					"originalRequest": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/marcas/{{marca_id_1}}",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"marcas",
+								"{{marca_id_1}}"
+							]
+						}
+					},
+					"status": "No Content",
+					"code": 204,
+					"_postman_previewlanguage": "",
+					"header": [],
+					"cookie": [
+						{
+							"expires": "Invalid Date",
+							"domain": "",
+							"path": ""
+						}
+					],
+					"body": ""
+				}
+			]
+		},
+		{
+			"name": "Borrar marca que no existe",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/marcas/0\n ",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"marcas",
+						"0\n "
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Borrar marca que no existe",
+					"originalRequest": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\r\n    \"apierror\": {\r\n\r\n        \"status\": \"NOT_FOUND\",\r\n\r\n        \"timestamp\": \"21-02-2023 10:05:19\",\r\n\r\n        \"message\": \"La marca no existe, no se puede borrar\"\r\n\r\n    }\r\n\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/marcas/0\n ",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"marcas",
+								"0\n "
+							]
+						}
+					},
+					"status": "Not Found",
+					"code": 404,
+					"_postman_previewlanguage": "",
+					"header": [],
+					"cookie": [
+						{
+							"expires": "Invalid Date",
+							"domain": "",
+							"path": ""
+						}
+					],
+					"body": ""
+				}
+			]
+		}
+	]
+}
