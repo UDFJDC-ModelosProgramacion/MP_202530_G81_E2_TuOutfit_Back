@@ -56,32 +56,37 @@ public class ImagenOutfitService {
     }
 
   
-    @Transactional
-    public ImagenOutfitEntity getImagenOutfit( Long imagenoutfitId, Long imagenoutfitId2) throws EntityNotFoundException {
-        log.info("Inicia proceso de consultar la imagen con id = {}", imagenoutfitId);
-        Optional<ImagenOutfitEntity> imagenEntity = imagenoutfitRepository.findById(imagenoutfitId);
-        if (imagenEntity.isEmpty())
-            throw new EntityNotFoundException(ErrorMessage.IMAGEN_NOT_FOUND);
-        log.info("Termina proceso de consultar la imagen con id = {}", imagenoutfitId);
-        return imagenEntity.get();
+   @Transactional
+public ImagenOutfitEntity getImagenOutfit(Long outfitId, Long imagenoutfitId)
+        throws EntityNotFoundException {
+    log.info("Inicia proceso de consultar la imagen con id = {} del outfit con id = {}", imagenoutfitId, outfitId);
+    Optional<ImagenOutfitEntity> imagenEntity = imagenoutfitRepository.findById(imagenoutfitId);
+    if (imagenEntity.isEmpty()) {
+        throw new EntityNotFoundException(ErrorMessage.IMAGEN_NOT_FOUND);
     }
+    log.info("Termina proceso de consultar la imagen con id = {}", imagenoutfitId);
+    return imagenEntity.get();
+}
 
   
     @Transactional
-    public ImagenOutfitEntity updateImagenOutfit( Long imagenoutfitId, Long imagenoutfitId2, ImagenOutfitEntity imagenoutfit)
-            throws EntityNotFoundException, IllegalOperationException {
-        log.info("Inicia proceso de actualizar la imagen con id = {}", imagenoutfitId);
-        Optional<ImagenOutfitEntity> imagenEntity = imagenoutfitRepository.findById(imagenoutfitId);
-        if (imagenEntity.isEmpty())
-            throw new EntityNotFoundException(ErrorMessage.IMAGEN_NOT_FOUND);
+public ImagenOutfitEntity updateImagenOutfit(Long outfitId, Long imagenoutfitId, ImagenOutfitEntity imagenoutfit)
+        throws EntityNotFoundException, IllegalOperationException {
+    log.info("Inicia proceso de actualizar la imagen del outfit con id = {} y imagen id = {}", outfitId, imagenoutfitId);
 
-        if (imagenoutfit.getImagen() == null || imagenoutfit.getImagen().isBlank())
-            throw new IllegalOperationException("El campo 'imagen' no puede ser nulo o vacío");
-
-        imagenoutfit.setId(imagenoutfitId);
-        log.info("Termina proceso de actualizar la imagen con id = {}", imagenoutfitId);
-        return imagenoutfitRepository.save(imagenoutfit);
+    Optional<ImagenOutfitEntity> imagenEntity = imagenoutfitRepository.findById(imagenoutfitId);
+    if (imagenEntity.isEmpty()) {
+        throw new EntityNotFoundException(ErrorMessage.IMAGEN_NOT_FOUND);
     }
+
+    if (imagenoutfit.getImagen() == null || imagenoutfit.getImagen().isBlank()) {
+        throw new IllegalOperationException("El campo 'imagen' no puede ser nulo o vacío");
+    }
+
+    imagenoutfit.setId(imagenoutfitId);
+    log.info("Termina proceso de actualizar la imagen con id = {}", imagenoutfitId);
+    return imagenoutfitRepository.save(imagenoutfit);
+}
 
    
     @Transactional

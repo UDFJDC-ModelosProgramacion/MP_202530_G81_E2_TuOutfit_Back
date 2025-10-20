@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import co.edu.udistrital.mdp.back.entities.ImagenPrendaEntity;
+import co.edu.udistrital.mdp.back.entities.PrendaEntity;
+import co.edu.udistrital.mdp.back.repositories.PrendaRepository;
 import co.edu.udistrital.mdp.back.exceptions.EntityNotFoundException;
 import co.edu.udistrital.mdp.back.exceptions.ErrorMessage;
 import co.edu.udistrital.mdp.back.exceptions.IllegalOperationException;
@@ -20,23 +22,40 @@ public class ImagenPrendaService {
 
     @Autowired
     ImagenPrendaRepository imagenPrendaRepository;
+    @Autowired
+    PrendaRepository prendaRepository;
+
 
     /**
      * Crea una nueva ImagenPrenda.
-     * @param outfitId 
+     * @param prendaId 
      */
-    @Transactional
-    public ImagenPrendaEntity createImagenPrenda(Long prendaId, ImagenPrendaEntity imagenPrendaEntity)
-            throws IllegalOperationException {
-        log.info("Inicia proceso de creación de una imagen de prenda");
+   @Transactional
+public ImagenPrendaEntity createImagenPrenda(Long prendaId, ImagenPrendaEntity imagenPrendaEntity)
+        throws EntityNotFoundException, IllegalOperationException {
 
-        if (imagenPrendaEntity.getImagen() == null || imagenPrendaEntity.getImagen().isBlank())
-            throw new IllegalOperationException("El campo 'imagen' no puede ser nulo o vacío");
+    log.info("Inicia proceso de creación de una imagen para la prenda con id = {}", prendaId);
 
-        log.info("Termina proceso de creación de una imagen de prenda");
-        return imagenPrendaRepository.save(imagenPrendaEntity);
+   
+    Optional<PrendaEntity> prendaEntity = prendaRepository.findById(prendaId);
+    if (prendaEntity.isEmpty()) {
+        throw new EntityNotFoundException("La prenda con el id proporcionado no existe");
     }
 
+   
+    if (imagenPrendaEntity.getImagen() == null || imagenPrendaEntity.getImagen().isBlank()) {
+        throw new IllegalOperationException("El campo 'imagen' no puede ser nulo o vacío");
+    }
+
+    
+    imagenPrendaEntity.setPrenda(prendaEntity.get());
+
+    
+    ImagenPrendaEntity nuevaImagen = imagenPrendaRepository.save(imagenPrendaEntity);
+
+    log.info("Termina proceso de creación de una imagen para la prenda con id = {}", prendaId);
+    return nuevaImagen;
+}
     /**
      * Obtiene todas las imágenes de prenda.
      * @param prendaId 

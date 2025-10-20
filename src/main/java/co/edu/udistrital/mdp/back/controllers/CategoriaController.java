@@ -65,9 +65,9 @@ public CategoriaDetailDTO findOne(@PathVariable Long id) throws EntityNotFoundEx
 
 @ResponseStatus(code = HttpStatus.CREATED)
 
-public CategoriaDTO create(@RequestBody CategoriaDTO bookDTO) throws IllegalOperationException, EntityNotFoundException {
+public CategoriaDTO create(@RequestBody CategoriaDTO categoriaDTO) throws IllegalOperationException {
 
-	CategoriaEntity categoriaEntity = categoriaService.createCategoria(modelMapper.map(bookDTO, CategoriaEntity.class));
+	CategoriaEntity categoriaEntity = categoriaService.createCategoria(modelMapper.map(categoriaDTO, CategoriaEntity.class));
 
 	return modelMapper.map(categoriaEntity, CategoriaDTO.class);
 
