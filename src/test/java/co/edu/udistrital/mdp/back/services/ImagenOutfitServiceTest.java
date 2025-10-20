@@ -76,19 +76,13 @@ class ImagenOutfitServiceTest {
 
     @Test
 void getImagenTest() throws EntityNotFoundException {
-   
-    OutfitEntity outfit = factory.manufacturePojo(OutfitEntity.class);
-    outfitRepository.save(outfit);
 
-  
     ImagenOutfitEntity imagen = factory.manufacturePojo(ImagenOutfitEntity.class);
-    imagen.setOutfit(outfit);
+    imagen.setOutfit(outfit); 
     imagen = imagenRepository.save(imagen);
 
-  
     ImagenOutfitEntity encontrada = imagenService.getImagenOutfit(outfit.getId(), imagen.getId());
 
-    
     assertNotNull(encontrada);
     assertEquals(imagen.getId(), encontrada.getId());
     assertEquals(outfit.getId(), encontrada.getOutfit().getId());
@@ -97,28 +91,25 @@ void getImagenTest() throws EntityNotFoundException {
 @Test
 void updateImagenTest() throws EntityNotFoundException, IllegalOperationException {
     
-    OutfitEntity outfit = factory.manufacturePojo(OutfitEntity.class);
-    outfit = outfitRepository.save(outfit);
+    OutfitEntity nuevoOutfit = factory.manufacturePojo(OutfitEntity.class);
+    nuevoOutfit = outfitRepository.save(nuevoOutfit);
 
-  
     ImagenOutfitEntity imagen = factory.manufacturePojo(ImagenOutfitEntity.class);
-    imagen.setOutfit(outfit);
+    imagen.setOutfit(nuevoOutfit);
     imagen = imagenRepository.save(imagen);
 
-    
     ImagenOutfitEntity nuevaImagen = new ImagenOutfitEntity();
     nuevaImagen.setImagen("https://cdn.test.com/nueva-imagen.png");
 
-  
     ImagenOutfitEntity resultado = imagenService.updateImagenOutfit(
-            outfit.getId(),
+            nuevoOutfit.getId(),
             imagen.getId(),
             nuevaImagen
     );
 
     assertNotNull(resultado);
     assertEquals("https://cdn.test.com/nueva-imagen.png", resultado.getImagen());
-    assertEquals(outfit.getId(), resultado.getOutfit().getId());
+    assertEquals(nuevoOutfit.getId(), resultado.getOutfit().getId());
 }
     
     @Test

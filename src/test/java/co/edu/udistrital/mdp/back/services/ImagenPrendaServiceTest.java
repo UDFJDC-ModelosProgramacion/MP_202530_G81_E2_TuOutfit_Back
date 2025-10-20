@@ -68,7 +68,7 @@ void createImagenPrendaTest() throws EntityNotFoundException, IllegalOperationEx
 }
 
    @Test
-void createImagenPrendaSinImagenTest() throws EntityNotFoundException {
+void createImagenPrendaSinImagenTest()  {
     PrendaEntity prenda = prendaRepository.save(factory.manufacturePojo(PrendaEntity.class));
 
     ImagenPrendaEntity imagen = new ImagenPrendaEntity();
