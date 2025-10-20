@@ -45,7 +45,7 @@ public class ListaDeseosOutfitController {
 	 * @param outfitId   El ID del outfit que se busca
 	 * @return {@link OutfitDetailDTO} - El outfit encontrado en la lista de deseos.
 	 */
-	@GetMapping(value = "/{listadeseosId}/outfits/{outfitId}")
+	@GetMapping(value = "/{listaDeseosId}/outfits/{outfitId}")
 	@ResponseStatus(code = HttpStatus.OK)
 	public OutfitDetailDTO getOutfit(@PathVariable Long listaDeseosId, @PathVariable Long outfitId)
 			throws EntityNotFoundException, IllegalOperationException {
@@ -60,7 +60,7 @@ public class ListaDeseosOutfitController {
 	 * @return JSONArray {@link OutfitDetailDTO} - Los outfits encontrados en la lista de deseos.
 	 *         Si no hay ninguno retorna una lista vacía.
 	 */
-	@GetMapping(value = "/{listadeseosId}/outfits")
+	@GetMapping(value = "/{listaDeseosId}/outfits")
 	@ResponseStatus(code = HttpStatus.OK)
 	public List<OutfitDetailDTO> getOutfits(@PathVariable Long listaDeseosId) throws EntityNotFoundException {
 		List<OutfitEntity> outfitEntity = listaOutfitsService.getOutfits(listaDeseosId);
@@ -75,7 +75,7 @@ public class ListaDeseosOutfitController {
 	 * @param outfitId   El ID del outfit que se asocia
 	 * @return JSON {@link OutfitDetailDTO} - El outfit asociado.
 	 */
-	@PostMapping(value = "/{authorId}/books/{bookId}")
+	@PostMapping(value = "/{listaDeseosId}/outfits/{outfitId}")
 	@ResponseStatus(code = HttpStatus.OK)
 	public OutfitDetailDTO addBook(@PathVariable Long listaDeseosId, @PathVariable Long outfitId)
 			throws EntityNotFoundException {
@@ -92,7 +92,7 @@ public class ListaDeseosOutfitController {
 	 *                 guardar.
 	 * @return JSONArray {@link OutfitDetailDTO} - La lista actualizada.
 	 */
-	@PutMapping(value = "/{listadeseosId}/outfits")
+	@PutMapping(value = "/{listaDeseosId}/outfits")
 	@ResponseStatus(code = HttpStatus.OK)
 	public List<OutfitDetailDTO> replaceOutfits(@PathVariable Long listaDeseosId, @RequestBody List<OutfitDTO> outfits)
 			throws EntityNotFoundException {
@@ -109,7 +109,7 @@ public class ListaDeseosOutfitController {
 	 * @param listaDeseosId El ID de la lista de deseos a la cual se le va a desasociar el outfit
 	 * @param outfitId   El ID del outfit que se desasocia
 	 */
-	@DeleteMapping(value = "/{listadeseosId}/outfits/{outfitId}")
+	@DeleteMapping(value = "/{listaDeseosId}/outfits/{outfitId}")
 	@ResponseStatus(code = HttpStatus.NO_CONTENT)
 	public void removeOutfit(@PathVariable Long listaDeseosId, @PathVariable Long outfitId)
 			throws EntityNotFoundException {

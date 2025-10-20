@@ -19,7 +19,6 @@ import co.edu.udistrital.mdp.back.dto.ListaDeseosDTO;
 import co.edu.udistrital.mdp.back.dto.ListaDeseosDetailDTO;
 import co.edu.udistrital.mdp.back.entities.ListaDeseosEntity;
 import co.edu.udistrital.mdp.back.exceptions.EntityNotFoundException;
-import co.edu.udistrital.mdp.back.exceptions.IllegalOperationException;
 import co.edu.udistrital.mdp.back.services.ListaDeseosService;
 
 /**
@@ -47,7 +46,7 @@ public class ListaDeseosController {
 	 */
 	@PostMapping("/usuarios/{usuarioId}/listas")
 	@ResponseStatus(code = HttpStatus.CREATED)
-	public ListaDeseosDTO create(@PathVariable Long usuarioId, @RequestBody ListaDeseosDTO listadeseosDTO) throws IllegalOperationException, EntityNotFoundException {
+	public ListaDeseosDTO create(@PathVariable Long usuarioId, @RequestBody ListaDeseosDTO listadeseosDTO) throws EntityNotFoundException {
 		ListaDeseosEntity listadeseosEntity = listaService.createListaDeseos(usuarioId, modelMapper.map(listadeseosDTO, ListaDeseosEntity.class));
 		return modelMapper.map(listadeseosEntity, ListaDeseosDTO.class);
 	}
@@ -92,9 +91,8 @@ public class ListaDeseosController {
 	@PutMapping(value = "/{id}")
 	@ResponseStatus(code = HttpStatus.OK)
 	public ListaDeseosDTO update(@PathVariable Long id, @RequestBody ListaDeseosDTO listadeseosDTO)
-			throws EntityNotFoundException, IllegalOperationException {
+			throws EntityNotFoundException {
 		ListaDeseosEntity listadeseosEntity = listaService.updateListaDeseos(id, modelMapper.map(listadeseosDTO, ListaDeseosEntity.class));
 		return modelMapper.map(listadeseosEntity, ListaDeseosDTO.class);
 	}
-    
 }
