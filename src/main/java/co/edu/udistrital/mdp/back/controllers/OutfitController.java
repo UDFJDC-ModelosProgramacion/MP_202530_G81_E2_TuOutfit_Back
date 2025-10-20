@@ -90,7 +90,7 @@ public OutfitDTO update(@PathVariable Long id, @RequestBody OutfitDTO outfitDTO)
 
 @ResponseStatus(code = HttpStatus.NO_CONTENT)
 
-public void delete(@PathVariable Long id) throws EntityNotFoundException, IllegalOperationException {
+public void delete(@PathVariable Long id) throws EntityNotFoundException {
 
 	outfitService.deleteOutfit(id);
 

@@ -37,16 +37,16 @@ public class ImagenPrendaController {
 
     @PostMapping(value = "/{prendaId}/imagenprendas")
 	@ResponseStatus(code = HttpStatus.CREATED)
-	public ImagenPrendaDTO createImagenPrenda(@PathVariable Long outfitId, @RequestBody ImagenPrendaDTO imagenprenda)
-			throws EntityNotFoundException, IllegalOperationException {
+	public ImagenPrendaDTO createImagenPrenda(@PathVariable Long prendaId, @RequestBody ImagenPrendaDTO imagenprenda)
+			throws EntityNotFoundException, IllegalOperationException{
 		ImagenPrendaEntity imagenprendaEnity = modelMapper.map(imagenprenda, ImagenPrendaEntity.class);
-		ImagenPrendaEntity newImagenPrenda = imagenprendaService.createImagenPrenda(outfitId, imagenprendaEnity);
+		ImagenPrendaEntity newImagenPrenda = imagenprendaService.createImagenPrenda(prendaId, imagenprendaEnity);
 		return modelMapper.map(newImagenPrenda, ImagenPrendaDTO.class);
 	}
 
     @GetMapping(value = "/{prendaId}/imagenprendas")
 	@ResponseStatus(code = HttpStatus.OK)
-	public List<ImagenPrendaDTO> getImagenPrendas(@PathVariable Long prendaId) throws EntityNotFoundException {
+	public List<ImagenPrendaDTO> getImagenPrendas(@PathVariable Long prendaId)  {
 		List<ImagenPrendaEntity> imagenprendas = imagenprendaService.getImagenPrendas(prendaId);
 		return modelMapper.map(imagenprendas, new TypeToken<List<ImagenPrendaDTO>>() {
 		}.getType());
@@ -62,7 +62,7 @@ public class ImagenPrendaController {
 
     @PutMapping(value = "/{prendaId}/imagenprendas/{imagenprendaId}")
 	@ResponseStatus(code = HttpStatus.OK)
-	public ImagenPrendaDTO updateImagenPrenda(@PathVariable Long prendaId, @PathVariable("imagenprendasId") Long imagenprendaId,
+	public ImagenPrendaDTO updateImagenPrenda(@PathVariable Long prendaId, @PathVariable("imagenprendaId") Long imagenprendaId,
 			@RequestBody ImagenPrendaDTO imagenprenda) throws EntityNotFoundException, IllegalOperationException {
 		ImagenPrendaEntity imagenprendaEntity = modelMapper.map(imagenprenda, ImagenPrendaEntity.class);
 		ImagenPrendaEntity newEntity = imagenprendaService.updateImagenPrenda(prendaId, imagenprendaId, imagenprendaEntity);
