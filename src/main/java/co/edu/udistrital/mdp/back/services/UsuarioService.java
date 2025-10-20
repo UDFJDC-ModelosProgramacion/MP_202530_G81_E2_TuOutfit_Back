@@ -165,7 +165,6 @@ public class UsuarioService {
     @Transactional
     public ComentarioEntity addComentario(Long usuarioId, ComentarioEntity comentario)
             throws EntityNotFoundException, IllegalOperationException {
-
         UsuarioEntity usuario = usuarioRepository.findById(usuarioId)
                 .orElseThrow(() -> new EntityNotFoundException(ErrorMessage.USUARIO_NOT_FOUND));
 
@@ -173,11 +172,15 @@ public class UsuarioService {
             throw new IllegalOperationException("El comentario no puede estar vacío");
         }
 
+        // Actualiza ambos lados de la relación
+        usuario.getComentarios().add(comentario);
         comentario.setUsuario(usuario);
+
         ComentarioEntity creado = comentarioRepository.save(comentario);
         log.info("Comentario agregado al usuario con id = {}", usuarioId);
         return creado;
     }
+
 
 	/**
      * Obtiene todos los comentarios de un usuario.

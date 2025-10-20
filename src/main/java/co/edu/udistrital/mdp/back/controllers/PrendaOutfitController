@@ -1,0 +1,78 @@
+package co.edu.udistrital.mdp.back.controllers;
+
+import java.util.List;
+
+import org.modelmapper.ModelMapper;
+import org.modelmapper.TypeToken;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestController;
+
+import co.edu.udistrital.mdp.back.dto.OutfitDTO;
+import co.edu.udistrital.mdp.back.dto.OutfitDetailDTO;
+import co.edu.udistrital.mdp.back.entities.OutfitEntity;
+import co.edu.udistrital.mdp.back.services.PrendaOutfitService;
+import co.edu.udistrital.mdp.back.exceptions.EntityNotFoundException;
+import co.edu.udistrital.mdp.back.exceptions.IllegalOperationException;
+
+@RestController
+@RequestMapping("/api/prendas/{prendaId}/outfits")
+public class PrendaOutfitController {
+
+    @Autowired
+    private PrendaOutfitService prendaOutfitService;
+
+    @Autowired
+    private ModelMapper modelMapper;
+
+    @PostMapping(value = "/{outfitId}")
+    @ResponseStatus(code = HttpStatus.OK)
+    public OutfitDTO addOutfit(@PathVariable Long prendaId, @PathVariable Long outfitId) throws EntityNotFoundException {
+        OutfitEntity outfitEntity = prendaOutfitService.addOutfit(prendaId, outfitId);
+        return modelMapper.map(outfitEntity, OutfitDTO.class);
+    }
+
+    @GetMapping
+    @ResponseStatus(code = HttpStatus.OK)
+    public List<OutfitDTO> getOutfits(@PathVariable Long prendaId) throws EntityNotFoundException {
+        List<OutfitEntity> outfits = prendaOutfitService.getOutfits(prendaId);
+        return modelMapper.map(outfits, new TypeToken<List<OutfitDTO>>() {
+        }.getType());
+    }
+
+    @GetMapping(value = "/{outfitId}")
+    @ResponseStatus(code = HttpStatus.OK)
+    public OutfitDetailDTO getOutfit(@PathVariable Long prendaId, @PathVariable Long outfitId) 
+            throws EntityNotFoundException, IllegalOperationException {
+        OutfitEntity outfitEntity = prendaOutfitService.getOutfit(prendaId, outfitId);
+        return modelMapper.map(outfitEntity, OutfitDetailDTO.class);
+    }
+
+    @PutMapping
+    @ResponseStatus(code = HttpStatus.OK)
+    public List<OutfitDTO> addOutfits(@PathVariable Long prendaId, @RequestBody List<OutfitDTO> outfitsDTO) 
+            throws EntityNotFoundException {
+        
+        List<OutfitEntity> outfitsToAssociate = modelMapper.map(outfitsDTO, new TypeToken<List<OutfitEntity>>() {
+        }.getType());
+        
+        List<OutfitEntity> updatedOutfits = prendaOutfitService.addOutfits(prendaId, outfitsToAssociate);
+        
+        return modelMapper.map(updatedOutfits, new TypeToken<List<OutfitDTO>>() {
+        }.getType());
+    }
+
+    @DeleteMapping(value = "/{outfitId}")
+    @ResponseStatus(code = HttpStatus.NO_CONTENT)
+    public void removeOutfit(@PathVariable Long prendaId, @PathVariable Long outfitId) throws EntityNotFoundException {
+        prendaOutfitService.removeOutfit(prendaId, outfitId);
+    }
+}
