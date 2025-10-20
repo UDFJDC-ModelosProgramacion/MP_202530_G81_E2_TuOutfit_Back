@@ -60,9 +60,9 @@ public class ImagenPrendaController {
 		return modelMapper.map(entity, ImagenPrendaDTO.class);
 	}
 
-    @PutMapping(value = "/{prendaId}/imagenprendas/{imagenprendaId}")
+    @PutMapping(value = "/{prendaId}/imagenprendas/{imagenprendasId}")
 	@ResponseStatus(code = HttpStatus.OK)
-	public ImagenPrendaDTO updateImagenPrenda(@PathVariable Long prendaId, @PathVariable("imagenprendaId") Long imagenprendaId,
+	public ImagenPrendaDTO updateImagenPrenda(@PathVariable Long prendaId, @PathVariable("imagenprendasId") Long imagenprendaId,
 			@RequestBody ImagenPrendaDTO imagenprenda) throws EntityNotFoundException, IllegalOperationException {
 		ImagenPrendaEntity imagenprendaEntity = modelMapper.map(imagenprenda, ImagenPrendaEntity.class);
 		ImagenPrendaEntity newEntity = imagenprendaService.updateImagenPrenda(prendaId, imagenprendaId, imagenprendaEntity);
