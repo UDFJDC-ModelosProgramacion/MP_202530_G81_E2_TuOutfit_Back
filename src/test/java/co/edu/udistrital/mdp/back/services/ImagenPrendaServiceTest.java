@@ -44,7 +44,7 @@ class ImagenPrendaServiceTest {
     }
 
     @Test
-    void createImagenPrendaTest() throws IllegalOperationException {
+    void createImagenPrendaTest() throws EntityNotFoundException, IllegalOperationException {
         ImagenPrendaEntity imagenPrenda = factory.manufacturePojo(ImagenPrendaEntity.class);
         imagenPrenda.setImagen("https://servidor.com/imagen1.png"); 
 

@@ -51,7 +51,7 @@ public class ComentarioController {
 	@PostMapping(value = "/{usuarioId}/comentarios")
 	@ResponseStatus(code = HttpStatus.CREATED)
 	public ComentarioDTO createReview(@PathVariable Long usuarioId, @RequestBody ComentarioDTO comentario)
-			throws EntityNotFoundException, IllegalOperationException {
+			throws EntityNotFoundException {
 		ComentarioEntity comentarioEnity = modelMapper.map(comentario, ComentarioEntity.class);
 		ComentarioEntity newComentario = comentarioService.createComentario(usuarioId, comentarioEnity);
 		return modelMapper.map(newComentario, ComentarioDTO.class);
@@ -96,7 +96,7 @@ public class ComentarioController {
 	 * @param comentario   {@link ComentarioDTO} - El comentario que se desea guardar.
 	 * @return JSON {@link ComentarioDTO} - El comentario actualizado.
 	 */
-	@PutMapping(value = "/{usaurioId}/comentarios/{comentariosId}")
+	@PutMapping(value = "/{usuarioId}/comentarios/{comentariosId}")
 	@ResponseStatus(code = HttpStatus.OK)
 	public ComentarioDTO updateComentario(@PathVariable Long usuarioId, @PathVariable("comentariosId") Long comentarioId,
 			@RequestBody ComentarioDTO comentario) throws EntityNotFoundException {
