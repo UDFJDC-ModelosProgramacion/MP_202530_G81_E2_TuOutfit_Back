@@ -1,7 +1,7 @@
 package co.edu.udistrital.mdp.back.services;
 
 import java.util.List; // Necesario para devolver listas
-
+import co.edu.udistrital.mdp.back.exceptions.ErrorMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -45,7 +45,7 @@ public class TiendaService {
         log.info("Inicia proceso de actualizar tienda");
 
         TiendaEntity tienda = tiendaRepository.findById(tiendaId)
-                .orElseThrow(() -> new EntityNotFoundException("Tienda no encontrada"));
+                .orElseThrow(() -> new EntityNotFoundException(ErrorMessage.TIENDA_NOT_FOUND));
 
         // Validar nombre duplicado
         if (!tienda.getNombre().equals(tiendaDetails.getNombre()) && tiendaRepository.existsByNombre(tiendaDetails.getNombre()))
@@ -68,7 +68,7 @@ public class TiendaService {
         log.info("Inicia proceso de eliminar tienda");
 
         TiendaEntity tienda = tiendaRepository.findById(tiendaId)
-                .orElseThrow(() -> new EntityNotFoundException("Tienda no encontrada"));
+                .orElseThrow(() -> new EntityNotFoundException(ErrorMessage.TIENDA_NOT_FOUND));
 
         tiendaRepository.delete(tienda);
         log.info("Tienda eliminada correctamente");
@@ -95,6 +95,6 @@ public class TiendaService {
     public TiendaEntity getTiendaById(Long tiendaId) throws EntityNotFoundException {
         log.info("Inicia proceso de consultar la tienda con id = {}", tiendaId);
         return tiendaRepository.findById(tiendaId)
-                .orElseThrow(() -> new EntityNotFoundException("Tienda no encontrada"));
+                .orElseThrow(() -> new EntityNotFoundException(ErrorMessage.TIENDA_NOT_FOUND));
     }
 }

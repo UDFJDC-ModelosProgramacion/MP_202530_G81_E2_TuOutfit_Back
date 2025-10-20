@@ -8,6 +8,27 @@
 	"item": [
 		{
 			"name": "Crear un usuario",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var data = pm.response.json()\r",
+							"\r",
+							"pm.globals.set(\"usuario_id_1\", data.id);\r",
+							"\r",
+							"pm.test(\"El codigo de estado es 201\", function () {\r",
+							"\r",
+							"   pm.response.to.have.status(201);\r",
+							"\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
 			"request": {
 				"method": "POST",
 				"header": [],
@@ -72,6 +93,31 @@
 		},
 		{
 			"name": "Obtener todos los usuarios",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('Número de usuarios > ' + 0, function () {\r",
+							"\r",
+							"   var data = pm.response.json()\r",
+							"\r",
+							"   pm.expect(data.length).to.greaterThan(0)\r",
+							"\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Codigo de estado es 200\", function () {\r",
+							"\r",
+							"   pm.response.to.have.status(200);\r",
+							"\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
 			"request": {
 				"method": "GET",
 				"header": [],
@@ -131,6 +177,23 @@
 		},
 		{
 			"name": "Obtener un usuario",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"El codigo de estado es 200\", function () {\r",
+							"\r",
+							"   pm.response.to.have.status(200);\r",
+							"\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
 			"request": {
 				"method": "GET",
 				"header": [],
@@ -193,6 +256,31 @@
 		},
 		{
 			"name": "Obtener un usuario que no existe",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"El codigo de estado es 404\", function () {\r",
+							"\r",
+							"   pm.response.to.have.status(404);\r",
+							"\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Obtener el mensaje de error esperado\", function () {\r",
+							"\r",
+							"   var data = pm.response.json();\r",
+							"\r",
+							"   pm.expect(data.apierror.message).to.eql(\"El usuario con el id dado no fue encontrado\");\r",
+							"\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
 			"request": {
 				"method": "GET",
 				"header": [],
@@ -256,6 +344,23 @@
 		},
 		{
 			"name": "Editar un usuario",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"El codigo de estado es 200\", function () {\r",
+							"\r",
+							"   pm.response.to.have.status(200);\r",
+							"\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
 			"request": {
 				"method": "PUT",
 				"header": [],
@@ -322,6 +427,31 @@
 		},
 		{
 			"name": "Editar un usuario que no existe",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"El codigo de estado es 404\", function () {\r",
+							"\r",
+							"   pm.response.to.have.status(404);\r",
+							"\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Obtener el mensaje de error esperado\", function () {\r",
+							"\r",
+							"   var data = pm.response.json();\r",
+							"\r",
+							"   pm.expect(data.apierror.message).to.eql(\"El usuario con el id dado no fue encontrado\");\r",
+							"\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
 			"request": {
 				"method": "PUT",
 				"header": [],
@@ -388,6 +518,23 @@
 		},
 		{
 			"name": "Borrar un usuario",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"El codigo de estado es 204\", function () {\r",
+							"\r",
+							"   pm.response.to.have.status(204);\r",
+							"\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
 			"request": {
 				"method": "DELETE",
 				"header": [],
@@ -436,6 +583,31 @@
 		},
 		{
 			"name": "Borrar un usuario que no existe",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"El codigo de estado es 404\", function () {\r",
+							"\r",
+							"   pm.response.to.have.status(404);\r",
+							"\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Obtener el mensaje de error esperado\", function () {\r",
+							"\r",
+							"   var data = pm.response.json();\r",
+							"\r",
+							"   pm.expect(data.apierror.message).to.eql(\"El usuario con el id dado no fue encontrado\");\r",
+							"\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
 			"request": {
 				"method": "DELETE",
 				"header": [],

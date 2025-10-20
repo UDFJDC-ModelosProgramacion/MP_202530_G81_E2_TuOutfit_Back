@@ -36,21 +36,21 @@ public ImagenPrendaEntity createImagenPrenda(Long prendaId, ImagenPrendaEntity i
 
     log.info("Inicia proceso de creación de una imagen para la prenda con id = {}", prendaId);
 
-   
+    
+    if (prendaId == null) {
+        throw new EntityNotFoundException("El id de la prenda no puede ser nulo");
+    }
+
     Optional<PrendaEntity> prendaEntity = prendaRepository.findById(prendaId);
     if (prendaEntity.isEmpty()) {
         throw new EntityNotFoundException("La prenda con el id proporcionado no existe");
     }
 
-   
     if (imagenPrendaEntity.getImagen() == null || imagenPrendaEntity.getImagen().isBlank()) {
         throw new IllegalOperationException("El campo 'imagen' no puede ser nulo o vacío");
     }
 
-    
     imagenPrendaEntity.setPrenda(prendaEntity.get());
-
-    
     ImagenPrendaEntity nuevaImagen = imagenPrendaRepository.save(imagenPrendaEntity);
 
     log.info("Termina proceso de creación de una imagen para la prenda con id = {}", prendaId);

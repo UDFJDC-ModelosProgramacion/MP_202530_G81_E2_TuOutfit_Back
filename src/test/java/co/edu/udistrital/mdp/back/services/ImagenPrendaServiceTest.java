@@ -13,6 +13,8 @@ import org.springframework.context.annotation.Import;
 import org.springframework.transaction.annotation.Transactional;
 
 import co.edu.udistrital.mdp.back.entities.ImagenPrendaEntity;
+import co.edu.udistrital.mdp.back.entities.PrendaEntity;
+import co.edu.udistrital.mdp.back.repositories.PrendaRepository;
 
 import co.edu.udistrital.mdp.back.exceptions.EntityNotFoundException;
 import co.edu.udistrital.mdp.back.exceptions.IllegalOperationException;
@@ -30,6 +32,9 @@ class ImagenPrendaServiceTest {
     @Autowired
     private TestEntityManager entityManager;
 
+    @Autowired
+    private PrendaRepository prendaRepository;
+
     private PodamFactory factory = new PodamFactoryImpl();
 
     @BeforeEach
@@ -44,26 +49,35 @@ class ImagenPrendaServiceTest {
     }
 
     @Test
-    void createImagenPrendaTest() throws EntityNotFoundException, IllegalOperationException {
-        ImagenPrendaEntity imagenPrenda = factory.manufacturePojo(ImagenPrendaEntity.class);
-        imagenPrenda.setImagen("https://servidor.com/imagen1.png"); 
+void createImagenPrendaTest() throws EntityNotFoundException, IllegalOperationException {
+    
+    PrendaEntity prenda = factory.manufacturePojo(PrendaEntity.class);
+    prendaRepository.save(prenda);
 
-        ImagenPrendaEntity nueva = imagenPrendaService.createImagenPrenda(null, imagenPrenda);
+    
+    ImagenPrendaEntity imagen = new ImagenPrendaEntity();
+    imagen.setImagen("https://img.com/foto1.png");
 
-        assertNotNull(nueva);
-        ImagenPrendaEntity encontrada = entityManager.find(ImagenPrendaEntity.class, nueva.getId());
-        assertEquals(imagenPrenda.getImagen(), encontrada.getImagen());
-    }
+    
+    ImagenPrendaEntity result = imagenPrendaService.createImagenPrenda(prenda.getId(), imagen);
 
-    @Test
-    void createImagenPrendaSinImagenTest() {
-        ImagenPrendaEntity imagenPrenda = new ImagenPrendaEntity();
-        imagenPrenda.setImagen(""); 
+   
+    assertNotNull(result);
+    assertEquals(imagen.getImagen(), result.getImagen());
+    assertEquals(prenda.getId(), result.getPrenda().getId());
+}
 
-        assertThrows(IllegalOperationException.class, () -> {
-            imagenPrendaService.createImagenPrenda(null, imagenPrenda);
-        });
-    }
+   @Test
+void createImagenPrendaSinImagenTest()  {
+    PrendaEntity prenda = prendaRepository.save(factory.manufacturePojo(PrendaEntity.class));
+
+    ImagenPrendaEntity imagen = new ImagenPrendaEntity();
+    imagen.setImagen(""); 
+
+    assertThrows(IllegalOperationException.class, () -> {
+        imagenPrendaService.createImagenPrenda(prenda.getId(), imagen);
+    });
+}
 
     @Test
     void getImagenesPrendaTest() {
