@@ -156,14 +156,14 @@ class UsuarioServiceTest {
 	 * Prueba para eliminar un usuario
 	 */
    @Test
-void testDeleteUsuarioCorrecto() throws EntityNotFoundException {
-    UsuarioEntity entity = usuarioList.get(0);
+    void testDeleteUsuarioCorrecto() throws EntityNotFoundException {
+        UsuarioEntity entity = usuarioList.get(0);
 
-    usuarioService.deleteUsuario(entity.getId());
+        usuarioService.deleteUsuario(entity.getId());
 
-    assertThrows(EntityNotFoundException.class, () -> {
-        usuarioService.getUsuario(entity.getId());
-    });
+        assertThrows(EntityNotFoundException.class, () -> {
+            usuarioService.getUsuario(entity.getId());
+        });
 }
 
     /**
