@@ -27,72 +27,46 @@ import org.modelmapper.TypeToken;
 @RequestMapping("/outfits")
 public class OutfitController {
     @Autowired
-
 	private OutfitService outfitService;
 
 	@Autowired
-
 	private ModelMapper modelMapper;
 
-    @GetMapping
+	@GetMapping
+	@ResponseStatus(code = HttpStatus.OK)
 
-@ResponseStatus(code = HttpStatus.OK)
+	public List<OutfitDetailDTO> findAll() {
+		List<OutfitEntity> outfits = outfitService.getOutfits();
+		return modelMapper.map(outfits, new TypeToken<List<OutfitDetailDTO>>() {
+		}.getType());
+	}
 
-public List<OutfitDetailDTO> findAll() {
+	@GetMapping(value = "/{id}")
+	@ResponseStatus(code = HttpStatus.OK)
 
-	List<OutfitEntity> outfits = outfitService.getOutfits();
+	public OutfitDetailDTO findOne(@PathVariable Long id) throws EntityNotFoundException {
+		OutfitEntity outfitEntity = outfitService.getOutfit(id);
+		return modelMapper.map(outfitEntity, OutfitDetailDTO.class);
+	}
 
-	return modelMapper.map(outfits, new TypeToken<List<OutfitDetailDTO>>() {
+	@PostMapping
+	@ResponseStatus(code = HttpStatus.CREATED)
+	public OutfitDTO create(@RequestBody OutfitDTO outfitDTO) throws IllegalOperationException, EntityNotFoundException {
+		OutfitEntity outfitEntity = outfitService.createOutfit(modelMapper.map(outfitDTO, OutfitEntity.class));
+		return modelMapper.map(outfitEntity, OutfitDTO.class);
+	}
 
-	}.getType());
+	@PutMapping(value = "/{id}")
+	@ResponseStatus(code = HttpStatus.OK)
+	public OutfitDTO update(@PathVariable Long id, @RequestBody OutfitDTO outfitDTO)
+				throws EntityNotFoundException, IllegalOperationException {
+		OutfitEntity outfitEntity = outfitService.updateOutfit(id, modelMapper.map(outfitDTO, OutfitEntity.class));
+		return modelMapper.map(outfitEntity, OutfitDTO.class);
+	}
 
-}
-
-@GetMapping(value = "/{id}")
-
-@ResponseStatus(code = HttpStatus.OK)
-
-public OutfitDetailDTO findOne(@PathVariable Long id) throws EntityNotFoundException {
-
-	OutfitEntity outfitEntity = outfitService.getOutfit(id);
-
-	return modelMapper.map(outfitEntity, OutfitDetailDTO.class);
-
-}
-
-@PostMapping
-
-@ResponseStatus(code = HttpStatus.CREATED)
-
-public OutfitDTO create(@RequestBody OutfitDTO outfitDTO) throws IllegalOperationException, EntityNotFoundException {
-
-	OutfitEntity outfitEntity = outfitService.createOutfit(modelMapper.map(outfitDTO, OutfitEntity.class));
-
-	return modelMapper.map(outfitEntity, OutfitDTO.class);
-
-}
-
-@PutMapping(value = "/{id}")
-
-@ResponseStatus(code = HttpStatus.OK)
-
-public OutfitDTO update(@PathVariable Long id, @RequestBody OutfitDTO outfitDTO)
-
-			throws EntityNotFoundException, IllegalOperationException {
-
-	OutfitEntity outfitEntity = outfitService.updateOutfit(id, modelMapper.map(outfitDTO, OutfitEntity.class));
-
-	return modelMapper.map(outfitEntity, OutfitDTO.class);
-
-}
-
-@DeleteMapping(value = "/{id}")
-
-@ResponseStatus(code = HttpStatus.NO_CONTENT)
-
-public void delete(@PathVariable Long id) throws EntityNotFoundException {
-
-	outfitService.deleteOutfit(id);
-
-}
+	@DeleteMapping(value = "/{id}")
+	@ResponseStatus(code = HttpStatus.NO_CONTENT)
+	public void delete(@PathVariable Long id) throws EntityNotFoundException {
+		outfitService.deleteOutfit(id);
+	}
 }

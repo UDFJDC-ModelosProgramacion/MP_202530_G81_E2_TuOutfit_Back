@@ -60,9 +60,9 @@ public class ImagenOutfitController {
 		return modelMapper.map(entity, ImagenOutfitDTO.class);
 	}
 
-    @PutMapping(value = "/{outfitId}/imagenoutfits/{imagenoutfitId}")
+    @PutMapping(value = "/{outfitId}/imagenoutfits/{imagenoutfitsId}")
 	@ResponseStatus(code = HttpStatus.OK)
-	public ImagenOutfitDTO updateImagenOutfit(@PathVariable Long outfitId, @PathVariable("imagenoutfitId") Long imagenoutfitId,
+	public ImagenOutfitDTO updateImagenOutfit(@PathVariable Long outfitId, @PathVariable("imagenoutfitsId") Long imagenoutfitId,
 			@RequestBody ImagenOutfitDTO imagenoutfit) throws EntityNotFoundException, IllegalOperationException {
 		ImagenOutfitEntity imagenoutfitEntity = modelMapper.map(imagenoutfit, ImagenOutfitEntity.class);
 		ImagenOutfitEntity newEntity = imagenoutfitService.updateImagenOutfit(outfitId, imagenoutfitId, imagenoutfitEntity);
