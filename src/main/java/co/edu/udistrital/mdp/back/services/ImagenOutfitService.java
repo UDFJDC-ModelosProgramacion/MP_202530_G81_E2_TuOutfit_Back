@@ -69,24 +69,43 @@ public ImagenOutfitEntity getImagenOutfit(Long outfitId, Long imagenoutfitId)
 }
 
   
-    @Transactional
-public ImagenOutfitEntity updateImagenOutfit(Long outfitId, Long imagenoutfitId, ImagenOutfitEntity imagenoutfit)
+  @Transactional
+public ImagenOutfitEntity updateImagenOutfit(Long outfitId, Long imagenId, ImagenOutfitEntity imagenOutfitEntity)
         throws EntityNotFoundException, IllegalOperationException {
-    log.info("Inicia proceso de actualizar la imagen del outfit con id = {} y imagen id = {}", outfitId, imagenoutfitId);
 
-    Optional<ImagenOutfitEntity> imagenEntity = imagenoutfitRepository.findById(imagenoutfitId);
-    if (imagenEntity.isEmpty()) {
-        throw new EntityNotFoundException(ErrorMessage.IMAGEN_NOT_FOUND);
-    }
+    log.info("Inicia proceso de actualización de una imagen de outfit");
 
-    if (imagenoutfit.getImagen() == null || imagenoutfit.getImagen().isBlank()) {
+    if (imagenOutfitEntity.getImagen() == null || imagenOutfitEntity.getImagen().isBlank()) {
         throw new IllegalOperationException("El campo 'imagen' no puede ser nulo o vacío");
     }
 
-    imagenoutfit.setId(imagenoutfitId);
-    log.info("Termina proceso de actualizar la imagen con id = {}", imagenoutfitId);
-    return imagenoutfitRepository.save(imagenoutfit);
+  
+    OutfitEntity outfit = outfitRepository.findById(outfitId)
+            .orElseThrow(() -> new EntityNotFoundException("No se encontró el outfit con el id proporcionado"));
+
+   
+    ImagenOutfitEntity imagenOutfit = imagenoutfitRepository.findById(imagenId)
+            .orElseThrow(() -> new EntityNotFoundException("No se encontró la imagen con el id proporcionado"));
+
+  
+    if (imagenOutfit.getOutfit() == null) {
+        imagenOutfit.setOutfit(outfit);
+    }
+
+   
+    if (!imagenOutfit.getOutfit().getId().equals(outfitId)) {
+        throw new IllegalOperationException("La imagen no está asociada al outfit proporcionado");
+    }
+
+    
+    imagenOutfit.setImagen(imagenOutfitEntity.getImagen());
+
+    ImagenOutfitEntity actualizado = imagenoutfitRepository.save(imagenOutfit);
+
+    log.info("Termina proceso de actualización de imagen de outfit con id: {}", imagenId);
+    return actualizado;
 }
+
 
    
     @Transactional
