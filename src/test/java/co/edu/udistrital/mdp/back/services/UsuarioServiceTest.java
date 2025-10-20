@@ -13,6 +13,8 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.context.annotation.Import;
 
+import co.edu.udistrital.mdp.back.entities.ComentarioEntity;
+import co.edu.udistrital.mdp.back.entities.ListaDeseosEntity;
 import co.edu.udistrital.mdp.back.entities.UsuarioEntity;
 import co.edu.udistrital.mdp.back.exceptions.EntityNotFoundException;
 import co.edu.udistrital.mdp.back.exceptions.IllegalOperationException;
@@ -166,5 +168,132 @@ class UsuarioServiceTest {
     @Test
     void testDeleteUsuarioNoExistente() {
         assertThrows(EntityNotFoundException.class, () -> usuarioService.deleteUsuario(0L));
+    }
+
+    // Relación Usuario - Comentarios
+
+    /**
+     * Prueba para agregar un comentario a un usuario existente.
+     */
+    @Test
+    void testAddComentarioCorrecto() throws Exception {
+        UsuarioEntity usuario = usuarioList.get(0);
+        ComentarioEntity comentario = new ComentarioEntity();
+        comentario.setTexto("Excelente usuario");
+        comentario.setUsuario(usuario);
+
+        ComentarioEntity creado = usuarioService.addComentario(usuario.getId(), comentario);
+
+        assertNotNull(creado);
+        assertEquals("Excelente usuario", creado.getTexto());
+    }
+
+    /**
+     * Prueba para agregar un comentario con texto vacío.
+     */
+    @Test
+    void testAddComentarioTextoVacio() {
+        UsuarioEntity usuario = usuarioList.get(0);
+        ComentarioEntity comentario = new ComentarioEntity();
+        comentario.setTexto("   ");
+
+        assertThrows(IllegalOperationException.class, () ->
+            usuarioService.addComentario(usuario.getId(), comentario));
+    }
+
+    /**
+     * Prueba para agregar un comentario a un usuario inexistente.
+     */
+    @Test
+    void testAddComentarioUsuarioNoExiste() {
+        ComentarioEntity comentario = new ComentarioEntity();
+        comentario.setTexto("Buen servicio");
+
+        assertThrows(EntityNotFoundException.class, () ->
+            usuarioService.addComentario(999L, comentario));
+    }
+
+    /**
+     * Prueba para obtener los comentarios de un usuario.
+     */
+    @Test
+    void testGetComentariosCorrecto() throws Exception {
+        UsuarioEntity usuario = usuarioList.get(0);
+
+        ComentarioEntity comentario = new ComentarioEntity();
+        comentario.setTexto("Comentario de prueba");
+        comentario.setUsuario(usuario); // <-- lado del comentario
+
+        // Muy importante: agregarlo también en la lista del usuario
+        usuario.getComentarios().add(comentario); // <-- lado del usuario
+
+        entityManager.persist(usuario);
+        entityManager.flush();
+
+        List<ComentarioEntity> comentarios = usuarioService.getComentarios(usuario.getId());
+        assertFalse(comentarios.isEmpty());
+    }
+
+    /**
+     * Prueba para obtener los comentarios de un usuario inexistente.
+     */
+    @Test
+    void testGetComentariosUsuarioNoExiste() {
+        assertThrows(EntityNotFoundException.class, () ->
+            usuarioService.getComentarios(999L));
+    }
+
+
+    // Relación Usuario - ListaDeseos
+
+    /**
+     * Prueba para asignar una lista de deseos a un usuario existente.
+     */
+    @Test
+    void testSetListaDeseosCorrecto() throws Exception {
+        UsuarioEntity usuario = usuarioList.get(0);
+
+        ListaDeseosEntity lista = new ListaDeseosEntity();
+
+        ListaDeseosEntity creada = usuarioService.setListaDeseos(usuario.getId(), lista);
+
+        assertNotNull(creada);
+        assertEquals(usuario.getId(), creada.getUsuario().getId());
+    }
+
+    /**
+     * Prueba para asignar una lista de deseos a un usuario inexistente.
+     */
+    @Test
+    void testSetListaDeseosUsuarioNoExiste() {
+        ListaDeseosEntity lista = new ListaDeseosEntity();
+
+        assertThrows(EntityNotFoundException.class, () ->
+            usuarioService.setListaDeseos(999L, lista));
+    }
+
+    /**
+     * Prueba para consultar la lista de deseos de un usuario existente.
+     */
+    @Test
+    void testGetListaDeseosCorrecto() throws Exception {
+        UsuarioEntity usuario = usuarioList.get(0);
+        ListaDeseosEntity lista = new ListaDeseosEntity();
+        lista.setUsuario(usuario);
+        usuario.setWishlist(lista);
+        entityManager.persist(lista);
+
+        ListaDeseosEntity result = usuarioService.getListaDeseos(usuario.getId());
+        assertNotNull(result);
+        assertEquals(usuario.getId(), result.getUsuario().getId());
+    }
+
+    /**
+     * Prueba para consultar la lista de deseos de un usuario inexistente.
+     */
+    @Test
+    void testGetListaDeseosUsuarioNoExiste() {
+        assertThrows(EntityNotFoundException.class, () ->
+            usuarioService.getListaDeseos(999L));
     }
 }
