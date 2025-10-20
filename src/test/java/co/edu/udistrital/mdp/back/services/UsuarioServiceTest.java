@@ -164,7 +164,7 @@ class UsuarioServiceTest {
         assertThrows(EntityNotFoundException.class, () -> {
             usuarioService.getUsuario(entity.getId());
         });
-}
+    }
 
     /**
 	 * Prueba para eliminar un usuario que no existe
