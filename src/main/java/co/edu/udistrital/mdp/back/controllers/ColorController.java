@@ -64,7 +64,7 @@ public class ColorController {
 
     @DeleteMapping(value = "/{id}")
     @ResponseStatus(code = HttpStatus.NO_CONTENT)
-    public void delete(@PathVariable Long id) throws EntityNotFoundException, IllegalOperationException {
+    public void delete(@PathVariable Long id) throws EntityNotFoundException {
         colorService.deleteColor(id);
     }
 }
