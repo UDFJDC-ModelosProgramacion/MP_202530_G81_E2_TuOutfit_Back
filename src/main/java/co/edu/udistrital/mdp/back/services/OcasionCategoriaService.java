@@ -51,5 +51,25 @@ public class OcasionCategoriaService {
 
         ocasion.getCategorias().remove(categoria);
         ocasionRepository.save(ocasion);
+         }
+
+    public static org.slf4j.Logger getLog() {
+        return log;
     }
-}
+
+    public OcasionRepository getOcasionRepository() {
+        return ocasionRepository;
+    }
+
+    public void setOcasionRepository(OcasionRepository ocasionRepository) {
+        this.ocasionRepository = ocasionRepository;
+    }
+
+    public CategoriaRepository getCategoriaRepository() {
+        return categoriaRepository;
+    }
+
+    public void setCategoriaRepository(CategoriaRepository categoriaRepository) {
+        this.categoriaRepository = categoriaRepository;
+    }
+        }
