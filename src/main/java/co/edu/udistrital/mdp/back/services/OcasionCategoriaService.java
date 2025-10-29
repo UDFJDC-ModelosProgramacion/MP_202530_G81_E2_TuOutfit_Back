@@ -72,4 +72,4 @@ public class OcasionCategoriaService {
     public void setCategoriaRepository(CategoriaRepository categoriaRepository) {
         this.categoriaRepository = categoriaRepository;
     }
-        }
+}
