@@ -1,46 +1,76 @@
 package co.edu.udistrital.mdp.back.controllers;
 
-import co.edu.udistrital.mdp.back.entities.CategoriaOcasion;
-import co.edu.udistrital.mdp.back.services.CategoriaOcasionService;
-import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
+import org.modelmapper.ModelMapper;
+import org.modelmapper.TypeToken;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
+
+import co.edu.udistrital.mdp.back.dto.OcasionDetailDTO;
+import co.edu.udistrital.mdp.back.entities.OcasionEntity;
+import co.edu.udistrital.mdp.back.exceptions.EntityNotFoundException;
+import co.edu.udistrital.mdp.back.services.CategoriaOcasionService;
+
+/**
+ * Clase que implementa el recurso "categorias/{id}/ocasiones".
+ * 
+ * Permite gestionar las asociaciones entre una categoría y sus ocasiones.
+ * 
+ * @author 
+ */
 @RestController
-@RequestMapping("/api/categoria-ocasion")
-@RequiredArgsConstructor
+@RequestMapping("/categorias")
 public class CategoriaOcasionController {
 
-    private final CategoriaOcasionService categoriaOcasionService;
+    @Autowired
+    private CategoriaOcasionService categoriaOcasionService;
 
-    @GetMapping
-    public ResponseEntity<List<CategoriaOcasion>> getAll() {
-        return ResponseEntity.ok(categoriaOcasionService.findAll());
+    @Autowired
+    private ModelMapper modelMapper;
+
+    /**
+     * Busca y devuelve todas las ocasiones asociadas a una categoría.
+     *
+     * @param categoriaId El ID de la categoría.
+     * @return Lista de {@link OcasionDetailDTO} con las ocasiones asociadas.
+     */
+    @GetMapping(value = "/{categoriaId}/ocasiones")
+    @ResponseStatus(code = HttpStatus.OK)
+    public List<OcasionDetailDTO> getOcasionesPorCategoria(@PathVariable Long categoriaId)
+            throws EntityNotFoundException {
+        List<OcasionEntity> ocasiones = categoriaOcasionService.getOcasionesPorCategoria(categoriaId);
+        return modelMapper.map(ocasiones, new TypeToken<List<OcasionDetailDTO>>() {
+        }.getType());
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<CategoriaOcasion> getById(@PathVariable Long id) {
-        CategoriaOcasion entity = categoriaOcasionService.findById(id);
-        return entity != null ? ResponseEntity.ok(entity) : ResponseEntity.notFound().build();
+    /**
+     * Asocia una ocasión existente a una categoría existente.
+     *
+     * @param categoriaId El ID de la categoría.
+     * @param ocasionId   El ID de la ocasión que se va a asociar.
+     * @return {@link OcasionDetailDTO} con la ocasión asociada.
+     */
+    @PostMapping(value = "/{categoriaId}/ocasiones/{ocasionId}")
+    @ResponseStatus(code = HttpStatus.OK)
+    public OcasionDetailDTO addOcasionACategoria(@PathVariable Long categoriaId, @PathVariable Long ocasionId)
+            throws EntityNotFoundException {
+        OcasionEntity ocasion = categoriaOcasionService.addOcasionACategoria(categoriaId, ocasionId);
+        return modelMapper.map(ocasion, OcasionDetailDTO.class);
     }
 
-    @PostMapping
-    public ResponseEntity<CategoriaOcasion> create(@RequestBody CategoriaOcasion categoriaOcasion) {
-        CategoriaOcasion saved = categoriaOcasionService.save(categoriaOcasion);
-        return ResponseEntity.ok(saved);
-    }
-
-    @PutMapping("/{id}")
-    public ResponseEntity<CategoriaOcasion> update(@PathVariable Long id, @RequestBody CategoriaOcasion categoriaOcasion) {
-        CategoriaOcasion updated = categoriaOcasionService.update(id, categoriaOcasion);
-        return updated != null ? ResponseEntity.ok(updated) : ResponseEntity.notFound().build();
-    }
-
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
-        boolean deleted = categoriaOcasionService.delete(id);
-        return deleted ? ResponseEntity.noContent().build() : ResponseEntity.notFound().build();
+    /**
+     * Elimina la relación entre una categoría y una ocasión específica.
+     *
+     * @param categoriaId El ID de la categoría.
+     * @param ocasionId   El ID de la ocasión que se desea eliminar de la categoría.
+     */
+    @DeleteMapping(value = "/{categoriaId}/ocasiones/{ocasionId}")
+    @ResponseStatus(code = HttpStatus.NO_CONTENT)
+    public void removeOcasionDeCategoria(@PathVariable Long categoriaId, @PathVariable Long ocasionId)
+            throws EntityNotFoundException {
+        categoriaOcasionService.removeOcasionDeCategoria(categoriaId, ocasionId);
     }
 }
+
